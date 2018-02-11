@@ -100,6 +100,39 @@
         var path = d3.geoPath()
             .projection(projection)
     
+
+    <title>D3: Loading GeoJSON data and generating SVG paths</title>
+    <script type="text/javascript" src="https://d3js.org/d3.v4.min.js"></script>
+    <script src="//d3js.org/d3-geo-projection.v1.min.js"></script>
+    <script src="https://d3js.org/topojson.v1.min.js"></script>
+    <script src="//d3js.org/topojson.v2.min.js"></script>
+    <style type="text/css">
+    </style>
+</head>
+<h3>
+    <left>World Oil Exports and Imports - 2016</left>
+</h3>
+
+<body>
+
+
+
+    <script type="text/javascript">
+        //Width and height
+        var w = 1920;
+        var h = 1024;
+
+
+
+
+        //Define path generator, using the Albers USA projection
+        var path = d3.geoPath()
+            .projection(d3.geoCylindricalStereographic())
+        //.projection(d3.geoMiller())
+
+        //var path = d3.geoPath()
+
+
         // Develop a tooltip
         var tooltip = d3.select('body').append('div')
             .style('position', 'absolute')
@@ -585,6 +618,91 @@
 
         }
 
+
+
+
+            .style('border', 'none')
+
+
+
+
+        //Create SVG element
+        var svg = d3.select("body")
+            .append("svg")
+            .attr("width", w)
+            .attr("height", h);
+
+
+        //Load in GeoJSON data
+        d3.json("countrycontinent.json", function(error, countries) {
+            var features = countries.features;
+            //Bind data and create one path per GeoJSON feature
+            svg.selectAll("path")
+                .data(features)
+                .enter()
+                .append("path")
+                .attr('id', function(d) {
+                    return d.properties.name
+                })
+                .attr("d", path)
+                .attr('transform', 'scale(2)')
+                //.attr("transform", "translate(-800,200)")
+                .style("fill", "#222222")
+                .style("stroke", 'Black')
+
+
+
+
+                .on('mouseover', function(d) {
+                    var name = d.properties.name;
+
+                    //if(typeof name !== null){
+                    // return document.getElementById('name').innerHTML=name;
+                    //}
+                    tooltip.transition()
+                        .style('opacity', 1)
+
+                    tooltip.html(name)
+                        .style('left', (d3.event.pageX) + "px")
+                        .style('top', (d3.event.pageY) + "px")
+
+
+                    //d3.select(this).append('svg:title').text(function(d){return d.properties.name});
+                })
+
+
+
+                .on('mouseout', function() {
+                    tooltip.transition()
+                        .style('opacity', 0);
+                    d3.select(this)
+                        .style('opacity', 1)
+
+                })
+
+                .on('click', function(d, i) {
+                        //d3.select(this).style("fill", "steelblue")
+                        length = countries.features.length
+
+                        console.log(d.properties.name)
+
+
+
+                        //console.log(d3.select(this))
+
+
+                        id = 'Thailand';
+
+                        //console.log(countries.features[1].geometry)
+                        if (d.properties.name == 'Pakistan') {
+
+                            svg.selectAll('path[id=' + id + ']')
+                                .style('fill', 'darkorange')
+
+                        }
+                    }
+
+        });
     </script>
 </body>
 </html>
