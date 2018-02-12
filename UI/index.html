@@ -78,7 +78,7 @@
                                                          production_barrels.year[2016])})
                 .style("stroke", 'black')
                 .on('mouseover', function(d) {return mapMouseOver(d.properties, production_barrels.year[2016])})
-                
+
                 /*.on('mouseout', function() {
                     tooltip.transition()
                         .style('opacity', 0);
@@ -110,12 +110,15 @@
                         production = production_barrels[properties.production_category];
                     }
 
-                    displayTip =  tooltip.html('hello')
+                    var displayTip;
+                    tooltip.transition()
+                        .style('opacity', 1);
+
+                    displayTip =  tooltip.html("Country: " + properties.name + "<br/>" + 
+                                                "Oil Production: " +production)
                                     .style('left', (d3.event.pageX) + "px")
                                     .style('top', (d3.event.pageY) + "px");
-
-                    //console.log(displayTip);
-                    return 'hello';
+                    return displayTip;
                 }
         }
     </script>
