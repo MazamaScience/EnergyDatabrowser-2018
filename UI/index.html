@@ -77,18 +77,9 @@
                 .style("fill", function(d) {return fillMapData(d.properties.production_category,
                                                          production_barrels.year[2016])})
                 .style("stroke", 'black')
+                .on('mouseover', function(d) {return mapMouseOver(d.properties, production_barrels.year[2016])})
                 
-                /*.on('mouseover', function(d) {
-                    var name = d.properties.name;
-
-                    tooltip.transition()
-                        .style('opacity', 1)
-
-                    tooltip.html(name)
-                        .style('left', (d3.event.pageX) + "px")
-                        .style('top', (d3.event.pageY) + "px")
-                })
-                .on('mouseout', function() {
+                /*.on('mouseout', function() {
                     tooltip.transition()
                         .style('opacity', 0);
                     d3.select(this)
@@ -111,6 +102,20 @@
                         return "white";
                     }
                     return color(production_barrels[production_category]);
+                }
+
+                function mapMouseOver(properties, production_barrels){
+                    var production = 0;
+                    if (properties.production_category != null){
+                        production = production_barrels[properties.production_category];
+                    }
+
+                    displayTip =  tooltip.html('hello')
+                                    .style('left', (d3.event.pageX) + "px")
+                                    .style('top', (d3.event.pageY) + "px");
+
+                    //console.log(displayTip);
+                    return 'hello';
                 }
         }
     </script>
