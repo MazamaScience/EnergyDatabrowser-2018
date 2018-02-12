@@ -1,0 +1,34 @@
+{  
+   "year":{  
+      "2016":{  
+         "United States of America":{  
+            "export":{  
+               "Canada":15,
+               "South and Central America":3.3,
+               "Europe":4,
+               "Other Middle East":0.3,
+               "China":0.5,
+               "Japan":0.4,
+               "Other Asia Pacific":0.7
+            },
+            "import":{  
+               "Canada":162.6,
+               "Mexico":29.1,
+               "South and Central America":79.8,
+               "Europe":3.2,
+               "Russia":1.9,
+               "Commonwealth of Independent States":0.5,
+               "Iraq":20.9,
+               "Kuwait":10.4,
+               "Saudi Arabia":54.8,
+               "United Arab Emirates":0.6,
+               "Other Middle East":1.5,
+               "North Africa":3.6,
+               "West Africa":22.2,
+               "Australasia":0.2,
+               "Other Asia Pacific":2.1
+            }
+         }
+      }
+   }
+}

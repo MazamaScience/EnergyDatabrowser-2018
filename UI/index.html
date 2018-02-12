@@ -44,19 +44,21 @@
         d3.queue()
             .defer(d3.json, "../Data/countries.json")
             .defer(d3.json, "../Data/production_barrels.json")
+            .defer(d3.json,"../Data/inter_area.json")
             .await(ready);
 
-        var countries, production_barrels;
+        var countries, production_barrels, trade_movements;
 
-        function ready(error, d1, d2){
+        function ready(error, d1, d2,d3){
             if(error) throw(error);
             countries = d1;
             production_barrels = d2;
+            trade_movements = d3;
 
-            buildMap(countries, production_barrels);
+            buildMap(countries, production_barrels,trade_movements);
         }
 
-        function buildMap(countries, production_barrels){
+        function buildMap(countries, production_barrels, trade_movements){
             var features = countries.features;
             var vals = d3.values(production_barrels.year[2016]);
 
@@ -70,7 +72,7 @@
                 .enter()
                 .append("path")
                 .attr('id', function(d) {
-                    return d.properties.name
+                    return d.properties.interarea_category
                 })
                 .attr("d", path)
                 .attr('transform', 'scale(2)')
@@ -79,23 +81,21 @@
                 .style("stroke", 'black')
                 .on('mouseover', function(d) {return mapMouseOver(d.properties, production_barrels.year[2016])})
 
-                /*.on('mouseout', function() {
+                //put in function
+                .on('mouseout', function() {
                     tooltip.transition()
                         .style('opacity', 0);
                     d3.select(this)
                         .style('opacity', 1)
+                       // console.log(d3.select(this))
                 })
-                .on('click', function(d, i) {
-                        length = countries.features.length
-                        console.log(d.properties.name)
-                        id = 'Thailand';
-                        //console.log(countries.features[1].geometry)
-                        if (d.properties.name == 'Pakistan') {
-                            svg.selectAll('path[id=' + id + ']')
-                                .style('fill', 'darkorange')
+
+                //put in function
+                .on('click', function(d, i) { 
+                     return clickMap(d.properties,trade_movements.year[2016])
                         }
-                    })
-                */
+                    )
+                
 
                 function fillMapData(production_category, production_barrels){
                     if (production_category == null){
@@ -120,6 +120,35 @@
                                     .style('top', (d3.event.pageY) + "px");
                     return displayTip;
                 }
+
+                function clickMap(properties, trade_movements){
+                    var movements = 0;
+                    var imp, exp;
+                    if(properties.interarea_category != null) {
+                           //console.log(trade_movements[properties.interarea_category])
+                           imp = d3.keys(trade_movements[properties.interarea_category]['import']);
+                           //console.log(imports)
+                           exp = d3.keys(trade_movements[properties.interarea_category]['export']);
+                            //console.log(imp)
+
+
+                           //console.log(d3.select('path'))
+
+                            imp.forEach(function(id,i){
+                                svg.selectAll('path[id="'+id+'"]')
+                                .style('fill', 'darkorange')
+                            })
+                    } 
+                    //console.log(d3.select('path').attr('id'))
+                    //console.log(path['id'])
+                    
+
+                }
+
+
+
+
+
         }
     </script>
 </body>
