@@ -12,10 +12,16 @@
     <script src="https://d3js.org/d3-request.v1.min.js"></script>
     <script src="https://d3js.org/d3-queue.v3.min.js"></script>
     <script src="http://d3js.org/colorbrewer.v1.min.js"></script> 
+    <script src="//code.jquery.com/jquery-1.10.2.js"></script>
 </head>
 <h3>
     <left>Oil Exports and Imports</left>
 </h3>
+<select id="inds">
+        <option value="oil_production" selected="selected">Oil Production</option>
+        <option value="oil_trade">Oil Trade</option>
+</select>
+
 <body>
     <script type="text/javascript">
         //Width and height
@@ -43,11 +49,11 @@
         //Loading JSON files
         d3.queue()
             .defer(d3.json, "../Data/countries.json")
-            .defer(d3.json, "../Data/production_barrels.json")
+            .defer(d3.json, "../Data/oil_stats.json")
             .defer(d3.json,"../Data/inter_area.json")
             .await(ready);
 
-        var countries, production_barrels, trade_movements;
+        var countries, oil_stats, trade_movements;
 
         function ready(error, d1, d2,d3){
             if(error) throw(error);
@@ -55,16 +61,19 @@
             production_barrels = d2;
             trade_movements = d3;
 
-            buildMap(countries, production_barrels,trade_movements);
+            buildMap(countries, oil_stats, trade_movements);
         }
 
-        function buildMap(countries, production_barrels, trade_movements){
+        function buildMap(countries, oil_stats, trade_movements){
             var features = countries.features;
             var vals = d3.values(production_barrels.year[2016]);
 
             color = d3.scaleThreshold()
                    .domain([1000, 2000, 3000, 4000, 5000, 14000])
                    .range(['#f0f9e8','#bae4bc','#7bccc4','#43a2ca','#0868ac', "#19198c"]);
+
+            d3.select('#inds')
+                .on("change", function () {console.log(this.value);});
 
             //Bind data and create one path per GeoJSON feature
             svg.selectAll("path")
@@ -80,17 +89,12 @@
                                                          production_barrels.year[2016])})
                 .style("stroke", 'black')
                 .on('mouseover', function(d) {return mapMouseOver(d.properties, production_barrels.year[2016])})
-
-                //put in function
                 .on('mouseout', function() {
                     tooltip.transition()
                         .style('opacity', 0);
                     d3.select(this)
                         .style('opacity', 1)
-                       // console.log(d3.select(this))
                 })
-
-                //put in function
                 .on('click', function(d, i) { 
                      return clickMap(d.properties,trade_movements.year[2016])
                         }
@@ -125,24 +129,14 @@
                     var movements = 0;
                     var imp, exp;
                     if(properties.interarea_category != null) {
-                           //console.log(trade_movements[properties.interarea_category])
-                           imp = d3.keys(trade_movements[properties.interarea_category]['import']);
-                           //console.log(imports)
-                           exp = d3.keys(trade_movements[properties.interarea_category]['export']);
-                            //console.log(imp)
-
-
-                           //console.log(d3.select('path'))
-
-                            imp.forEach(function(id,i){
-                                svg.selectAll('path[id="'+id+'"]')
-                                .style('fill', 'darkorange')
-                            })
+                        imp = d3.keys(trade_movements[properties.interarea_category]['import']);
+                        exp = d3.keys(trade_movements[properties.interarea_category]['export']);
+                        
+                        imp.forEach(function(id,i){
+                            svg.selectAll('path[id="'+id+'"]')
+                            .style('fill', 'darkorange')
+                        });
                     } 
-                    //console.log(d3.select('path').attr('id'))
-                    //console.log(path['id'])
-                    
-
                 }
 
 
