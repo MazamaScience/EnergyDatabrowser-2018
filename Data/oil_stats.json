@@ -1,7 +1,6 @@
 {
       "oil_production": {
-            "year": {
-                  "2016": {
+            "2016": {
                         "United States of America": 12354,
                         "Canada": 4460,
                         "Mexico": 2456,
@@ -56,7 +55,6 @@
                         "Thailand": 479,
                         "Vietnam": 333,
                         "Other Asia Pacific": 278
-                  }
             }
       }
 }

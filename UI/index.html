@@ -67,14 +67,28 @@
         function buildMap(countries, oil_stats, trade_movements){
             var features = countries.features;
             constructEmptyMap(features);
-            console.log('here');
-            console.log(d3.select('#id').node().value);
+            selected_type = d3.select('#drop_down').node().value;
+            selected_year = 2016;
+
+            //Make it dynamic according to input values
+            color = d3.scaleThreshold()
+                .domain([1000, 2000, 3000, 4000, 5000, 14000])
+                .range(['#f0f9e8','#bae4bc','#7bccc4','#43a2ca','#0868ac', "#19198c"]);
+
+            if(selected_type != 'oil_trade'){
+                data = oil_stats[selected_type][selected_year];
+                //Showing production values
+                showValues(features, data);
+            }
+            else{
+                data = trade_movements;
+                //Showing trade area movements
+                showTrade(features, data);
+            }
+
+
             /*
             var vals = d3.values(production_barrels.year[2016]);
-
-            color = d3.scaleThreshold()
-                   .domain([1000, 2000, 3000, 4000, 5000, 14000])
-                   .range(['#f0f9e8','#bae4bc','#7bccc4','#43a2ca','#0868ac', "#19198c"]);
 
             d3.select('#inds')
                 .on("change", function () {console.log(this.value);});
@@ -103,14 +117,6 @@
                      return clickMap(d.properties,trade_movements.year[2016])
                         }
                     )
-                
-
-                function fillMapData(production_category, production_barrels){
-                    if (production_category == null){
-                        return "white";
-                    }
-                    return color(production_barrels[production_category]);
-                }
 
                 function mapMouseOver(properties, production_barrels){
                     var production = 0;
@@ -155,7 +161,21 @@
                     .attr('transform', 'scale(2)')
                     .style("fill", 'white')
                     .style("stroke", 'black')
+            }
+
+            function showValues(features, data){
+                svg.selectAll("path")
+                    .data(features)
+                    .style("fill", function(d){return fillMapData(d.properties.production_category, data)})
+            }
+
+            function fillMapData(production_category, oil_values){
+                if (production_category == null){
+                    return "white";
                 }
+                return color(oil_values[production_category]);
+            }
+
         }
     </script>
 </body>
