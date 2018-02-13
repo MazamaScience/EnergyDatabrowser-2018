@@ -17,7 +17,7 @@
 <h3>
     <left>Oil Exports and Imports</left>
 </h3>
-<select id="inds">
+<select id="drop_down">
         <option value="oil_production" selected="selected">Oil Production</option>
         <option value="oil_trade">Oil Trade</option>
 </select>
@@ -58,7 +58,7 @@
         function ready(error, d1, d2,d3){
             if(error) throw(error);
             countries = d1;
-            production_barrels = d2;
+            oil_stats = d2;
             trade_movements = d3;
 
             buildMap(countries, oil_stats, trade_movements);
@@ -66,6 +66,10 @@
 
         function buildMap(countries, oil_stats, trade_movements){
             var features = countries.features;
+            constructEmptyMap(features);
+            console.log('here');
+            console.log(d3.select('#id').node().value);
+            /*
             var vals = d3.values(production_barrels.year[2016]);
 
             color = d3.scaleThreshold()
@@ -138,11 +142,20 @@
                         });
                     } 
                 }
+            */
 
-
-
-
-
+            function constructEmptyMap(features){
+                //Bind data and create one path per GeoJSON feature
+                svg.selectAll("path")
+                    .data(features)
+                    .enter()
+                    .append("path")
+                    .attr('id', function(d) {return d.properties.interarea_category})
+                    .attr("d", path)
+                    .attr('transform', 'scale(2)')
+                    .style("fill", 'white')
+                    .style("stroke", 'black')
+                }
         }
     </script>
 </body>
