@@ -13,22 +13,66 @@
     <script src="https://d3js.org/d3-queue.v3.min.js"></script>
     <script src="http://d3js.org/colorbrewer.v1.min.js"></script> 
     <script src="//code.jquery.com/jquery-1.10.2.js"></script>
+
+    <style>
+    .dropdown{
+        width: 115px;
+        left-padding: 10px;
+        float:left;
+    }
+
+    .slider{
+        width: 1000px;
+        height: 15px;
+        left-padding: 10px;
+        float:left;
+
+    }
+    .slider:hover {
+        opacity: 1;
+    }
+    .text{
+        width: 60px;
+        margin-left: 15px;
+        float:left;
+    }
+    .clearfix
+        {
+            clear:both;
+        }
+    </style>
 </head>
 <h3>
     <left>Oil Exports and Imports</left>
 </h3>
 
-<select id="drop_down">
+<select id="drop_down" class = "dropdown">
         <option value="oil_production">Oil Production</option>
         <option value="oil_trade" selected="selected">Oil Trade</option>
 </select>
 
+<div id = "text" class = "text">Years:</div>
 <div id = "slider" class = slider>
   <input type="range" min="2010" max="2016" class="slider" id="Year">
 </div>
 
 <body>
     <script type="text/javascript">
+
+        // Set default variable for year
+        var years = ["2010","2016"]
+
+        // Create scale for year Scale
+
+        var yearScale = d3.scaleLinear()
+                           //.domain([new Date('1960'),new Date('1961'),new Date('1962'),new Date('1963'),new Date('1964'),new Date('1965')])
+                           .domain([d3.min(years, function(d){return d}),d3.max(years, function(d){return d;})])
+                           .range([0,1000]); 
+
+        var yAxis = d3.axisBottom(yearScale)
+                        //.tickFormat(d3.timeFormat('%Y'))
+                        .ticks(7);
+
         //Width and height
         var w = 1960;
         var h = 1024;
@@ -51,15 +95,10 @@
             .attr("width", w)
             .attr("height", h);
 
-        svg.append("input")
-                .attr("type", "range")
-                .attr("min", 2010)
-                .attr("max", 2016)
-                .attr("step", "1")
-                .attr("id", "year")
-                .on("input", function input() {
-                    update();
-                });
+        // add the scale
+        svg.append('g')
+            .attr("transform","translate(10,10)")
+            .call(yAxis)
 
         //Loading JSON files
         d3.queue()
