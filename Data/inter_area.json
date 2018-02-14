@@ -1,33 +1,73 @@
-{  
-   "year":{  
-      "2016":{  
-         "United States of America":{  
-            "export":{  
-               "Canada":15,
-               "South and Central America":3.3,
-               "Europe":4,
-               "Other Middle Eastern":0.3,
-               "China":0.5,
-               "Japan":0.4,
-               "Other Asia Pacific":0.7
-            },
-            "import":{  
-               "Canada":162.6,
-               "Mexico":29.1,
-               "South and Central America":79.8,
-               "Europe":3.2,
-               "Russia":1.9,
-               "Commonwealth of Independent States":0.5,
-               "Iraq":20.9,
-               "Kuwait":10.4,
-               "Saudi Arabia":54.8,
-               "United Arab Emirates":0.6,
-               "Other Middle Eastern":1.5,
-               "North Africa":3.6,
-               "West Africa":22.2,
-               "Australasia":0.2,
-               "Other Asia Pacific":2.1
-            }
+{
+   "2016":{
+      "United States of America":{
+         "Canada":{
+            "imp":162.6,
+            "exp":15
+         },
+         "South and Central America":{
+            "imp":79.8,
+            "exp":3.3
+         },
+         "Europe":{
+            "imp":3.2,
+            "exp":4
+         },
+         "Other Middle Eastern":{
+            "imp":1.5,
+            "exp":0.3
+         },
+         "China":{
+            "imp":0,
+            "exp":0.5
+         },
+         "Japan":{
+            "imp":0,
+            "exp":0.4
+         },
+         "Other Asia Pacific":{
+            "imp":2.1,
+            "exp":0.7
+         },
+         "Mexico":{
+            "imp":29.1,
+            "exp":0
+         },
+         "Russia":{
+            "imp":1.9,
+            "exp":0
+         },
+         "Commonwealth of Independent States":{
+            "imp":0.5,
+            "exp":0
+         },
+         "Iraq":{
+            "imp":20.9,
+            "exp":0
+         },
+         "Kuwait":{
+            "imp":10.4,
+            "exp":0
+         }, 
+         "Saudi Arabia":{
+            "imp":54.8,
+            "exp":0
+         },
+         "United Arab Emirates":{
+            "imp":0.6,
+            "exp":0
+         },
+         "North Africa":{
+            "imp":3.6,
+            "exp":0
+         },
+         "West Africa":{
+            "imp":22.2,
+            "exp":0
+         },
+         "Australasia":{
+            "imp":0.2,
+            "exp":0
          }
       }
    }
