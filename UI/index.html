@@ -63,23 +63,7 @@
     <script type="text/javascript">
     
         // Set default variable for year
-        var years = ["2010","2016"]
-
-        // Create scale for year Scale
-
-        /*var yearScale = d3.scaleTime()
-                           //.domain([new Date('1960'),new Date('1961'),new Date('1962'),new Date('1963'),new Date('1964'),new Date('1965')])
-                           .domain([d3.min(years, function(d){return d}),d3.max(years, function(d){return d;})])
-                           .range([0,1000]); 
-
-
-        var yAxis = d3.axisBottom(yearScale)
-                        //.tickFormat(d3.timeFormat('%Y'))
-                        .ticks(7);
-*/
-        // Width and height
-        // var width = 960;
-        // var height = 500;
+        var years = ["2014","2016"]
 
         //Define path generator, using projection
         var projection = d3.geoCylindricalStereographic()
@@ -96,38 +80,14 @@
             .style('padding', '5,15px')
             .style('border', 'none');
 
-        
+        var svg = d3.select("svg"),
+            margin = {top: 20, right: 20, bottom: 30, left: 50},
+            width = +svg.attr("width") - margin.left - margin.right,
+            height = +svg.attr("height") - margin.top - margin.bottom;
 
+            svg = svg.append("g")
+                        .attr("transform", "translate( 15 ," + margin.top + ")");
 
-
-        //Create SVG element
-    /* var svg = d3.select("svg");
-    margin = {top: 20, right: 20, bottom: 30, left: 50};
-    width = +svg.attr("width") - margin.left - margin.right;
-    height = +svg.attr("height") - margin.top - margin.bottom;
-*/
-
-
-var svg = d3.select("svg"),
-    margin = {top: 20, right: 20, bottom: 30, left: 50},
-    width = +svg.attr("width") - margin.left - margin.right,
-    height = +svg.attr("height") - margin.top - margin.bottom;
-
-    svg = svg.append("g")
-                .attr("transform", "translate( 15 ," + margin.top + ")");
-
-        
-
-    /*
-        svg = svg.append("g")
-            .attr("transform", "translate(" + margin.left + "," + margin.top + ")")
-            .attr('style','float:left');
-*/
-        // add the scale
-      /*  svg.append('g')
-            .attr("transform","translate(10,10)")
-            .call(yAxis)
-*/
         //Loading JSON files
         d3.queue()
             .defer(d3.json, "../Data/countries.json")
@@ -161,7 +121,7 @@ var svg = d3.select("svg"),
             if(selected_type != 'oil_trade'){
                 data = oil_stats[selected_type][selected_year];
                 //Showing production values
-                valueMap(features, data);
+                valueMap(features, oil_stats, selected_type, selected_year);
             }
             else{
                 data = trade_movements[selected_year];
@@ -173,14 +133,11 @@ var svg = d3.select("svg"),
                 update();});
             d3.select('#drop_down').on("change", function(){update();});
                         
-
-            function displayyear() {
+            function displayYear() {
                 var yearSlider = document.getElementById("Year");
                 year = yearSlider.value
                 document.getElementById("yeartext").innerHTML = year;
             }
-
-
 
             function update(){
                 var slider = document.getElementById("Year");
@@ -190,11 +147,11 @@ var svg = d3.select("svg"),
                 selected_type = drop_down.value;
 
                 if(selected_type != 'oil_trade'){
-                    data = oil_stats[selected_type][selected_year];
-                    svg.selectAll('path')
-                        .on("click", '');
                     //Showing production values
-                    valueMap(features, data);
+                    valueMap(features, oil_stats, selected_type, selected_year);
+                    svg.selectAll('path')
+                        .on("click", buildChart(d3.select(this).attr('id'), 
+                            oil_stats, selected_type));
                 }
                 else{
                     data = trade_movements[selected_year];
@@ -213,18 +170,20 @@ var svg = d3.select("svg"),
                     .append("path")
                     .attr('id', function(d) {return d.properties.interarea_category})
                     .attr("d", path)
-                    //.attr('transform', 'scale(1.3)')
                     .style("fill", 'white')
                     .style("stroke", 'black')
             }
 
-            function valueMap(features, data){
+            function valueMap(features, oil_stats, selected_type, selected_year){
+                data = oil_stats[selected_type][selected_year];
+
                 svg.selectAll("path")
                     .data(features)
+                    .on("click", function(d, i){return buildChart(d.properties.production_category, 
+                                                                    oil_stats[selected_type])})
                     .transition()
-                    .duration(500)
-                    .style("fill", function(d){return fillMapData(d.properties.production_category, data)})
-
+                    .duration(250)
+                    .style("fill", function(d){return fillMapData(d.properties.production_category, data)});
             }
 
             function fillMapData(production_category, oil_values){
@@ -261,7 +220,18 @@ var svg = d3.select("svg"),
                 }
             }
 
+            function buildChart(id, oil_stats){
+                years = d3.keys(oil_stats);
+                var values = [];
+                for (var i = 0; i < years.length; i++){
+                    values = values.concat([oil_stats[years[i]][id]]);
+                }
+                console.log(years);
+                console.log(values);
+            }
+
         }
+
     </script>
 </body>
 </html>
