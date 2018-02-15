@@ -136,7 +136,7 @@
                 tradeMap(features, data);
             }
 
-            d3.select('#Year').on("input", function(){displayyear();
+            d3.select('#Year').on("input", function(){displayYear();
                 update();});
             d3.select('#drop_down').on("change", function(){update();});
                         
@@ -156,9 +156,6 @@
                 if(selected_type != 'oil_trade'){
                     //Showing production values
                     valueMap(features, oil_stats, selected_type, selected_year);
-                    svg.selectAll('path')
-                        .on("click", buildChart(d3.select(this).attr('id'), 
-                            oil_stats, selected_type));
                 }
                 else{
                     data = trade_movements[selected_year];
@@ -263,8 +260,6 @@
 
                 x.domain(d3.extent(stats, function(d) { return d.Date; }));
                 y.domain([0, d3.max(stats, function(d) {return Math.max(d.stat); })]);
-
-                console.log(stats);
 
                 // Add the valueline path.
                 d3.select("#line")
