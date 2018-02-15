@@ -41,6 +41,12 @@
         {
             clear:both;
         }
+
+    .line {
+  fill: none;
+  stroke: steelblue;
+  stroke-width: 2px;
+}
     </style>
 </head>
 <h3>
@@ -59,6 +65,7 @@
 <div id ="yeartext" class = "text">2010</div>
  <br/><br/>
 <svg width="920" height="500"></svg>
+<svg id = "line" width="920" height="500"></svg>
 <body>
     <script type="text/javascript">
     
@@ -222,12 +229,59 @@
 
             function buildChart(id, oil_stats){
                 years = d3.keys(oil_stats);
-                var values = [];
+                var stats = [];
                 for (var i = 0; i < years.length; i++){
-                    values = values.concat([oil_stats[years[i]][id]]);
+                    stats.push({"Date": years[i], "stat": oil_stats[years[i]][id]});
                 }
-                console.log(years);
-                console.log(values);
+                
+                var parseTime = d3.timeParse("%Y");
+
+                var x = d3.scaleTime().range([0, width]);
+                var y = d3.scaleLinear().range([height, 0]);
+
+                // define the line
+                var valueline = d3.line()
+                    .x(function(d) { return x(d.Date); })
+                    .y(function(d) { return y(d.stat); });
+
+                d3.select("#line")
+                            .attr("width", width + margin.left + margin.right)
+                            .attr("height", height + margin.top + margin.bottom)
+                            .append("g")
+                            .attr("transform",
+                                  "translate(" + margin.left + "," + margin.top + ")");
+
+                stats.forEach(function(d) {
+                      d.Date = parseTime(d.Date);
+                      d.stat = +d.stat;
+                  });
+
+                // sort years ascending
+                stats.sort(function(a, b){
+                    return a["Date"]-b["Date"];
+                    })
+
+                x.domain(d3.extent(stats, function(d) { return d.Date; }));
+                y.domain([0, d3.max(stats, function(d) {return Math.max(d.stat); })]);
+
+                console.log(stats);
+
+                // Add the valueline path.
+                d3.select("#line")
+                    .append("path")
+                    .data([stats])
+                    .attr("class", "line")
+                    .attr("d", valueline);
+                // Add the X Axis
+                d3.select("#line")
+                    .append("g")
+                    .attr("transform", "translate(0," + height + ")")
+                    .call(d3.axisBottom(x));
+
+                // Add the Y Axis
+                d3.select("#line")
+                    .append("g")
+                    .call(d3.axisLeft(y));
             }
 
         }
