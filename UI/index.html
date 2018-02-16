@@ -43,10 +43,10 @@
         }
 
     .line {
-  fill: none;
-  stroke: steelblue;
-  stroke-width: 2px;
-}
+        fill: none;
+        stroke: steelblue;
+        stroke-width: 2px;
+    }
     </style>
 </head>
 <h3>
@@ -63,14 +63,15 @@
   <input type="range" min="2010" max="2016" value = "2010" class="slider" id="Year">
 </div>
 <div id ="yeartext" class = "text">2010</div>
- <br/><br/>
+<br/><br/>
 <svg width="920" height="500"></svg>
 <svg id = "line" width="920" height="500"></svg>
+
 <body>
     <script type="text/javascript">
     
         // Set default variable for year
-        var years = ["2014","2016"]
+        var years = ["2014","2016"];
 
         //Define path generator, using projection
         var projection = d3.geoCylindricalStereographic()
@@ -225,6 +226,8 @@
             }
 
             function buildChart(id, oil_stats){
+                d3.selectAll("path.line").remove();
+
                 years = d3.keys(oil_stats);
                 var stats = [];
                 for (var i = 0; i < years.length; i++){
