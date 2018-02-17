@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="utf-8">
-    <title>D3: Loading GeoJSON data and generating SVG paths</title>
+    <title>Assignment 3: Creating Interactive Visualization Software</title>
     <script src="https://d3js.org/d3.v4.min.js"></script>
     <script src="https://d3js.org/d3-geo-projection.v2.min.js"></script>
     <script src="https://d3js.org/d3-collection.v1.min.js"></script>
@@ -37,6 +37,19 @@
         float:left;
         font-weight:bold;
     }
+    .longtext{
+        width: 1000px;
+        margin-left: 15px;
+        float:left;
+        font-weight:bold;
+    }
+    .legendtext{
+        width: 150px;
+        margin-left: 15px;
+        float:left;
+        color: "orange";
+        font-size: 12;
+    }
     .clearfix
         {
             clear:both;
@@ -54,8 +67,8 @@
 </h3>
 
 <select id="drop_down" class = "dropdown">
-        <option value="oil_production">Oil Production</option>
-        <option value="oil_trade" selected="selected">Oil Trade</option>
+        <option value="oil_production" selected="selected">Oil Production</option>
+        <option value="oil_trade">Oil Trade</option>
 </select>
 
 <div id = "text" class = "text">Years (2014-2016):</div>
@@ -63,9 +76,12 @@
   <input type="range" min="2014" max="2016" value = "2014" class="slider" id="Year">
 </div>
 <div id ="yeartext" class = "text">2014</div>
-<br/><br/>
+<br>
 <svg width="920" height="500"></svg>
-<svg id = "line" width="920" height="500"></svg>
+<svg id = "line" width="920" height="500" float="right">
+
+<div id ="chart2" class="longtext">Trends in Oil Produciton (Thousand Barrels Daily Averages by Year)</div>
+</svg>
 
 <body>
     <script type="text/javascript">
@@ -146,7 +162,20 @@
 
             d3.select('#Year').on("input", function(){displayYear();
                 update();});
-            d3.select('#drop_down').on("change", function(){update();});
+            d3.select('#drop_down').on("change", function(){displayText();
+                update();});
+
+            function displayText(){
+                var optionSelection = document.getElementById("drop_down");
+                if(optionSelection.value == "oil_trade")
+                {
+                    document.getElementById("chart2").innerHTML = "Trends in Oil Trade (Imports and Exports of Crude in Million Tonnes per Year)"
+                }
+                else
+                {
+                    document.getElementById("chart2").innerHTML = "Trends in Oil Produciton (Thousand Barrels Daily Averages by Year)"   
+                }
+            }
                         
             function displayYear() {
                 var yearSlider = document.getElementById("Year");
@@ -158,6 +187,10 @@
                 d3.selectAll("path.line").remove();
                 d3.selectAll('path[id=import]').remove();
                 d3.selectAll('path[id=export]').remove();
+                d3.selectAll('g[id=yaxis]').remove();
+                d3.selectAll('g[id=yaxis2]').remove();
+                d3.selectAll("g[id=xaxis]").remove();
+                d3.selectAll("g[id=xaxis2]").remove();
 
                 var slider = document.getElementById("Year");
                 selected_year = slider.value;
@@ -180,6 +213,9 @@
 
             function constructEmptyMap(features){
                 //Bind data and create one path per GeoJSON feature
+                //var drop_down = document.getElementById("drop_down");
+                //selected_type = drop_down.value;
+
                 svg.selectAll("path")
                     .data(features)
                     .enter()
@@ -187,7 +223,9 @@
                     .attr('id', function(d) {return d.properties.interarea_category})
                     .attr("d", path)
                     .style("fill", 'white')
-                    .style("stroke", 'black')
+                    .style("stroke", 'black');
+
+                    
             }
 
             function valueMap(features, oil_stats, selected_type, selected_year){
@@ -197,9 +235,20 @@
                     .data(features)
                     .on("click", function(d, i){return buildValueChart(d.properties.production_category, 
                                                                     oil_stats[selected_type])})
+                    .on('mouseover',function(d){
+                        d3.select(this).append('svg:title').text(function(d){ 
+                            if(selected_type=="oil_production")
+                            {return d.properties.production_category}
+                          //  if(selected_type=="oil_trade"){return d.properties.interarea_category}
+                            else {return d.properties.interarea_category}
+                        })
+                    })
+                    .on('mouseout',function(){})
                     .transition()
                     .duration(250)
-                    .style("fill", function(d){return fillMapData(d.properties.production_category, data)});
+                    .style("fill", function(d){return fillMapData(d.properties.production_category, data)})
+
+                    
             }
 
             function fillMapData(production_category, oil_values){
@@ -216,7 +265,11 @@
                     .on("click", function(d, i){
                         buildTradeChart(d.properties.interarea_category, data)
                         return showTrade(d.properties.interarea_category, current_year)})
-            }
+                    .on('mouseover',function(d){
+                        d3.select(this).append('svg:title').text(function(d){ 
+                            if(selected_type=="oil_trade")
+                            {return d.properties.interarea_category}
+            })})}
 
             function showTrade(interarea_category, data){
                 if (interarea_category != null){
@@ -238,7 +291,18 @@
 
             function buildValueChart(id, oil_stats){
                 d3.selectAll("path.line").remove();
+                d3.selectAll("g[id=yaxis]").remove();
+                d3.selectAll("g[id=xaxis]").remove();
 
+                var svg = d3.select("svg"),
+                margin = {top: 20, right: 20, bottom: 30, left: 50},
+                width = +svg.attr("width") - margin.left - margin.right,
+                height = +svg.attr("height") - margin.top - margin.bottom;
+
+                svg = svg.append("g")
+                        .attr("transform", "translate( 15 ," + margin.top + ")");
+
+                
                 years = d3.keys(oil_stats);
                 var stats = [];
                 for (var i = 0; i < years.length; i++){
@@ -248,6 +312,7 @@
                 var parseTime = d3.timeParse("%Y");
 
                 var x = d3.scaleTime().range([0, width]);
+
                 var y = d3.scaleLinear().range([height, 0]);
 
                 // define the line
@@ -273,28 +338,42 @@
                     })
 
                 x.domain(d3.extent(stats, function(d) { return d.Date; }));
-                y.domain([0, d3.max(stats, function(d) {return Math.max(d.stat); })]);
+                y.domain([0, d3.max(stats, function(d) {return d.stat; })]);
 
+                
                 // Add the valueline path.
                 d3.select("#line")
                     .append("path")
                     .data([stats])
                     .attr("class", "line")
-                    .attr("d", valueline);
+                    .attr("d", valueline)
+                    .attr("transform", "translate(40,0)")
+                    //.on('mouseover',function(d){console.log(y(d))}
+                        
+                    ;
+                    
                 // Add the X Axis
                 d3.select("#line")
                     .append("g")
-                    .attr("transform", "translate(0," + height + ")")
-                    .call(d3.axisBottom(x));
+                    .attr("id","xaxis")
+                    .attr("transform", "translate(40," + height + ")")
+                    .call(d3.axisBottom(x).ticks(3));
 
                 // Add the Y Axis
                 d3.select("#line")
                     .append("g")
+                    .attr("id","yaxis")
+                    .attr("transform", "translate(40,0)")
                     .call(d3.axisLeft(y));
+
+               d3.select("#line")
+                .append("svg:title")
+                .text(function(d) {return "Hello"});     
             }
 
             function buildTradeChart(id, oil_trade){
                 d3.selectAll("path.line").remove();
+                
 
                 years = d3.keys(oil_trade);
                 var stats = [];
@@ -343,26 +422,59 @@
                     .append("path")
                     .data([stats])
                     .attr("d", valueline)
+                    .attr("transform", "translate(40,0)")
                     .attr("stroke", "red")
                     .attr("id", 'import')
-                    .attr("fill", "none");
+                    .attr("fill", "none")
+                    ;
                 d3.select("#line")
                     .append("path")
                     .data([stats])
                     .attr("d", valueline2)
+                    .attr("transform", "translate(40,0)")
                     .attr("stroke", "green")
                     .attr("id", "export")
                     .attr("fill", "none");
                 // Add the X Axis
                 d3.select("#line")
                     .append("g")
-                    .attr("transform", "translate(0," + height + ")")
-                    .call(d3.axisBottom(x));
+                    .attr("id","xaxis2")
+                    .attr("transform", "translate(40," + height + ")")
+                    .call(d3.axisBottom(x).ticks(3));
 
                 // Add the Y Axis
                 d3.select("#line")
                     .append("g")
-                    .call(d3.axisLeft(y));
+                    .attr("id","yaxis2")
+                    .attr("transform", "translate(40,0)")
+                    .call(d3.axisLeft(y))
+                
+               d3.select("#line")
+                  .append("svg:text")
+                  .attr("transform","translate(500,20)")
+                  .text("Import")
+                  .style("color:Orange")
+                ; 
+                d3.select('#line')
+                    .append("svg:rect")
+                    .attr("transform","translate(480,10)")
+                    .attr("width",10)
+                    .attr("height",10)
+                    .attr("fill","Red")
+
+                d3.select("#line")
+                  .append("svg:text")
+                  .attr("transform","translate(700,20)")
+                  .text("Export")
+                  .style("color:Green")
+                ; 
+                d3.select('#line')
+                    .append("svg:rect")
+                    .attr("transform","translate(680,10)")
+                    .attr("width",10)
+                    .attr("height",10)
+                    .attr("fill","Green")    
+
             }
 
         }
