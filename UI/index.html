@@ -78,14 +78,11 @@
 <div id ="yeartext" class = "text">2014</div>
 <br>
 <svg width="920" height="500"></svg>
-<svg id = "line" width="920" height="500" float="right">
-
-<div id ="chart2" class="longtext">Trends in Oil Produciton (Thousand Barrels Daily Averages by Year)</div>
-</svg>
-
+<svg id = "line" width="920" height="500" float="right"></svg>
 <body>
+
     <script type="text/javascript">
-    
+//<div id ="chart2" class="longtext">Trends in Oil Produciton (Thousand Barrels Daily Averages by Year)</div>     
         var tradeColor = d3.scaleThreshold()
                            .domain([-500, -300, -100, 0, 100, 300, 500])
                            .range(['#6d0e04', '#aa190a', '#d3301f', '#e74c3c',
@@ -162,7 +159,7 @@
 
             d3.select('#Year').on("input", function(){displayYear();
                 update();});
-            d3.select('#drop_down').on("change", function(){displayText();
+            d3.select('#drop_down').on("change", function(){//displayText();
                 update();});
 
             function displayText(){
@@ -191,6 +188,14 @@
                 d3.selectAll('g[id=yaxis2]').remove();
                 d3.selectAll("g[id=xaxis]").remove();
                 d3.selectAll("g[id=xaxis2]").remove();
+                d3.selectAll("#tradeChartText").remove();
+                d3.selectAll("#valChartText").remove();
+                d3.selectAll("#tradeImport").remove();
+                d3.selectAll("#tradeExport").remove();
+                d3.selectAll("#tradeRect1").remove();
+                d3.selectAll("#tradeRect2").remove();
+
+
 
                 var slider = document.getElementById("Year");
                 selected_year = slider.value;
@@ -367,8 +372,10 @@
                     .call(d3.axisLeft(y));
 
                d3.select("#line")
-                .append("svg:title")
-                .text(function(d) {return "Hello"});     
+                  .append("svg:text")
+                  .attr("id","valChartText")
+                  .attr("transform","translate(200,490)")
+                  .text("Trends in Oil Produciton (Thousand Barrels Daily Averages by Year)")    
             }
 
             function buildTradeChart(id, oil_trade){
@@ -451,30 +458,39 @@
                 
                d3.select("#line")
                   .append("svg:text")
+                  .attr("id","tradeImport")
                   .attr("transform","translate(500,20)")
-                  .text("Import")
-                  .style("color:Orange")
-                ; 
+                  .text("Import");
+                 
                 d3.select('#line')
                     .append("svg:rect")
+                    .attr("id","tradeRect1")
                     .attr("transform","translate(480,10)")
                     .attr("width",10)
                     .attr("height",10)
-                    .attr("fill","Red")
+                    .attr("fill","Red");
 
                 d3.select("#line")
                   .append("svg:text")
-                  .attr("transform","translate(700,20)")
-                  .text("Export")
-                  .style("color:Green")
-                ; 
+                  .attr("id","tradeExport")
+                  .attr("transform","translate(600,20)")
+                  .text("Export"); 
+                
                 d3.select('#line')
                     .append("svg:rect")
-                    .attr("transform","translate(680,10)")
+                    .attr("id","tradeRect2")
+                    .attr("transform","translate(580,10)")
                     .attr("width",10)
                     .attr("height",10)
-                    .attr("fill","Green")    
+                    .attr("fill","Green");    
 
+                d3.select("#line")
+                  .append("svg:text")
+                  .attr("id","tradeChartText")
+                  .attr("transform","translate(200,490)")
+                  .text("Trends in Oil Trade (Imports and Exports of Crude in Million Tonnes per Year)");
+                  
+                ;    
             }
 
         }
