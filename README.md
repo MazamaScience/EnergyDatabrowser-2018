@@ -57,13 +57,22 @@ https://www.jodidata.org
 
 ----
 
-# Original instructions (to be deleted)
+# Notes from 3/6/2018
 
-Directions:
-1. Fork this repository.
-2. Rename the repository to something meaningful.
-3. Revise the `readme.md` to include a title and brief description of the project. Please also include the sponsor, all team members, and their role.
-4. Use the `PlanOfWork.md` template to document your proposal. It is especially helpful to create milestones for your project.
-5. As much as possible - keep this repository up to date. Add to this: data, software, and documentation you create in completing the project. At the end of the capstone you should upload your poster, and any final deliverables that you have created.
+Need more guidance on exactly what plots to create.
+
+Some suggestions to break up the tasks:
+
+ * create an html page with good HTML/CSS/bootstsrap desing (with help from Jon)
+ * keep working on map as needed (but it looks pretty good)
+ * disregard trade data and focus on annual by country statistics (production/consumption by fuel source)
+ * use Papa Parse 4 (or d3) to ingest csv files
+ * all plots should support a wide range of years and countries (but not necessarily all)
+ * create scatter plot
+ * create area plot
+ * create stacked bar (stacked area?) pkot
+ * stay in sync and share functions as much as possible (refactor/cleanup code)
+ * test deployment on github IO
+ 
 
  
