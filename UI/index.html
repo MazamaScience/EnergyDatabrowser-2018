@@ -2,57 +2,18 @@
 <html lang="en">
 
 <head>
-
-  <title>Energy Databrowser - 2018</title>
-
-  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-  <meta name="keywords" content="keyword1, keyword2" />
-  <meta name="description" content="One sentence description that will appear in search engine summaries." />
-  <meta name="author" content="mazamascience.com" />
-
-  <!--
-  The databrowser relies on javascript functionality found in jquery and d3.
-  -->
-  <script src="//code.jquery.com/jquery-1.10.2.js"></script>
-
-  <script src="https://d3js.org/d3.v4.min.js"></script>
-  <script src="https://d3js.org/d3-geo-projection.v2.min.js"></script>
-  <script src="https://d3js.org/d3-collection.v1.min.js"></script>
-  <script src="https://d3js.org/d3-dispatch.v1.min.js"></script>
-  <script src="https://d3js.org/d3-dsv.v1.min.js"></script>
-  <script src="https://d3js.org/d3-request.v1.min.js"></script>
-  <script src="https://d3js.org/d3-queue.v3.min.js"></script>
-  <script src="https://d3js.org/colorbrewer.v1.min.js"></script> 
-
-  <link rel="stylesheet" href="css/main.css">
-
+    <script src="https://d3js.org/d3.v4.min.js"></script>
+    <script src="https://d3js.org/d3-geo-projection.v2.min.js"></script>
+    <script src="https://d3js.org/d3-collection.v1.min.js"></script>
+    <script src="https://d3js.org/d3-dispatch.v1.min.js"></script>
+    <script src="https://d3js.org/d3-dsv.v1.min.js"></script>
+    <script src="https://d3js.org/d3-request.v1.min.js"></script>
+    <script src="https://d3js.org/d3-queue.v3.min.js"></script>
+    <script src="https://d3js.org/colorbrewer.v1.min.js"></script> 
 </head>
 
 <body>
-
-  <h3>
-    <left>World Oil Trade and Production Trends (2014-2016)</left>
-  </h3>
-
-  <select id="drop_down" class = "dropdown">
-    <option value="oil_production" selected="selected">Oil Production</option>
-    <option value="oil_trade">Oil Trade</option>
-  </select>
-
-  <div id = "text" class = "text">Years (2014-2016):</div>
-
-  <div id = "slider" class = slider>
-    <input type="range" min="2014" max="2016" value = "2014" class="slider" id="Year">
-  </div>
-
-  <div id ="yeartext" class = "text">2014</div>
-
-  <br>
-  <svg id = 'map' width="920" height="500"></svg>
-  <svg id = "line" width="920" height="500" float="right"></svg>
-
-  <!-- Load -->
-  <script type="text/javascript" src="js/map_chart.js"></script>
-
+    <script type="text/javascript" src="js/functions.js"></script>
+    <script type="text/javascript" src="js/scatter_plot.js"></script>
 </body>
 </html>
