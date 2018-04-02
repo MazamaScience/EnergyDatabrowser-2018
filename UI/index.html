@@ -2,103 +2,27 @@
 <html lang="en">
 
 <head>
-    <meta charset="utf-8">
-    <title>Assignment 3: Creating Interactive Visualization Software</title>
-    <script src="https://d3js.org/d3.v4.min.js"></script>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <script src="js/plotly.min.js"></script>
+    <script src="//d3js.org/d3.v4.min.js"></script>
     <script src="https://d3js.org/d3-geo-projection.v2.min.js"></script>
     <script src="https://d3js.org/d3-collection.v1.min.js"></script>
     <script src="https://d3js.org/d3-dispatch.v1.min.js"></script>
     <script src="https://d3js.org/d3-dsv.v1.min.js"></script>
     <script src="https://d3js.org/d3-request.v1.min.js"></script>
     <script src="https://d3js.org/d3-queue.v3.min.js"></script>
-    <script src="http://d3js.org/colorbrewer.v1.min.js"></script> 
-    <script src="//code.jquery.com/jquery-1.10.2.js"></script>
-
-    <style>
-    .dropdown{
-        width: 115px;
-        margin-left: 20px;
-        float:left;
-    }
-
-    .slider{
-        width: 300px;
-        height: 15px;
-        left-padding: 10px;
-        float:left;
-
-    }
-    .slider:hover {
-        opacity: 1;
-    }
-    .text{
-        width: 150px;
-        margin-left: 15px;
-        float:left;
-        font-weight:bold;
-    }
-    .longtext{
-        width: 1000px;
-        margin-left: 15px;
-        float:left;
-        font-weight:bold;
-    }
-    .legendtext{
-        width: 150px;
-        margin-left: 15px;
-        float:left;
-        color: "orange";
-        font-size: 12;
-    }
-    .clearfix
-        {
-            clear:both;
-        }
-
-    .line {
-        fill: none;
-        stroke: steelblue;
-        stroke-width: 2px;
-    }
-    </style>
+    <script src="https://d3js.org/colorbrewer.v1.min.js"></script> 
+    <script src="https://d3js.org/colorbrewer.v1.min.js"></script> 
+    <script type="text/javascript" src="js/functions.js"></script>
+   
 </head>
-<h3>
-    <left>World Oil Trade and Production Trends (2014-2016)</left>
-</h3>
 
-<select id="drop_down" class = "dropdown">
-        <option value="oil_production" selected="selected">Oil Production</option>
-        <option value="oil_trade">Oil Trade</option>
-</select>
-
-<div id = "text" class = "text">Years (2014-2016):</div>
-<div id = "slider" class = slider>
-  <input type="range" min="2014" max="2016" value = "2014" class="slider" id="Year">
-</div>
-<div id ="yeartext" class = "text">2014</div>
-<br>
-<svg id = 'map' width="920" height="500"></svg>
-<svg id = "line" width="920" height="500" float="right"></svg>
 <body>
-
-    <script type="text/javascript">
-//<div id ="chart2" class="longtext">Trends in Oil Produciton (Thousand Barrels Daily Averages by Year)</div>     
-        var tradeColor = d3.scaleThreshold()
-                           .domain([-500, -300, -100, 0, 100, 300, 500])
-                           .range(['#6d0e04', '#aa190a', '#d3301f', '#e74c3c',
-                                     '#34bc6e', '#0f753a', '#046d31']);
-                           //.range(["#145a32", "#1e8449", "#52be80", " #a9dfbf",
-                           //             "#c0392b", "#922b21", "#7b241c"]);
-
-        // Set default variable for year
-        var years = ["2014","2016"];
-
-        //Define path generator, using projection
-        var projection = d3.geoCylindricalStereographic()
-                            .scale(150)
-                            //.translate([960 / 2, 500 / 2]);
-        var path = d3.geoPath()
-            .projection(projection)
+       <script type="text/javascript" src="js/scatter_plot.js"></script>
+       <script type="text/javascript" src="js/stacked_area_plot.js"></script> 
+       <div id="consumptionChart" style="width:600px;height:500px;"></div>
+       <div id="stackChart" style="width:960px;height:500px;"></div>
     
 
     <title>D3: Loading GeoJSON data and generating SVG paths</title>
@@ -706,3 +630,4 @@
     </script>
 </body>
 </html>
+
