@@ -15,14 +15,227 @@
     <script src="https://d3js.org/colorbrewer.v1.min.js"></script> 
     <script src="https://d3js.org/colorbrewer.v1.min.js"></script> 
     <script type="text/javascript" src="js/functions.js"></script>
+    <link rel="stylesheet" href="css/styles.css">
    
 </head>
 
 <body>
+  <div id="databrowser">
+    <table>
+      <tbody>
+        <tr>
+
+          <td id="controls_td">
+
+            <div id="controls_div">
+              <form id="controls_form" name="controls_form">
+
+                <input id="language" type="hidden" name="language" value="en">
+                <input id="plottype" type="hidden" name="plottype" value="Exports">
+                <input id="datasource" type="hidden" name="datasource" value="BP_2017">
+
+                <div id="radio_table_div">
+                  <table class="layout">
+                    <tbody>
+
+                      <tr id="data_row">
+                        <td class="label_td">
+                          <label>Data:</label>
+                        </td>
+                        <td>
+                          <span>BP Statistical Review 2017</span>
+                        </td>
+                      </tr>
+
+                      <tr id="units_row">
+                        <td class="label_td">
+                          <label class="radio_label">Units:</label>
+                        </td>
+                        <td>
+                          <span id="mtoe_span" class="radio_span selected" title="million tonnes of oil equivalent per year">
+                            <input type="radio" name="units" id="mtoe" value="mtoe" onclick=drawStack()>
+                            <span>mtoe</span>
+                          </span>
+                          <span id="joule_span" class="radio_span" title="Exajoules per year">
+                            <input type="radio" name="units" id="joule" value="joule" checked="checked">
+                            <span>J</span>
+                          </span>
+                        </td>
+                      </tr>
+
+                    </tbody>
+                  </table>
+                </div>
+
+                <div id="countryID_div">
+                  <label for="countryID">Country / Group:</label>
+                  <select id="countryID" name="countryID" onchange="updateData()">
+        
+                    <optgroup label="Groups of Nations">
+                      <option selected="" value="BP_WORLD">World</option>
+<!--
+                      <option value="BP_WORLD1">World (-OECD -FSU)</option>
+-->
+                      <option value="BP_FSU">Former Soviet Union</option>
+                      <option value="BP_EU0">Europe (-FSU)</option>
+                      <option value="BP_EU1">Europe (+FSU)</option>
+                      <option value="BP_EU2">Eurozone</option>
+                      <option value="BP_OPEC10">OPEC-10</option>
+                      <option value="BP_OPEC">OPEC</option>
+                      <option value="BP_GCC">GCC</option>
+                      <option value="BP_GECF11">GECF-11</option>
+                      <option value="BP_GECF">GECF</option>
+                      <option value="BP_NON_OPEC">Non-OPEC</option>
+                      <option value="BP_OECD">OECD</option>
+                      <option value="BP_OECD1">OECD (-USA)</option>
+                      <option value="BP_G7">G7</option>
+                      <option value="BP_O5">O5</option>
+                      <option value="BP_G75">G7 + O5</option>
+                    </optgroup>
+        
+                    <optgroup label="Oil Producing Regions">
+                      <option value="BP_CRB">Caribbean</option>
+                      <option value="BP_NSE">North Sea</option>
+                      <option value="BP_PRG">Persian Gulf</option>
+                      <option value="BP_WAF">West Africa</option>
+                    </optgroup>
+        
+                    <optgroup label="North America">
+                      <option value="BP_TNA">Total North America</option>
+                      <option value="CA">Canada</option>
+                      <option value="MX">Mexico</option>
+                      <option value="US">USA</option>
+                    </optgroup>
+        
+                    <optgroup label="South America">
+                      <option value="BP_TSCA">Total S. &amp; Cent. America</option>
+                      <option value="AR">Argentina</option>
+                      <option value="BO">Bolivia</option>
+                      <option value="BR">Brazil</option>
+                      <option value="CL">Chile</option>
+                      <option value="CO">Colombia</option>
+                      <option value="EC">Ecuador</option>
+                      <option value="PE">Peru</option>
+                      <option value="TT">Trinidad and Tobago</option>
+                      <option value="VE">Venezuela</option>
+                    </optgroup>
+        
+                    <optgroup label="Europe &amp; Eurasia">
+                      <option value="BP_TEE">Total Europe &amp; Eurasia</option>
+                      <option value="AT">Austria</option>
+                      <option value="AZ">Azerbaijan</option>
+                      <option value="BY">Belarus</option>
+                      <option value="BP_BELU">Belgium and Luxembourg</option>
+                      <option value="BG">Bulgaria</option>
+                      <option value="CZ">Czech Republic</option>
+                      <option value="DK">Denmark</option>
+                      <option value="FI">Finland</option>
+                      <option value="FR">France</option>
+                      <option value="DE">Germany</option>
+                      <option value="GR">Greece</option>
+                      <option value="HU">Hungary</option>
+                      <option value="IS">Iceland</option>
+                      <option value="IE">Ireland</option>
+                      <option value="IT">Italy</option>
+                      <option value="KZ">Kazakhstan</option>
+                      <option value="LT">Lithuania</option>
+                      <option value="NL">Netherlands</option>
+                      <option value="NO">Norway</option>
+                      <option value="PL">Poland</option>
+                      <option value="PT">Portugal</option>
+                      <option value="RO">Romania</option>
+                      <option value="RU">Russian Federation</option>
+                      <option value="SK">Slovakia</option>
+                      <option value="ES">Spain</option>
+                      <option value="SE">Sweden</option>
+                      <option value="CH">Switzerland</option>
+                      <option value="TR">Turkey</option>
+                      <option value="TM">Turkmenistan</option>
+                      <option value="UA">Ukraine</option>
+                      <option value="GB">United Kingdom</option>
+                      <option value="UZ">Uzbekistan</option>
+                    </optgroup>
+        
+                    <optgroup label="Middle East">
+                      <option value="BP_TME">Total Middle East</option>
+                      <option value="BP_GCC">Gulf Cooperation Council</option>
+                      <option value="BH">Bahrain</option>
+                      <option value="IR">Iran</option>
+                      <option value="IQ">Iraq</option>
+                      <option value="IL">Israel</option>
+                      <option value="KW">Kuwait</option>
+                      <option value="OM">Oman</option>
+                      <option value="QA">Qatar</option>
+                      <option value="SA">Saudi Arabia</option>
+                      <option value="SY">Syria</option>
+                      <option value="YE">Yemen</option>
+                      <option value="AE">United Arab Emirates</option>
+                    </optgroup>
+        
+                    <optgroup label="Africa">
+                      <option value="BP_TAF">Total Africa</option>
+                      <option value="DZ">Algeria</option>
+                      <option value="AO">Angola</option>
+                      <option value="CM">Cameroon</option>
+                      <option value="TD">Chad</option>
+                      <option value="CG">Congo</option>
+                      <option value="EG">Egypt</option>
+                      <option value="GQ">Equatorial Guinea</option>
+                      <option value="GA">Gabon</option>
+                      <option value="LY">Libya</option>
+                      <option value="NG">Nigeria</option>
+                      <option value="ZA">South Africa</option>
+                      <option value="SD">Sudan</option>
+                      <option value="TN">Tunisia</option>
+                      <option value="ZW">Zimbabwe</option>
+                    </optgroup>
+        
+                    <optgroup label="Asia-Pacific">
+                      <option value="BP_TAP">Total Asia-Pacific</option>
+                      <option value="AU">Australia</option>
+                      <option value="BD">Bangladesh</option>
+                      <option value="BN">Brunei</option>
+                      <option value="CN">China</option>
+                      <option value="HK">Hong Kong</option>
+                      <option value="IN">India</option>
+                      <option value="ID">Indonesia</option>
+                      <option value="JP">Japan</option>
+                      <option value="MY">Malaysia</option>
+                      <option value="MM">Myanmar</option>
+                      <option value="NZ">New Zealand</option>
+                      <option value="PK">Pakistan</option>
+                      <option value="PH">Philippines</option>
+                      <option value="SG">Singapore</option>
+                      <option value="KR">South Korea</option>
+                      <option value="TW">Taiwan</option>
+                      <option value="TH">Thailand</option>
+                      <option value="VN">Vietnam</option>
+                    </optgroup>
+        
+                  </select>
+                </div> <!-- countryID_div -->
+        
+
+                </div>
+
+              </form>
+            </div> <!-- END of controls_div -->
+
+          </td> <!-- END of controls_td -->
+
+          </td>
+
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
        <script type="text/javascript" src="js/scatter_plot.js"></script>
        <script type="text/javascript" src="js/stacked_area_plot.js"></script> 
        <div id="consumptionChart" style="width:600px;height:500px;"></div>
        <div id="stackChart" style="width:960px;height:500px;"></div>
+      <div class="graph"></div>
+      <script type="text/javascript" src="js/sv.js"></script>
     
      
 </body>
