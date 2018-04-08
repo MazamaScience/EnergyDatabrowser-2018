@@ -63,13 +63,29 @@
                         </td>
                       </tr>
 
+                     <!-- <tr id="toggle_row">
+                        <td class="toggle_td">
+                          <label class="toggle_label">Toggle tooltip:</label>
+                        </td>
+                        <td>
+                          <span id="toggle_on_span" class="toggle_radio_span selected" title="Tooltip On">
+                            <input type="radio" name="units" id="mtoe" value="mtoe" onclick=drawStack()>
+                            <span>mtoe</span>
+                          </span>
+                          <span id="toggle_off_span" class="toggle_radio_span" title="Tooltip Off">
+                            <input type="radio" name="units" id="joule" value="joule" checked="checked">
+                            <span>J</span>
+                          </span>
+                        </td>
+                      </tr>
+-->
                     </tbody>
                   </table>
                 </div>
 
                 <div id="countryID_div">
                   <label for="countryID">Country / Group:</label>
-                  <select id="countryID" name="countryID" onchange="updateScatter()">
+                  <select id="countryID" name="countryID" onchange="updateChart()">
         
                     <optgroup label="Groups of Nations">
                       <option selected="" value="BP_WORLD">World</option>
@@ -230,11 +246,15 @@
     </table>
   </div>
 
-       <script type="text/javascript" src="js/scatter_plot.js"></script>
+       
        <script type="text/javascript" src="js/stacked_area_plot.js"></script> 
-       <div id="consumptionChart" style="width:600px;height:500px;"></div>
-       <div id="stackChart" style="width:960px;height:500px;"></div>
+       
+       <div id='wrapper'>
+         <div id="consumptionChart" style="width:600px;height:500px;float:left"></div>
+         <div id="stackChart" style="width:600px;height:500px;float:right"></div>
+       </div>
      <!-- <div class="graph"></div>
+      <script type="text/javascript" src="js/scatter_plot.js"></script>
       <script type="text/javascript" src="js/sv.js"></script>-->
     
 

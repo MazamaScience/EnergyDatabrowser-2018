@@ -39,7 +39,8 @@ function plotPatternData(unit, country, country_name, resource_pattern){
           mode: "lines",
           name: resource,
           x: years,
-          y: values
+          y: values,
+          hoverinfo: 'none'
         }
 
         resource_data.push(trace);
@@ -56,7 +57,6 @@ function updatePatternData(unit, country, country_name, resource_pattern){
     /*Aim is to get timeseries data for a given country, unit for all resources for all years*/
 
     var resource_data = [];
-    var indices=[];
     for (var resource in merged_json[unit]){
         country_resource = merged_json[unit][resource][country];
         //Parsing value from all years
@@ -66,12 +66,10 @@ function updatePatternData(unit, country, country_name, resource_pattern){
         for(var year in country_resource){
             values.push(country_resource[year][resource_pattern]);
         }
-        indices.push(values)
+        resource_data.push(values)
 
         var trace = {
-          type: "scatter",
-          mode: "lines",
-          y: indices
+          y: resource_data
         }
     }
     
