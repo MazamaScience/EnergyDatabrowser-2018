@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+<title>Map Testing</title>
+<style>
+    .province{
+        fill:#ccc;
+    }
+</style>
+<body>
+<!-- <script type="text/javascript" src="d3/d3.v3.js"></script> -->
+<script src="http://d3js.org/d3.v4.min.js" charset="utf-8"></script>
+<script src="http://d3js.org/topojson.v1.min.js"></script>
+<script type="text/javascript">
+
+    var width = 960; 
+        height = 500;
+
+    var svg = d3.select("body").append("svg").attr("width", width).attr("height",height);
+
+    // Removed the slash before provinces.geojson
+    d3.json("provinces.geojson", function(error, provinces) {
+        if (error) return console.error(error);
+
+        svg.append("g")
+            .selectAll("path")
+            .data(provinces.features)
+            .enter()
+            .append("path")
+            .attr("class","province")
+            .attr("d", d3.geo.path().projection(d3.geo.mercator().center([0,5]).scale(200).rotate([-180,0]))); // Added center and rotate here
+});
+</script>
+</body>
+</html>
