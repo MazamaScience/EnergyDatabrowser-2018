@@ -80,7 +80,6 @@ function plotResourceCharts(unit, country, country_name, resource_pattern)
            color: markers[resource]['color'],
            symbol: markers[resource]['symbol']
           },
-          hoverinfo: 'none'
         }
      
       stacked_resource_data.push(stacked_trace);
