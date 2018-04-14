@@ -1,25 +1,25 @@
 d3.queue()
     .defer(d3.json, "../Data/BPStatReview/bp_stat_review_2017_combined.json")
-    .await(ready);
+    .await(resourceChart);
 
 var merged_json;
 
-function ready(error, loaded_json){
+function resourceChart(error, loaded_json){
     merged_json = loaded_json;
     var cid_sp = document.getElementById("countryID");
   var countryID_sp = cid_sp.options[cid_sp.selectedIndex].value;
   var country_sp = cid_sp.options[cid_sp.selectedIndex].text;
-  plotStackChart('mtoe', countryID_sp, country_sp, 'consumption');
+  plotResourceCharts('mtoe', countryID_sp, country_sp, 'consumption');
 }
 
 function updateChart(){
   var cid_sp = document.getElementById("countryID");
   var countryID_sp = cid_sp.options[cid_sp.selectedIndex].value;
   var country_sp = cid_sp.options[cid_sp.selectedIndex].text;
-  updateStackChart('mtoe', countryID_sp, country_sp, 'consumption');
+  updateResourceCharts('mtoe', countryID_sp, country_sp, 'consumption');
 }
 
-function plotStackChart(unit, country, country_name, resource_pattern)
+function plotResourceCharts(unit, country, country_name, resource_pattern)
 {
   var stacked_resource_data = [];
   var line_resource_data = [];
@@ -80,7 +80,6 @@ function plotStackChart(unit, country, country_name, resource_pattern)
            color: markers[resource]['color'],
            symbol: markers[resource]['symbol']
           },
-          hoverinfo: 'none'
         }
      
       stacked_resource_data.push(stacked_trace);
@@ -95,7 +94,7 @@ function plotStackChart(unit, country, country_name, resource_pattern)
 }
 
 
-function updateStackChart(unit, country, country_name, resource_pattern)
+function updateResourceCharts(unit, country, country_name, resource_pattern)
 {
   var stacked_resource_data = [];
   var line_resource_data = [];
@@ -153,3 +152,31 @@ function updateStackChart(unit, country, country_name, resource_pattern)
   Plotly.update('stackChart', stacked_trace, layout);
   Plotly.update('consumptionChart', line_trace, layout);
 }
+
+
+  function toggleTooltip(){
+
+    var toggle = document.querySelector('input[name = "toggle"]:checked').value;
+
+    if(toggle=="off"){
+    var stacked_trace = {
+        hoverinfo:'none'
+        }
+      
+      var line_trace = {
+          hoverinfo: 'none'
+        }
+      }
+    else{
+          var stacked_trace = {
+        hoverinfo:'x+text'
+        }
+      
+      var line_trace = {
+          hoverinfo: ''
+        }
+      }
+
+    Plotly.restyle('stackChart', stacked_trace);
+    Plotly.restyle('consumptionChart', line_trace);
+  }
