@@ -53,32 +53,32 @@
                         </td>
                         <td>
                           <span id="mtoe_span" class="radio_span selected" title="million tonnes of oil equivalent per year">
-                            <input type="radio" name="units" id="mtoe" value="mtoe" onclick=drawStack()>
+                            <input type="radio" name="units" id="mtoe" value="mtoe" checked="checked" onclick=drawStack()>
                             <span>mtoe</span>
                           </span>
                           <span id="joule_span" class="radio_span" title="Exajoules per year">
-                            <input type="radio" name="units" id="joule" value="joule" checked="checked">
+                            <input type="radio" name="units" id="joule" value="joule">
                             <span>J</span>
                           </span>
                         </td>
                       </tr>
 
-                     <!-- <tr id="toggle_row">
+                      <tr id="toggle_row">
                         <td class="toggle_td">
                           <label class="toggle_label">Toggle tooltip:</label>
                         </td>
                         <td>
                           <span id="toggle_on_span" class="toggle_radio_span selected" title="Tooltip On">
-                            <input type="radio" name="units" id="mtoe" value="mtoe" onclick=drawStack()>
-                            <span>mtoe</span>
+                            <input type="radio" name="toggle" id="on" value="on" checked="checked" onclick=toggleTooltip()>
+                            <span>On</span>
                           </span>
-                          <span id="toggle_off_span" class="toggle_radio_span" title="Tooltip Off">
-                            <input type="radio" name="units" id="joule" value="joule" checked="checked">
-                            <span>J</span>
+                          <span id="toggle_off_span" class="toggle_radio_span selected" title="Tooltip Off">
+                            <input type="radio" name="toggle" id="off" value="off" onclick=toggleTooltip()>
+                            <span>Off</span>
                           </span>
                         </td>
                       </tr>
--->
+
                     </tbody>
                   </table>
                 </div>
@@ -246,16 +246,22 @@
     </table>
   </div>
 
-       <script type="text/javascript" src="js/stacked_area_plot.js"></script> 
-       <script type="text/javascript" src="js/stacked_production_consumption.js"></script> 
-       
+       <script type="text/javascript" src="js/stacked_area_plot.js"></script>        
+        <script type="text/javascript" src="js/stacked_production_consumption.js"></script> 
+
+
+       <div id="stackChart_production_consumption" style="width:600px;height:500px;"></div> <br/>
+
        <div id='wrapper'>
-         
-         <div id="stackChart_production_consumption" style="width:600px;height:500px;"></div> <br/>
-         <div id="consumptionChart" style="width:600px;height:500px;"></div> <br/>
-         <div id="stackChart" style="width:600px;height:500px;"></div> <br/>
+       	<div id="consumptionChart" style="width:600px;height:500px;float:left;"></div> 
+         <div id="stackChart" style="width:600px;height:500px;float:right;"></div> 
        </div>
+
+
+
+		
      <!-- <div class="graph"></div>
+     	
       <script type="text/javascript" src="js/scatter_plot.js"></script>
       <script type="text/javascript" src="js/sv.js"></script>-->
     
