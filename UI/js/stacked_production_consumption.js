@@ -61,3 +61,30 @@ var resource_data = [];
     };
     Plotly.newPlot('stackChart_production_consumption', resource_data, layout);
 }
+
+function toggleTooltip_pc(){
+
+    var toggle = document.querySelector('input[name = "toggle"]:checked').value;
+
+    if(toggle=="off"){
+    var trace0 = {
+        hoverinfo:'none'
+        }
+      
+      var trace1 = {
+          hoverinfo: 'none'
+        }
+      }
+    else{
+          var trace0 = {
+        hoverinfo:'x+text'
+        }
+      
+      var trace1 = {
+          hoverinfo: ''
+        }
+      }
+
+    Plotly.restyle('stackChart', stacked_trace);
+    Plotly.restyle('consumptionChart', line_trace);
+  }

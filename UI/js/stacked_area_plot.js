@@ -157,4 +157,27 @@ function updateResourceCharts(unit, country, country_name, resource_pattern)
 
   function toggleTooltip(){
 
+    var toggle = document.querySelector('input[name = "toggle"]:checked').value;
+
+    if(toggle=="off"){
+    var stacked_trace = {
+        hoverinfo:'none'
+        }
+      
+      var line_trace = {
+          hoverinfo: 'none'
+        }
+      }
+    else{
+          var stacked_trace = {
+        hoverinfo:'x+text'
+        }
+      
+      var line_trace = {
+          hoverinfo: ''
+        }
+      }
+
+    Plotly.restyle('stackChart', stacked_trace);
+    Plotly.restyle('consumptionChart', line_trace);
   }
