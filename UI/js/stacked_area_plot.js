@@ -61,7 +61,7 @@ function plotResourceCharts(unit, country, country_name, resource_pattern)
         mode: "lines",
         name: resource,
         text: values.slice(),
-        hoverinfo:'x+text',
+        hoverinfo:'x+name+text',
         x: years,
         y: cummulative_values.slice(),
         fill: 'tonexty',
@@ -169,7 +169,7 @@ function updateResourceCharts(unit, country, country_name, resource_pattern)
       }
     else{
           var stacked_trace = {
-        hoverinfo:'x+text'
+        hoverinfo:'x+name+text',
         }
       
       var line_trace = {

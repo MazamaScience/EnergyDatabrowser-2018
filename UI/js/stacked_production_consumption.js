@@ -62,7 +62,7 @@ var resource_data = [];
     Plotly.newPlot('stackChart_production_consumption', resource_data, layout);
 }
 
-function toggleTooltip_pc(){
+/*function toggleTooltip_pc(){
 
     var toggle = document.querySelector('input[name = "toggle"]:checked').value;
 
@@ -88,3 +88,5 @@ function toggleTooltip_pc(){
     Plotly.restyle('stackChart', stacked_trace);
     Plotly.restyle('consumptionChart', line_trace);
   }
+
+  */
