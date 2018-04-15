@@ -6,15 +6,15 @@ var merged_json;
 var years = [];
 function ready(error, loaded_json)
 {
-	merged_json = loaded_json;
-	plotStackChart("mtoe","CN","coal");
+  merged_json = loaded_json;
+  plotStackChart("mtoe","EG","oil");
 
 }
 
 function plotStackChart(unit, country, resource)
 {
 var resource_data = [];
-
+var traceflag = "tozeroy";
 
     for (data in merged_json[unit][resource])
       {
@@ -34,57 +34,36 @@ var resource_data = [];
             consumption_values.push(country_data[year]["consumption"]);
         }
         
+        /*for (data in production_values)
+          {console.log(production_values[data])} */
 
-        var trace0 = {
-          type: "scatter",
-          x: years,
-          y: production_values,
-          fill: "tozeroy",
-          fillcolor: '#98fb98',
-          name: "Production"
-        }
         var trace1 = {
           type: "scatter",
           x: years,
-          y: consumption_values,
+          y: production_values,
           fill: "tonexty",
-          fillcolor:'#ff5f5f' ,
-          name: "Consumption"
-        }
+          
+          
+          name: "Production",
+          mode: "none"
+        };
+        var trace2 = {
+          type: "scatter",
+          x: years,
+          y: consumption_values,
+          fill: "tozeroy",
+          
+          
+          name: "Consumption",
+          mode: "none"
+        };
 
-        resource_data = [trace0,trace1];
+        resource_data = [trace1,trace2];
     }
 
 
     var layout = {
-        title: country + " " + resource + ' trends for ' + years[0] + ' - ' + years[years.length - 1 ]
+        title: country +"YPT"+ " " + resource + ' trends for ' + years[0] + ' - ' + years[years.length - 1 ]
     };
     Plotly.newPlot('stackChart_production_consumption', resource_data, layout);
 }
-
-function toggleTooltip_pc(){
-
-    var toggle = document.querySelector('input[name = "toggle"]:checked').value;
-
-    if(toggle=="off"){
-    var trace0 = {
-        hoverinfo:'none'
-        }
-      
-      var trace1 = {
-          hoverinfo: 'none'
-        }
-      }
-    else{
-          var trace0 = {
-        hoverinfo:'x+text'
-        }
-      
-      var trace1 = {
-          hoverinfo: ''
-        }
-      }
-
-    Plotly.restyle('stackChart', stacked_trace);
-    Plotly.restyle('consumptionChart', line_trace);
-  }
