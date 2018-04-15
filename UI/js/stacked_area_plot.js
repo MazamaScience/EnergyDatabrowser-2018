@@ -38,6 +38,11 @@ function multiplyConstant(A, constant){
   return(A.map(function(element) {return (element * constant).toFixed(4);}));
 }
 
+//Null Comparision
+function fillZeros(A){
+  return(A.map(function(element) {return (element || 0);}));
+}
+
 //Given two array of traces, normalize each chart
 function normalizeResources(stacked_resource_data, line_resource_data, cummulative_values, update){
   for(resource in stacked_resource_data){
@@ -81,7 +86,7 @@ function resourceChart(error, loaded_json) {
     var cid_sp = document.getElementById("countryID");
     var countryID_sp = cid_sp.options[cid_sp.selectedIndex].value;
     var country_sp = cid_sp.options[cid_sp.selectedIndex].text;
-    plotResourceCharts('mtoe', countryID_sp, country_sp, 'consumption', true);
+    plotResourceCharts('mtoe', countryID_sp, country_sp, 'production', false);
 }
 
 //Update the chart as the radio button changes
@@ -89,7 +94,7 @@ function updateChart() {
     var cid_sp = document.getElementById("countryID");
     var countryID_sp = cid_sp.options[cid_sp.selectedIndex].value;
     var country_sp = cid_sp.options[cid_sp.selectedIndex].text;
-    updateResourceCharts('mtoe', countryID_sp, country_sp, 'consumption', true);
+    updateResourceCharts('mtoe', countryID_sp, country_sp, 'production', false);
 }
 
 //Plotting all resources
@@ -121,7 +126,7 @@ function plotResourceCharts(unit, country, country_name, resource_pattern, perce
 
         for (var i = 0; i < years.length; i++) {
             year = years[i];
-            current_value = country_resource[year][resource_pattern];
+            current_value = country_resource[year][resource_pattern] || 0;
             cummulative_values[i] = cummulative_values[i] + current_value;
             values[i] = current_value;
         }
@@ -133,7 +138,7 @@ function plotResourceCharts(unit, country, country_name, resource_pattern, perce
             text: values.slice(),
             hoverinfo: 'x+name+text',
             x: years,
-            y: multiplyConstant(cummulative_values.slice(), 1),
+            y: cummulative_values.slice(),
             fill: 'tonexty',
             line: {
                 color: markers[resource]['color']
@@ -146,7 +151,7 @@ function plotResourceCharts(unit, country, country_name, resource_pattern, perce
             name: resource,
             hoverinfo: 'all',
             x: years,
-            y: multiplyConstant(values, 1),
+            y: values,
             marker: {
                 color: markers[resource]['color'],
                 symbol: markers[resource]['symbol']
@@ -155,6 +160,9 @@ function plotResourceCharts(unit, country, country_name, resource_pattern, perce
 
         stacked_resource_data.push(stacked_trace);
         line_resource_data.push(line_trace);
+
+        console.log(stacked_trace);
+        console.log(line_trace);
     }
 
     var layout = {
@@ -200,13 +208,13 @@ function updateResourceCharts(unit, country, country_name, resource_pattern, per
 
         for (var i = 0; i < years.length; i++) {
             year = years[i];
-            current_value = country_resource[year][resource_pattern];
+            current_value = country_resource[year][resource_pattern] || 0;
             cummulative_values[i] = cummulative_values[i] + current_value;
             values[i] = current_value;
         }
 
-        stacked_resource_data.push(multiplyConstant(cummulative_values.slice(), 1));
-        line_resource_data.push(multiplyConstant(values, 1));
+        stacked_resource_data.push(cummulative_values.slice());
+        line_resource_data.push(values);
     }
 
     var layout = {
