@@ -9,9 +9,9 @@ var res_data;
 function ready(error, loaded_json) {
 	data_json = loaded_json;
 
-	printFilter('mtoe','2016', 'oil');
+	//printFilter('mtoe','2016', 'oil');
 }
-
+/*
 function printFilter(unit, year, res) {
 	var resource_data = []
 		console
@@ -63,6 +63,7 @@ function printFilter(unit, year, res) {
 
 	
 }
+*/
 
 function updateChart(){
 
