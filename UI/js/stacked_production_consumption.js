@@ -36,16 +36,29 @@ var traceflag = "tozeroy";
         years = d3.keys(country_data);
        
         production_values = [];
+        
         for(var year in country_data){
             production_values.push(country_data[year]["production"]);
         }
-        
-        consumption_values = [];
+        for(i in production_values)
+        { if(isNaN(production_values[i]))
+          {production_values[i]=0}
+        }
 
+        consumption_values = [];
+        
         for(var year in country_data){
             consumption_values.push(country_data[year]["consumption"]);
         }
-        
+        for(i in consumption_values)
+        { if(isNaN(consumption_values[i]))
+          {consumption_values[i]=0}
+        }
+        imp_exp = []
+          for (i in production_values)
+          {
+            imp_exp.push(production_values[i]-consumption_values[i])
+          }
         /*for (data in production_values)
           {console.log(production_values[data])} */
 
@@ -53,7 +66,7 @@ var traceflag = "tozeroy";
           type: "scatter",
           x: years,
           y: production_values,
-          fill: "tonexty",
+          fill: "tozeroy",
           
           
           name: "Production",
@@ -63,33 +76,25 @@ var traceflag = "tozeroy";
           type: "scatter",
           x: years,
           y: consumption_values,
-          fill: "tozeroy",
+          
           
           
           name: "Consumption",
-          mode: "none"
+          
         };
 
         var trace3 = {
           type: "scatter",
           x: years,
-          y: [100,200,300,400],
+          y: imp_exp,
+          fill: "tozeroy",
           
-          
-          name: "Export"
+          name: "Import/Export"
           
         };
 
-        var trace4 = {
-          type: "scatter",
-          x: years,
-          y: [-100,-200,-300,-400],
-          
-      
-          name: "Import"
-
-        };
-        resource_data = [trace1,trace2,trace3,trace4];
+        
+        resource_data = [trace1,trace2,trace3];
     }
 
 
@@ -112,24 +117,37 @@ var traceflag = "tozeroy";
         years = d3.keys(country_data);
        
         production_values = [];
+        
         for(var year in country_data){
             production_values.push(country_data[year]["production"]);
         }
-        
+        for(i in production_values)
+        { if(isNaN(production_values[i]))
+          {production_values[i]=0}
+        }
         consumption_values = [];
-
+        
         for(var year in country_data){
             consumption_values.push(country_data[year]["consumption"]);
         }
-        
+        for(i in consumption_values)
+        { if(isNaN(consumption_values[i]))
+          {consumption_values[i]=0}
+        }
         /*for (data in production_values)
           {console.log(production_values[data])} */
+
+          imp_exp = []
+          for (i in production_values)
+          {
+            imp_exp.push(production_values[i]-consumption_values[i])
+          }
 
         var trace1 = {
           type: "scatter",
           x: years,
           y: production_values,
-          fill: "tonexty",
+          fill: "tozeroy",
           
           
           name: "Production",
@@ -139,33 +157,23 @@ var traceflag = "tozeroy";
           type: "scatter",
           x: years,
           y: consumption_values,
-          fill: "tozeroy",
           
           
           name: "Consumption",
-          mode: "none"
+          
         };
         
         var trace3 = {
           type: "scatter",
           x: years,
-          y: [100,200,300,400],
-          
-          
-          name: "Export"
+          y: imp_exp,
+          fill: "tozeroy",
+          name: "Import/Export"
           
         };
 
-        var trace4 = {
-          type: "scatter",
-          x: years,
-          y: [-100,-200,-300,-400],
-          
-      
-          name: "Import"
-
-        };
-        resource_data = [trace1,trace2,trace3,trace4];
+        
+        resource_data = [trace1,trace2,trace3];
     }
 
 
