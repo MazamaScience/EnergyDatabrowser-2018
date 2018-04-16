@@ -99,12 +99,12 @@ function updateChart(){
   	units = document.getElementById("mtoe").value;
   } else if (document.getElementById("bbl").checked) {
   	units = document.getElementById("bbl").value;
-  } else if (document.getElementById("ft").checked) {
-  	units = document.getElementById("ft").value;
+  } else if (document.getElementById("ft3").checked) {
+  	units = document.getElementById("ft3").value;
   } else if (document.getElementById("twh").checked) {
   	units = document.getElementById("twh").value;
-  } else if (document.getElementById("m").checked) {
-  	units = document.getElementById("m").value;
+  } else if (document.getElementById("m3").checked) {
+  	units = document.getElementById("m3").value;
   }
   else {
   	units = document.getElementById("joule").value
