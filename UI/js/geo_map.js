@@ -28,7 +28,7 @@ info.onAdd = function (map) {
 
 info.update = function (props) {
 	this._div.innerHTML = '<h4>Net Consumption </h4>' +  (props ?
-		'<b>' + props.name + '</b><br />' + props.value + ' mtoe'
+		'<b>' + props.name + '</b><br />' + props.value + ' ' + props.unit
 		: 'Hover over a country');
 };
 

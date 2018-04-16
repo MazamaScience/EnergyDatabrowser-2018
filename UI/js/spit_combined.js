@@ -5,9 +5,15 @@ d3.queue()
 
 var data_json;
 var res_data;
+var unit_json;
 
 function ready(error, loaded_json) {
 	data_json = loaded_json;
+	console.log(unitMap)
+	document.getElementById("oil").checked = true;
+	document.getElementById("mtoe").checked = true;
+	grayOut("oil");
+
 
 	//printFilter('mtoe','2016', 'oil');
 }
@@ -85,13 +91,26 @@ function updateChart(){
   	resource = document.getElementById("hyd").value;
   }
 
+  grayOut(resource);
+
   // Get units
   var units;
   if (document.getElementById("mtoe").checked) {
   	units = document.getElementById("mtoe").value;
-  } else {
+  } else if (document.getElementById("bbl").checked) {
+  	units = document.getElementById("bbl").value;
+  } else if (document.getElementById("ft3").checked) {
+  	units = document.getElementById("ft3").value;
+  } else if (document.getElementById("twh").checked) {
+  	units = document.getElementById("twh").value;
+  } else if (document.getElementById("m3").checked) {
+  	units = document.getElementById("m3").value;
+  }
+  else {
   	units = document.getElementById("joule").value
   }
+
+  console.log(units)
 
   var cid_sp = document.getElementById("countryID");
   try {
@@ -120,11 +139,11 @@ function updateChart(){
 } 
 
 function forGroup(data_countries, geo_countries, unit, year, res){
-	console.log("reached here")
+
 	var resource_data = []
 
 	for (var ix = 0; ix < geo_countries.length; ix++) {
-		console.log(data_countries[ix])
+		
 		if (data_json[unit][res][data_countries[ix]]) {
 		var country_resource = data_json[unit][res][data_countries[ix]];
 		values = [];
@@ -160,7 +179,7 @@ function forGroup(data_countries, geo_countries, unit, year, res){
 
 		res_data = resource_data;
 	}
-	console.log(res_data);
+
 
 	var i = 0;
 	for (var i = 0; i < statesData.features.length; i++) {
@@ -171,7 +190,7 @@ function forGroup(data_countries, geo_countries, unit, year, res){
 			if(feature.id == res_data[ix].country) {
 
 				feature.properties['value'] = res_data[ix].val[0];
-				console.log(res_data[ix].val[0])
+				feature.properties['unit'] = unit;
 			}
 			
 		}
@@ -221,7 +240,7 @@ function forIndividual(data_country, geo_country, unit, year, res){
 	resource_data.push(trace);
 
 	res_data = resource_data;
-	console.log(res_data);
+
 
 	var i = 0;
 	for (i = 0; i < statesData.features.length; i++) {
@@ -229,7 +248,8 @@ function forIndividual(data_country, geo_country, unit, year, res){
 		if(feature.id == res_data[0].country) {
 
 			feature.properties['value'] = res_data[0].val[0];
-			console.log(res_data[0].val[0])
+			feature.properties['unit'] = unit;
+		
 		}
 		else {
 			feature.properties['value'] = null;
@@ -248,8 +268,21 @@ function refreshMapLocations() {
 	}).addTo(map);
 }
 
-function forAll(){
+function grayOut(resource){
+	var units = unitMap[resource];
+	console.log(units)
+	var unit_list = ["bbl","ft3","m3","twh","mtoe","joule"]
+	for (var ui = 0; ui < unit_list.length; ui++){
+			document.getElementById(unit_list[ui] + '_span').style.color = 'gray';
+			document.getElementById(unit_list[ui]).disabled = true;
+		for (var gi = 0; gi < units.length; gi++) {
 
+			if (units[gi] == unit_list[ui]){
+			    document.getElementById(unit_list[ui] + '_span').style.color = 'black';
+				document.getElementById(units[gi]).disabled = false;
+			}
+		}
+	}
 }
 
 $("#first").on("load", function() {
