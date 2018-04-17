@@ -85,11 +85,11 @@
                         </td>
                         <td>
                           <span id="cons_span" class="util_radio_span selected" title="Consumption">
-                            <input type="radio" name="utility" id="consumption" value="consumption" checked="checked" onclick=toggleTooltip()>
+                            <input type="radio" name="utility" id="consumption" value="consumption" checked="checked" onclick=updateChart()>
                             <span>Consumption</span>
                           </span>
                           <span id="prod_span" class="util_radio_span selected" title="Production">
-                            <input type="radio" name="utility" id="production" value="production" onclick=toggleTooltip()>
+                            <input type="radio" name="utility" id="production" value="production" onclick=updateChart()>
                             <span>Production</span>
                           </span>
                         </td>
@@ -100,7 +100,7 @@
                         </td>
                         <td class="extra_td">
                           <span id="percent_span">
-                            <input type="checkbox" name="percent" id="percent" value="pct">
+                            <input type="checkbox" name="percent" id="percent" value="pct" onclick=updateChart()>
                             <label class="checkbox-label" for="percent">percent</label>
                           </span>
                         </td>
@@ -112,7 +112,7 @@
 
                 <div id="countryID_div">
                   <label for="countryID">Country / Group:</label>
-                  <select id="countryID" name="countryID" onchange="updateChart();updateDiffChart();">
+                  <select id="countryID" name="countryID" onchange="updateChart()">
         
                     <optgroup label="Groups of Nations">
                       <option selected="" value="BP_WORLD">World</option>
@@ -277,7 +277,7 @@
         <script type="text/javascript" src="js/stacked_production_consumption.js"></script> 
 
 
-     
+       <div id="stackChart_production_consumption" style="width:600px;height:500px;"></div> <br/>
 
        <div id='wrapper'>
         <div id="consumptionChart" style="width:600px;height:500px;float:left;"></div> 
@@ -288,7 +288,7 @@
 
 		
      <!-- <div class="graph"></div>
-     	  <div id="stackChart_production_consumption" style="width:600px;height:500px;"></div> <br/>
+     	
       <script type="text/javascript" src="js/scatter_plot.js"></script>
       <script type="text/javascript" src="js/sv.js"></script>
     
