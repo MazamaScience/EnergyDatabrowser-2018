@@ -2,7 +2,7 @@
 <html>
 <head>
 	
-	<title>Choropleth Tutorial - Leaflet</title>
+	<title>Net Consumption - Production</title>
 
 	<meta charset="utf-8" />
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -47,6 +47,22 @@
                           <label class="radio_label">Units:</label>
                         </td>
                         <td>
+                          <span id="bbl_span" class="radio_span" title="Exajoules per year">
+                            <input type="radio" name="units" id="bbl" value="bbl" checked="checked" onclick=updateChart()>
+                            <span>bbl</span>
+                          </span>
+                          <span id="ft3_span" class="radio_span" title="Exajoules per year">
+                            <input type="radio" name="units" id="ft3" value="ft3" checked="checked" onclick=updateChart()>
+                            <span>ft</span>
+                          </span>
+                          <span id="m3_span" class="radio_span" title="Exajoules per year">
+                            <input type="radio" name="units" id="m3" value="m3" checked="checked" onclick=updateChart()>
+                            <span>m</span>
+                          </span>
+                          <span id="twh_span" class="radio_span" title="Exajoules per year">
+                            <input type="radio" name="units" id="twh" value="twh" checked="checked" onclick=updateChart()>
+                            <span>twh</span>
+                          </span>
                           <span id="mtoe_span" class="radio_span selected" title="million tonnes of oil equivalent per year">
                             <input type="radio" name="units" id="mtoe" value="mtoe" checked="checked" onclick=updateChart()>
                             <span>mtoe</span>
@@ -254,6 +270,7 @@
 
 
 <script type="text/javascript" src="../Data/countries.js"></script>
+<script type="text/javascript" src="../Data/unitMap.js"></script>
 <script id= "first" type="text/javascript" src="js/spit_combined.js"></script>
 
 

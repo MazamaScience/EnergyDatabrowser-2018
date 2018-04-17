@@ -1,0 +1,1 @@
+unitMap = {"oil":["bbl","mtoe"], "gas":["ft3","m3","mtoe"],"coal":["mtoe","ton"],"nuclear":["mtoe","twh"],"hydro":["mtoe","twh"]}
