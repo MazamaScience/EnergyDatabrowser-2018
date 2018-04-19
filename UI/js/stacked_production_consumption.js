@@ -54,7 +54,10 @@ var traceflag = "tozeroy";
         { if(isNaN(consumption_values[i]))
           {consumption_values[i]=0}
         }
-        imp_exp = []
+        
+        imp_exp = [];
+        imp = [];
+        exp = [];
           for (i in production_values)
           {
             imp_exp.push(production_values[i]-consumption_values[i])
@@ -62,13 +65,30 @@ var traceflag = "tozeroy";
         /*for (data in production_values)
           {console.log(production_values[data])} */
 
+
+          for (i in years) {
+
+            if (imp_exp[i] > 0) {
+              exp[i] = imp_exp[i];
+              imp[i] = 0;
+            }
+            else if (imp_exp[i] < 0) {
+              imp[i] = imp_exp[i];
+              exp[i] = 0;
+            }  
+
+            else {
+              imp[i] = 0;
+              exp[i] = 0;
+            }
+          }
+          
+
         var trace1 = {
           type: "scatter",
           x: years,
           y: production_values,
           fill: "tozeroy",
-          
-          
           name: "Production",
           mode: "none"
         };
@@ -76,9 +96,6 @@ var traceflag = "tozeroy";
           type: "scatter",
           x: years,
           y: consumption_values,
-          
-          
-          
           name: "Consumption",
           
         };
@@ -86,15 +103,21 @@ var traceflag = "tozeroy";
         var trace3 = {
           type: "scatter",
           x: years,
-          y: imp_exp,
+          y: imp,
           fill: "tozeroy",
-          
-          name: "Import/Export"
+          name: "Import",
           
         };
 
-        
-        resource_data = [trace1,trace2,trace3];
+        var trace4 = {
+          type: "scatter",
+          x: years,
+          y: exp,
+          fill: "tozeroy",
+          name: "Export",
+          
+        }
+        resource_data = [trace1,trace2,trace3,trace4];
     }
 
 
@@ -138,9 +161,28 @@ var traceflag = "tozeroy";
           {console.log(production_values[data])} */
 
           imp_exp = []
+          imp = [];
+          exp = [];
           for (i in production_values)
           {
             imp_exp.push(production_values[i]-consumption_values[i])
+          }
+
+          for (i in years) {
+
+            if (imp_exp[i] > 0) {
+              exp[i] = imp_exp[i];
+              imp[i] = 0;
+            }
+            else if (imp_exp[i] < 0) {
+              imp[i] = imp_exp[i];
+              exp[i] = 0;
+            }  
+
+            else {
+              imp[i] = 0;
+              exp[i] = 0;
+            }
           }
 
         var trace1 = {
@@ -163,17 +205,24 @@ var traceflag = "tozeroy";
           
         };
         
-        var trace3 = {
+       var trace3 = {
           type: "scatter",
           x: years,
-          y: imp_exp,
+          y: imp,
           fill: "tozeroy",
-          name: "Import/Export"
+          name: "Import",
           
         };
 
-        
-        resource_data = [trace1,trace2,trace3];
+        var trace4 = {
+          type: "scatter",
+          x: years,
+          y: exp,
+          fill: "tozeroy",
+          name: "Export",
+          
+        }
+        resource_data = [trace1,trace2,trace3,trace4];
     }
 
 
