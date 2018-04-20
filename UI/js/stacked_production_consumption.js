@@ -103,18 +103,18 @@ var traceflag = "tozeroy";
         var trace3 = {
           type: "scatter",
           x: years,
-          y: imp,
+          y: exp,
           fill: "tozeroy",
-          name: "Import",
+          name: "Export",
           
         };
 
         var trace4 = {
           type: "scatter",
           x: years,
-          y: exp,
+          y: imp,
           fill: "tozeroy",
-          name: "Export",
+          name: "Import",
           
         }
         resource_data = [trace1,trace2,trace3,trace4];
@@ -208,18 +208,18 @@ var traceflag = "tozeroy";
        var trace3 = {
           type: "scatter",
           x: years,
-          y: imp,
+          y: exp,
           fill: "tozeroy",
-          name: "Import",
+          name: "Export",
           
         };
 
         var trace4 = {
           type: "scatter",
           x: years,
-          y: exp,
+          y: imp,
           fill: "tozeroy",
-          name: "Export",
+          name: "Import",
           
         }
         resource_data = [trace1,trace2,trace3,trace4];
