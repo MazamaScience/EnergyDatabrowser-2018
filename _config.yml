@@ -3,8 +3,8 @@ title: Antonio Trento, theme Jeky New Age, the start Bootstrap themplate build f
 email:
 description: A jekyll template for landing pages, portfolio and blogging
 
-baseurl: "EnergyDatabrowser-2018/" # the subpath of your site, e.g. /blog/ (If you use organization leave empty)
-url: "https://mazamascience.github.io/" # the base hostname & protocol for your site
+baseurl: "" # the subpath of your site, e.g. /blog/ (If you use organization leave empty)
+url: "https://mazamascience.github.io/EnergyDatabrowser-2018/" # the base hostname & protocol for your site
 
 #Google Ad Words Data from scripts code (using Google responsive options) and ad client
 data-ad-slot: 2973388149

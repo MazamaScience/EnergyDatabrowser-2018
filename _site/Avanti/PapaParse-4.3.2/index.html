@@ -1,0 +1,262 @@
+<!-- <!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <!-- <title>Parse CSV with JavaScript</title> -->
+
+    <!-- Bootstrap Core CSS -->
+    <link rel="stylesheet" href="/vendor/bootstrap/css/bootstrap.min.css" type="text/css">
+
+    <!-- Custom Fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Catamaran:100,200,300,400,500,600,700,800,900" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Muli" rel="stylesheet">
+
+    <!-- Plugin CSS -->
+    <link rel="stylesheet" href="/css/animate.min.css" type="text/css">
+    <link rel="stylesheet" href="/vendor/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/vendor/simple-line-icons/css/simple-line-icons.css">
+    <link rel="stylesheet" href="/vendor/device-mockups/device-mockups.min.css">
+
+    <!-- Custom CSS
+    <link rel="stylesheet" href="css/main.css" type="text/css"> -->
+    <link href="/css/main.css" rel="stylesheet">
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+    
+    <!-- Google ADS mobile block -->
+    <!-- 
+    <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+    <script>
+     (adsbygoogle = window.adsbygoogle || []).push({
+        google_ad_client: "ca-pub-9204963049240271",
+        enable_page_level_ads: true
+        });
+    </script>
+    
+
+     -->
+    <!-- Go to www.addthis.com/dashboard to customize your tools -->
+      <!--  -->
+
+</head>
+
+
+<body id="page-top">
+  <nav id="mainNav" class="navbar navbar-default navbar-fixed-top">
+    <div class="container">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                <span class="sr-only">Toggle navigation</span> Menu <i class="fa fa-bars"></i>
+            </button>
+            <a class="navbar-brand page-scroll" href="/">Jeky New Age</a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav navbar-right">
+                <li>
+                    <a href="/">Home</a>
+                </li>
+                <li>
+                    <a class="page-scroll" href="/funds">Help the project</a>
+                </li>
+                <li>
+                    <a class="page-scroll" href="/blog/">Blog</a>
+                </li>
+                <li>
+                    <a class="page-scroll" href="#contact">Contact</a>
+                </li>
+                <li>
+                    <a class="outer-menu">menu</a>
+                </li>
+            </ul>
+        </div>
+        <!-- /.navbar-collapse -->
+    </div>
+    <!-- /.container-fluid -->
+</nav>
+
+
+  <h1 id="parse-csv-with-javascript">Parse CSV with JavaScript</h1>
+
+<p>Papa Parse is the <a href="http://jsperf.com/javascript-csv-parsers/4">fastest</a> in-browser CSV (or delimited text) parser for JavaScript. It is reliable and correct according to <a href="https://tools.ietf.org/html/rfc4180">RFC 4180</a>, and it comes with these features:</p>
+
+<ul>
+  <li>Easy to use</li>
+  <li>Parse CSV files directly (local or over the network)</li>
+  <li>Fast mode (<a href="http://jsperf.com/javascript-csv-parsers/3">is really fast</a>)</li>
+  <li>Stream large files (even via HTTP)</li>
+  <li>Reverse parsing (converts JSON to CSV)</li>
+  <li>Auto-detect delimiter</li>
+  <li>Worker threads to keep your web page reactive</li>
+  <li>Header row support</li>
+  <li>Pause, resume, abort</li>
+  <li>Can convert numbers and booleans to their types</li>
+  <li>Optional jQuery integration to get files from <code class="highlighter-rouge">&lt;input type="file"&gt;</code> elements</li>
+</ul>
+
+<p>Papa Parse has <strong>no dependencies</strong> - not even jQuery.</p>
+
+<h2 id="homepage--demo">Homepage &amp; Demo</h2>
+
+<ul>
+  <li><a href="http://papaparse.com">Homepage</a></li>
+  <li><a href="http://papaparse.com/demo">Demo</a></li>
+</ul>
+
+<p>To learn how to use Papa Parse:</p>
+
+<ul>
+  <li><a href="http://papaparse.com/docs">Documentation</a></li>
+</ul>
+
+<h2 id="papa-parse-for-node">Papa Parse for Node</h2>
+
+<p>Papa Parse can parse a <a href="https://nodejs.org/api/stream.html#stream_readable_streams">Readable Stream</a> instead of a <a href="https://www.w3.org/TR/FileAPI/">File</a> when used in Node.js environments (in addition to plain strings). In this mode, <code class="highlighter-rouge">encoding</code> must, if specified, be a Node-supported character encoding. The <code class="highlighter-rouge">Papa.LocalChunkSize</code>, <code class="highlighter-rouge">Papa.RemoteChunkSize</code> , <code class="highlighter-rouge">download</code>, <code class="highlighter-rouge">withCredentials</code> and <code class="highlighter-rouge">worker</code> config options are unavailable.</p>
+
+<p>Additionally, <a href="https://github.com/Rich-Harris">Rich Harris</a> forked this project to make <strong><a href="https://github.com/Rich-Harris/BabyParse">Baby Parse</a></strong> which runs in Node.js environments.</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>npm install babyparse
+</code></pre></div></div>
+
+<p><a href="https://www.npmjs.org/package/babyparse">Baby Parse on npm registry</a></p>
+
+<p>Use it just like Papa Parse. However:</p>
+
+<ul>
+  <li>Files are not supported; strings only (you can use Node’s file facilities to load file contents yourself)</li>
+  <li>Some config options are unavailable:
+    <ul>
+      <li>worker</li>
+      <li>download (you can use Node’s network facilities to download files yourself)</li>
+      <li>encoding</li>
+      <li>chunk</li>
+    </ul>
+  </li>
+</ul>
+
+<p>Otherwise, Baby Parse has nearly all the same functionality as Papa Parse 4.0, including the <code class="highlighter-rouge">unparse()</code> utility.</p>
+
+<h2 id="get-started">Get Started</h2>
+
+<p>Use <a href="https://github.com/mholt/PapaParse/blob/master/papaparse.min.js">papaparse.min.js</a> for production.</p>
+
+<p>For usage instructions, see the <a href="http://papaparse.com">homepage</a> and, for more detail, the <a href="http://papaparse.com/docs">documentation</a>.</p>
+
+<h2 id="tests">Tests</h2>
+
+<p>Papa Parse is under test. Download this repository, run <code class="highlighter-rouge">npm install</code>, then <code class="highlighter-rouge">npm test</code> to run the tests in your browser.</p>
+
+<h2 id="contributing">Contributing</h2>
+
+<p>To discuss a new feature or ask a question, open an issue. To fix a bug, submit a pull request to be credited with the <a href="https://github.com/mholt/PapaParse/graphs/contributors">contributors</a>! Remember, a pull request, <em>with test</em>, is best. You may also discuss on Twitter with <a href="https://twitter.com/search?q=%23PapaParse&amp;src=typd&amp;f=realtime">#PapaParse</a> or directly to me, <a href="https://twitter.com/mholt6">@mholt6</a>.</p>
+
+
+  
+<section id="contact" class="contact bg-primary">
+    <div class="container">
+        <h2>We <i class="fa fa-heart"></i> new friends!</h2>
+        <ul class="list-inline list-social">
+            
+            <li class="social-twitter">
+                <a href="https://twitter.com/lantoniotrento" class="btn-social btn-outline"><i class="fa fa-fw fa-twitter"></i></a>
+            </li>
+        
+            <li class="social-facebook">
+                <a href="https://facebook.com/lantoniotrento" class="btn-social btn-outline"><i class="fa fa-fw fa-facebook"></i></a>
+            </li>
+        
+            <li class="social-google-plus">
+                <a href="https://plus.google.com/+AntoniotrentoIt" class="btn-social btn-outline"><i class="fa fa-fw fa-google-plus"></i></a>
+            </li>
+        
+        </ul>
+        <!-- <ul class="list-inline list-social">
+            <li class="social-twitter">
+                <a href="#"><i class="fa fa-twitter"></i></a>
+            </li>
+            <li class="social-facebook">
+                <a href="#"><i class="fa fa-facebook"></i></a>
+            </li>
+            <li class="social-google-plus">
+                <a href="#"><i class="fa fa-google-plus"></i></a>
+            </li>
+        </ul> -->
+    </div>
+</section>
+<footer>
+    <div class="container">
+        <p>&copy; 2016 theme by <a rel="nofollow" target="blank" href="https://startbootstrap.com/template-overviews/new-age/">Start Bootstrap</a> Built with <a target="_blank" rel="nofollow" href="https://jekyllrb.com/">Jekyll</a> by <a target="_blank" rel="nofollow" href="https://it.linkedin.com/in/antoniotrento">Antonio Trento</a> hosted on <a target="_blank" rel="nofollow" href="https://github.com/jekynewage/jekynewage.github.io">Github</a>. All Rights Reserved.</p>
+        <ul class="list-inline">
+            <li>
+                <a href="#">Privacy</a>
+            </li>
+            <li>
+                <a href="#">Terms</a>
+            </li>
+            <li>
+                <a href="#">FAQ</a>
+            </li>
+        </ul>
+    </div>
+</footer>
+
+  <!-- jQuery -->
+<script src="/js/jquery.js"></script>
+
+<!-- Bootstrap Core JavaScript
+<script src="js/bootstrap.min.js"></script> -->
+
+<!-- Plugin JavaScript -->
+<script src="/js/jquery.easing.min.js"></script>
+<script src="/js/jquery.fittext.js"></script>
+<script src="/js/wow.min.js"></script>
+
+<!-- Custom Theme JavaScript -->
+<script src="/js/creative.js"></script>
+
+<!-- jQuery
+<script src="/vendor/jquery/jquery.min.js"></script> -->
+
+<!-- Bootstrap Core JavaScript -->
+<script src="/vendor/bootstrap/js/bootstrap.min.js"></script>
+
+<!-- Plugin JavaScript -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.3/jquery.easing.min.js"></script>
+
+<!-- Theme JavaScript -->
+<script src="/js/new-age.min.js"></script>
+
+
+<script type="text/javascript">
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-86331249-1']);
+          _gaq.push(['_trackPageview']);
+  (function () {
+      var ga = document.createElement('script');
+      ga.type = 'text/javascript';
+      ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0];
+      s.parentNode.insertBefore(ga, s);
+  })();
+</script>
+
+
+</body>
+
+</html> -->
