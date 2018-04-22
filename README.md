@@ -1,78 +1,47 @@
-# Energy Databrowser 2018
+# New Age Jekyll theme
+=========================
 
-This repository contains work done to build an updated version of the original
-[Energy Export Databrowser](http://mazamascience.com/OilExport/).
+## If you are a company and you're going to use the blog: 
+1. contact bootstrap start up and ask.
+2. contact me because there is to remove some useless part.
 
-This project is sponsored by Mazama Science and co-sponsored by the Open Data Literacy project at the University of
-Washington's [iSchool](https://ischool.uw.edu/).
+Jekyll theme based on [New Age bootstrap theme ](https://startbootstrap.com/template-overviews/new-age/)
 
-## Team Members
+# Demo
+View this jekyll theme in action [here](https://jekynewage.github.io/)
 
- Jonathan Callahan -- advisor
+## Built by
+[Antonio Trento](https://it.linkedin.com/in/antoniotrento)
 
-## Databrowser Background
+This Jekyll template was created to develop, landing pages, squeeze pages, portfolio and blog or all the above.
 
-From the original databrowser [About Page](http://mazamascience.com/OilExport/about.html):
+### I integrated analytical tools and marketing such as:
+- Google Ad Words
+- Google analytics
+- Disqus comment system
+- Add This social sharing
 
-> Access to fossil fuels is one of the most important issues of our time. The world's largest economies are extremely
-> dependent upon imported supplies of oil and gas. Understanding who produces and consumes oil, coal and natural gas
-> is critical today and will remain so in the years ahead.
+>>External stylesheets and libraries included are Google Fonts, Font Awesome, Normalize.CSS, and WOW.js
 
-> This databrowser uses data from the 2017 BP Statistical Review and displays coal, oil & natural gas production
-> and consumption timelines for each country in the database and several political and geographic groupings of nations.
-> Users can dynamically plot import/export curves to get a sense of who the major fossil fuel producers and consumers
-> are and how this has changed in the last four decades.
+In order to set your log data to applications _config.yml just open the file and find the associated items.
 
-## Energy Background Reading
+I also built a system to add their own names on the same company files
 
-### Papers and presentations
-
- * [UNC Anthropologist paper on Peak Oil](http://www.unc.edu/~rdaniels/papers/EASA/Daniels-WhereIsAnthro-2010-06-10.pdf)
- * [Peak Oil presentation at CH2MHill](http://mazamascience.com/Presentations/Peak_Oil_by_the_Numbers.pdf)
- * [Peak Oil presentation at energy investment forum](http://mazamascience.com/Presentations/International_Energy_Trends.pdf)
- * [Peak Oil presenation at energy investment forum](http://mazamascience.com/Presentations/Oil_and_Gas_Panel.pdf)
- * [Nat. Gas presentation at ASPO conference](http://mazamascience.com/Presentations/Global_Gas_Trends.pdf)
-
-### Posts at The Oil Drum with databrowser plots
-
- * [Energy Export Databrowser](http://www.theoildrum.com/node/4127)
- * [Current and Future Saudi and Russian Oil Production](http://www.theoildrum.com/node/7088)
- * [South America Enters the LNG World](http://www.theoildrum.com/node/7168)
- * [What's Behind Egypt's Problems?](http://www.theoildrum.com/node/7425)
- * [Egypt’s Natural Gas Trends and Potential Impacts](http://www.theoildrum.com/node/7477)
- * [Japan's Liquid Fuels Crisis](http://www.theoildrum.com/node/7726)
- * [What is "our" oil doing in their economy? -- Saudi Oil Consumption Trends](http://www.theoildrum.com/node/7767)
- * [Energy Export Databrowser Updated to BP 2013 Data](http://www.theoildrum.com/node/10029)
+**To change the base colors yellow go in css folder there main.css where you can set the primary color and the secondary color, remember that the theme is gradient in the background areas**
 
 
-## Other Sources of Data
+If you are interested in implementing this theme please contact me without any problems I will do what is in my power to help you!
 
-### Energy Information Administration (EIA)
+If you have noticed anything unusual or errors in my development I ask you kindly let me know or send a pull request!
 
-https://www.eia.gov/petroleum/data.php
+Any opinion and critical comment is welcome! So give us inside!
 
-### Joint Oil Data Initiative (JODI)
+We can get in touch by:
 
-https://www.jodidata.org
+1. By <a href="https://twitter.com/lantoniotrento">twitter</a>
+2. mail <a href="mailto:lantoniotrento@gmail.com">lantoniotrento[at]gmail.com</a>
+3. Via <a href="https://it.linkedin.com/in/antoniotrento">LinkedIn</a>
 
-----
+=========
 
-# Notes from 3/6/2018
-
-Need more guidance on exactly what plots to create.
-
-Some suggestions to break up the tasks:
-
- * create an html page with good HTML/CSS/bootstsrap desing (with help from Jon)
- * keep working on map as needed (but it looks pretty good)
- * disregard trade data and focus on annual by country statistics (production/consumption by fuel source)
- * use Papa Parse 4 (or d3) to ingest csv files
- * all plots should support a wide range of years and countries (but not necessarily all)
- * create scatter plot
- * create area plot
- * create stacked bar (stacked area?) pkot
- * stay in sync and share functions as much as possible (refactor/cleanup code)
- * test deployment on github IO
- 
-
- 
+For more details, read the [documentation](http://jekyllrb.com/)
