@@ -194,11 +194,11 @@ function plotResourceCharts(unit, country, country_name, resource_pattern, perce
     //div.innerHTML += Math.round((stacked_trace.y[51]-stacked_trace.y[36])/stacked_trace.y[36]*10000)/100; 
     
     var layout = {
-        title: country_name + ' energy resource consumption for all years',
+        title: country_name + ' energy resource '+ resource_pattern + ' for all years',
         annotations: [{ 
             text: subtitle,            
             x: 1990,
-            y: 1.1,
+            y: 1.13,
             showarrow: false,
             yref: 'paper',
             font: {
@@ -209,7 +209,7 @@ function plotResourceCharts(unit, country, country_name, resource_pattern, perce
     Plotly.newPlot('stackChart', stacked_resource_data, layout);
     
     var layout = {
-        title: country_name + ' energy resource consumption for years',
+        title: country_name + ' energy resource '+ resource_pattern + ' for all years',
     };
     Plotly.newPlot('consumptionChart', line_resource_data, layout);
  
@@ -281,11 +281,11 @@ function updateResourceCharts(unit, country, country_name, resource_pattern, per
     }
 
     var layout = {
-        title: country_name + ' energy resource consumption for all years',
+        title: country_name + ' energy resource '+ resource_pattern + ' for all years',
         annotations: [{ 
             text: subtitle,            
             x: 1990,
-            y: 1.1,
+            y: 1.13,
             showarrow: false,
             yref: 'paper',
             font: {
@@ -297,7 +297,7 @@ function updateResourceCharts(unit, country, country_name, resource_pattern, per
     Plotly.update('stackChart', stacked_trace, layout);
 
     var layout = {
-        title: country_name + ' energy resource consumption for all years',
+        title: country_name + ' energy resource '+ resource_pattern + ' for all years',
     };
     Plotly.update('consumptionChart', line_trace, layout);
 }
