@@ -113,6 +113,8 @@ function plotResourceCharts(unit, country, country_name, resource_pattern, perce
     //All resources required to plot
     var resources = ['nuclear', 'coal', 'oil', 'gas', 'hydro'];
 
+    var subtitle = 0
+
     //The order of resources have to be fixed for stacked area
     for (var i in resources) {
         resource = resources[i];
@@ -166,10 +168,19 @@ function plotResourceCharts(unit, country, country_name, resource_pattern, perce
         line_resource_data.push(line_trace);
 
     }
+    
+    var pct_chg = Math.round((stacked_trace.y[51]-stacked_trace.y[36])/stacked_trace.y[36]*10000)/100
+    
+    if(pct_chg>0){
+        subtitle = " Increased by " +  pct_chg + "% since 2000"
+    }
+    else{
+        subtitle = " Decreased by " +  pct_chg + "% since 2000"
+    }
 
-    var layout = {
-        title: country_name + ' energy resource consumption for all years',
-    };
+    
+
+    
 
     if(percentage == true){
       normalized_values = normalizeResources(stacked_resource_data, 
@@ -179,8 +190,29 @@ function plotResourceCharts(unit, country, country_name, resource_pattern, perce
 
     }
 
+    //var div = document.getElementById('stackChart');
+    //div.innerHTML += Math.round((stacked_trace.y[51]-stacked_trace.y[36])/stacked_trace.y[36]*10000)/100; 
+    
+    var layout = {
+        title: country_name + ' energy resource consumption for all years',
+        annotations: [{ 
+            text: subtitle,            
+            x: 1990,
+            y: 1.1,
+            showarrow: false,
+            yref: 'paper',
+            font: {
+                size: 15,
+            }
+        }],
+    };
     Plotly.newPlot('stackChart', stacked_resource_data, layout);
-    Plotly.newPlot('consumptionChart', line_resource_data, layout);  
+    
+    var layout = {
+        title: country_name + ' energy resource consumption for years',
+    };
+    Plotly.newPlot('consumptionChart', line_resource_data, layout);
+ 
     
 }
 
@@ -192,6 +224,7 @@ function updateResourceCharts(unit, country, country_name, resource_pattern, per
     var first = true;
     var cummulative_values = [];
     var resources = ['nuclear', 'coal', 'oil', 'gas', 'hydro'];
+    var subtitle = 0
 
     //The order of resources have to be fixed for stacked area
     for (var i in resources) {
@@ -219,9 +252,6 @@ function updateResourceCharts(unit, country, country_name, resource_pattern, per
         line_resource_data.push(values);
     }
 
-    var layout = {
-        title: country_name + ' energy resource consumption for all years',
-    };
 
     if(percentage == true){
       normalized_values = normalizeResources(stacked_resource_data, 
@@ -239,7 +269,36 @@ function updateResourceCharts(unit, country, country_name, resource_pattern, per
         y: line_resource_data
     }
 
+    console.log(stacked_trace.y[4][51])
+
+    var pct_chg = Math.round((stacked_trace.y[4][51]-stacked_trace.y[4][36])/stacked_trace.y[4][36]*10000)/100
+    
+    if(pct_chg>0){
+        subtitle = " Increased by " +  pct_chg + "% since 2000"
+    }
+    else{
+        subtitle = " Decreased by " +  Math.abs(pct_chg) + "% since 2000"
+    }
+
+    var layout = {
+        title: country_name + ' energy resource consumption for all years',
+        annotations: [{ 
+            text: subtitle,            
+            x: 1990,
+            y: 1.1,
+            showarrow: false,
+            yref: 'paper',
+            font: {
+                size: 15,
+            }
+        }],
+    };
+
     Plotly.update('stackChart', stacked_trace, layout);
+
+    var layout = {
+        title: country_name + ' energy resource consumption for all years',
+    };
     Plotly.update('consumptionChart', line_trace, layout);
 }
 
