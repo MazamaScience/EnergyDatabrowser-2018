@@ -1,0 +1,901 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <script src="js/plotly.min.js"></script>
+    <script src="//d3js.org/d3.v4.min.js"></script>
+    <script src="https://d3js.org/d3-geo-projection.v2.min.js"></script>
+    <script src="https://d3js.org/d3-collection.v1.min.js"></script>
+    <script src="https://d3js.org/d3-dispatch.v1.min.js"></script>
+    <script src="https://d3js.org/d3-dsv.v1.min.js"></script>
+    <script src="https://d3js.org/d3-request.v1.min.js"></script>
+    <script src="https://d3js.org/d3-queue.v3.min.js"></script>
+    <script src="https://d3js.org/colorbrewer.v1.min.js"></script> 
+    <script src="https://d3js.org/colorbrewer.v1.min.js"></script> 
+    <script type="text/javascript" src="js/functions.js"></script>
+    <link rel="stylesheet" href="css/styles.css">
+   
+</head>
+
+<body>
+  <div id="databrowser">
+    <table>
+      <tbody>
+        <tr>
+
+          <td id="controls_td">
+
+            <div id="controls_div">
+              <form id="controls_form" name="controls_form">
+
+                <input id="language" type="hidden" name="language" value="en">
+                <input id="plottype" type="hidden" name="plottype" value="Exports">
+                <input id="datasource" type="hidden" name="datasource" value="BP_2017">
+
+                <div id="radio_table_div">
+                  <table class="layout">
+                    <tbody>
+
+                      <tr id="data_row">
+                        <td class="label_td">
+                          <label>Data:</label>
+                        </td>
+                        <td>
+                          <span>BP Statistical Review 2017</span>
+                        </td>
+                      </tr>
+
+                      <tr id="units_row">
+                        <td class="label_td">
+                          <label class="radio_label">Units:</label>
+                        </td>
+                        <td>
+                          <span id="mtoe_span" class="radio_span selected" title="million tonnes of oil equivalent per year">
+                            <input type="radio" name="units" id="mtoe" value="mtoe" checked="checked" onclick=drawStack()>
+                            <span>mtoe</span>
+                          </span>
+                          <span id="joule_span" class="radio_span" title="Exajoules per year">
+                            <input type="radio" name="units" id="joule" value="joule">
+                            <span>J</span>
+                          </span>
+                        </td>
+                      </tr>
+
+                      <tr id="toggle_row">
+                        <td class="toggle_td">
+                          <label class="toggle_label">Toggle Tooltip:</label>
+                        </td>
+                        <td>  
+                          <span id="toggle_on_span" class="toggle_radio_span selected" title="Tooltip On">
+                            <input type="radio" name="toggle" id="on" value="on" checked="checked" onclick=toggleTooltip()>
+                            <span>On</span>
+                          </span>
+                          <span id="toggle_off_span" class="toggle_radio_span selected" title="Tooltip Off">
+                            <input type="radio" name="toggle" id="off" value="off" onclick=toggleTooltip()>
+                            <span>Off</span>
+                          </span>
+                        </td>
+                      </tr>
+
+                      <tr id="util_row">
+                        <td class="util_td">
+                          <label class="toggle_label">Utility Type:</label>
+                        </td>
+                        <td>
+                          <span id="cons_span" class="util_radio_span selected" title="Consumption">
+                            <input type="radio" name="utility" id="consumption" value="consumption" checked="checked" onclick=updateChart()>
+                            <span>Consumption</span>
+                          </span>
+                          <span id="prod_span" class="util_radio_span selected" title="Production">
+                            <input type="radio" name="utility" id="production" value="production" onclick=updateChart()>
+                            <span>Production</span>
+                          </span>
+                        </td>
+                      </tr>
+                      <tr id="extra_row">
+                        <td class="util_td">
+                          <label class="toggle_label">Display Option:</label>
+                        </td>
+                        <td class="extra_td">
+                          <span id="percent_span">
+                            <input type="checkbox" name="percent" id="percent" value="pct" onclick=updateChart()>
+                            <label class="checkbox-label" for="percent">percent</label>
+                          </span>
+                        </td>
+                      </tr>
+
+                    </tbody>
+                  </table>
+                </div>
+
+                <div id="countryID_div">
+                  <label for="countryID">Country / Group:</label>
+                  <select id="countryID" name="countryID" onchange="updateChart()">
+        
+                    <optgroup label="Groups of Nations">
+                      <option selected="" value="BP_WORLD">World</option>
+<!--
+                      <option value="BP_WORLD1">World (-OECD -FSU)</option>
+-->
+                      <option value="BP_FSU">Former Soviet Union</option>
+                      <option value="BP_EU0">Europe (-FSU)</option>
+                      <option value="BP_EU1">Europe (+FSU)</option>
+                      <option value="BP_EU2">Eurozone</option>
+                      <option value="BP_OPEC10">OPEC-10</option>
+                      <option value="BP_OPEC">OPEC</option>
+                      <option value="BP_GCC">GCC</option>
+                      <option value="BP_GECF11">GECF-11</option>
+                      <option value="BP_GECF">GECF</option>
+                      <option value="BP_NON_OPEC">Non-OPEC</option>
+                      <option value="BP_OECD">OECD</option>
+                      <option value="BP_OECD1">OECD (-USA)</option>
+                      <option value="BP_G7">G7</option>
+                      <option value="BP_O5">O5</option>
+                      <option value="BP_G75">G7 + O5</option>
+                    </optgroup>
+        
+                    <optgroup label="Oil Producing Regions">
+                      <option value="BP_CRB">Caribbean</option>
+                      <option value="BP_NSE">North Sea</option>
+                      <option value="BP_PRG">Persian Gulf</option>
+                      <option value="BP_WAF">West Africa</option>
+                    </optgroup>
+        
+                    <optgroup label="North America">
+                      <option value="BP_TNA">Total North America</option>
+                      <option value="CA">Canada</option>
+                      <option value="MX">Mexico</option>
+                      <option value="US">USA</option>
+                    </optgroup>
+        
+                    <optgroup label="South America">
+                      <option value="BP_TSCA">Total S. &amp; Cent. America</option>
+                      <option value="AR">Argentina</option>
+                      <option value="BO">Bolivia</option>
+                      <option value="BR">Brazil</option>
+                      <option value="CL">Chile</option>
+                      <option value="CO">Colombia</option>
+                      <option value="EC">Ecuador</option>
+                      <option value="PE">Peru</option>
+                      <option value="TT">Trinidad and Tobago</option>
+                      <option value="VE">Venezuela</option>
+                    </optgroup>
+        
+                    <optgroup label="Europe &amp; Eurasia">
+                      <option value="BP_TEE">Total Europe &amp; Eurasia</option>
+                      <option value="AT">Austria</option>
+                      <option value="AZ">Azerbaijan</option>
+                      <option value="BY">Belarus</option>
+                      <option value="BP_BELU">Belgium and Luxembourg</option>
+                      <option value="BG">Bulgaria</option>
+                      <option value="CZ">Czech Republic</option>
+                      <option value="DK">Denmark</option>
+                      <option value="FI">Finland</option>
+                      <option value="FR">France</option>
+                      <option value="DE">Germany</option>
+                      <option value="GR">Greece</option>
+                      <option value="HU">Hungary</option>
+                      <option value="IS">Iceland</option>
+                      <option value="IE">Ireland</option>
+                      <option value="IT">Italy</option>
+                      <option value="KZ">Kazakhstan</option>
+                      <option value="LT">Lithuania</option>
+                      <option value="NL">Netherlands</option>
+                      <option value="NO">Norway</option>
+                      <option value="PL">Poland</option>
+                      <option value="PT">Portugal</option>
+                      <option value="RO">Romania</option>
+                      <option value="RU">Russian Federation</option>
+                      <option value="SK">Slovakia</option>
+                      <option value="ES">Spain</option>
+                      <option value="SE">Sweden</option>
+                      <option value="CH">Switzerland</option>
+                      <option value="TR">Turkey</option>
+                      <option value="TM">Turkmenistan</option>
+                      <option value="UA">Ukraine</option>
+                      <option value="GB">United Kingdom</option>
+                      <option value="UZ">Uzbekistan</option>
+                    </optgroup>
+        
+                    <optgroup label="Middle East">
+                      <option value="BP_TME">Total Middle East</option>
+                      <option value="BP_GCC">Gulf Cooperation Council</option>
+                      <option value="BH">Bahrain</option>
+                      <option value="IR">Iran</option>
+                      <option value="IQ">Iraq</option>
+                      <option value="IL">Israel</option>
+                      <option value="KW">Kuwait</option>
+                      <option value="OM">Oman</option>
+                      <option value="QA">Qatar</option>
+                      <option value="SA">Saudi Arabia</option>
+                      <option value="SY">Syria</option>
+                      <option value="YE">Yemen</option>
+                      <option value="AE">United Arab Emirates</option>
+                    </optgroup>
+        
+                    <optgroup label="Africa">
+                      <option value="BP_TAF">Total Africa</option>
+                      <option value="DZ">Algeria</option>
+                      <option value="AO">Angola</option>
+                      <option value="CM">Cameroon</option>
+                      <option value="TD">Chad</option>
+                      <option value="CG">Congo</option>
+                      <option value="EG">Egypt</option>
+                      <option value="GQ">Equatorial Guinea</option>
+                      <option value="GA">Gabon</option>
+                      <option value="LY">Libya</option>
+                      <option value="NG">Nigeria</option>
+                      <option value="ZA">South Africa</option>
+                      <option value="SD">Sudan</option>
+                      <option value="TN">Tunisia</option>
+                      <option value="ZW">Zimbabwe</option>
+                    </optgroup>
+        
+                    <optgroup label="Asia-Pacific">
+                      <option value="BP_TAP">Total Asia-Pacific</option>
+                      <option value="AU">Australia</option>
+                      <option value="BD">Bangladesh</option>
+                      <option value="BN">Brunei</option>
+                      <option value="CN">China</option>
+                      <option value="HK">Hong Kong</option>
+                      <option value="IN">India</option>
+                      <option value="ID">Indonesia</option>
+                      <option value="JP">Japan</option>
+                      <option value="MY">Malaysia</option>
+                      <option value="MM">Myanmar</option>
+                      <option value="NZ">New Zealand</option>
+                      <option value="PK">Pakistan</option>
+                      <option value="PH">Philippines</option>
+                      <option value="SG">Singapore</option>
+                      <option value="KR">South Korea</option>
+                      <option value="TW">Taiwan</option>
+                      <option value="TH">Thailand</option>
+                      <option value="VN">Vietnam</option>
+                    </optgroup>
+        
+                  </select>
+                </div> <!-- countryID_div -->
+        
+
+                </div>
+
+              </form>
+            </div> <!-- END of controls_div -->
+
+          </td> <!-- END of controls_td -->
+
+          </td>
+
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+       <script type="text/javascript" src="js/stacked_area_plot.js"></script>        
+        <script type="text/javascript" src="js/stacked_production_consumption.js"></script> 
+
+
+       <div id="stackChart_production_consumption" style="width:600px;height:500px;"></div> <br/>
+
+       <div id='wrapper'>
+        <div id="consumptionChart" style="width:600px;height:500px;float:left;"></div> 
+         <div id="stackChart" style="width:600px;height:500px;float:right;"></div> 
+       </div>
+
+
+
+		
+     <!-- <div class="graph"></div>
+     	
+      <script type="text/javascript" src="js/scatter_plot.js"></script>
+      <script type="text/javascript" src="js/sv.js"></script>
+    
+
+    <title>D3: Loading GeoJSON data and generating SVG paths</title>
+    <script type="text/javascript" src="https://d3js.org/d3.v4.min.js"></script>
+    <script src="//d3js.org/d3-geo-projection.v1.min.js"></script>
+    <script src="https://d3js.org/topojson.v1.min.js"></script>
+    <script src="//d3js.org/topojson.v2.min.js"></script>
+    <style type="text/css">
+    </style>
+</head>
+<h3>
+    <left>World Oil Exports and Imports - 2016</left>
+</h3>
+
+<body>
+
+
+
+    <script type="text/javascript">
+        //Width and height
+        var w = 1920;
+        var h = 1024;
+
+
+
+
+        //Define path generator, using the Albers USA projection
+        var path = d3.geoPath()
+            .projection(d3.geoCylindricalStereographic())
+        //.projection(d3.geoMiller())
+
+        //var path = d3.geoPath()
+
+
+        // Develop a tooltip
+        var tooltip = d3.select('body').append('div')
+            .style('position', 'absolute')
+            .style('background', 'white')
+            .style('opacity', '0')
+            .style('padding', '5,15px')
+            .style('border', 'none');
+
+        var svg = d3.select("svg"),
+            margin = {top: 20, right: 20, bottom: 30, left: 50},
+            width = +svg.attr("width") - margin.left - margin.right,
+            height = +svg.attr("height") - margin.top - margin.bottom;
+
+            svg = svg.append("g")
+                        .attr("transform", "translate( 15 ," + margin.top + ")");
+
+        //Loading JSON files
+        d3.queue()
+            .defer(d3.json, "../Data/countries.json")
+            .defer(d3.json, "../Data/oil_stats.json")
+            .defer(d3.json,"../Data/inter_area.json")
+            .await(ready);
+
+        var countries, oil_stats, trade_movements;
+
+        function ready(error, d1, d2,d3){
+            if(error) throw(error);
+            countries = d1;
+            oil_stats = d2;
+            trade_movements = d3;
+
+            buildMap(countries, oil_stats, trade_movements);
+        }
+
+        function buildMap(countries, oil_stats, trade_movements){
+            var features = countries.features;
+
+            constructEmptyMap(features);
+            selected_type = d3.select('#drop_down').node().value;
+            selected_year = 2016;
+
+            //Make it dynamic according to input values
+            color = d3.scaleThreshold()
+                .domain([1000, 2000, 3000, 4000, 5000, 14000])
+                .range(['#f0f9e8','#bae4bc','#7bccc4','#43a2ca','#0868ac', "#19198c"]);
+
+            if(selected_type != 'oil_trade'){
+                data = oil_stats[selected_type][selected_year];
+                //Showing production values
+                valueMap(features, oil_stats, selected_type, selected_year);
+            }
+            else{
+                data = trade_movements;
+                //Showing trade area movements
+                tradeMap(features, data, selected_year);
+            }
+
+            d3.select('#Year').on("input", function(){displayYear();
+                update();});
+            d3.select('#drop_down').on("change", function(){//displayText();
+                update();});
+
+            function displayText(){
+                var optionSelection = document.getElementById("drop_down");
+                if(optionSelection.value == "oil_trade")
+                {
+                    document.getElementById("chart2").innerHTML = "Trends in Oil Trade (Imports and Exports of Crude in Million Tonnes per Year)"
+                }
+                else
+                {
+                    document.getElementById("chart2").innerHTML = "Trends in Oil Produciton (Thousand Barrels Daily Averages by Year)"   
+                }
+            }
+                        
+            function displayYear() {
+                var yearSlider = document.getElementById("Year");
+                year = yearSlider.value
+                document.getElementById("yeartext").innerHTML = year;
+            }
+
+            function update(){
+                d3.selectAll("path.line").remove();
+                d3.selectAll('path[id=import]').remove();
+                d3.selectAll('path[id=export]').remove();
+                d3.selectAll('g[id=yaxis]').remove();
+                d3.selectAll('g[id=yaxis2]').remove();
+                d3.selectAll("g[id=xaxis]").remove();
+                d3.selectAll("g[id=xaxis2]").remove();
+                d3.selectAll("#tradeChartText").remove();
+                d3.selectAll("#valChartText").remove();
+                d3.selectAll("#tradeImport").remove();
+                d3.selectAll("#tradeExport").remove();
+                d3.selectAll("#tradeRect1").remove();
+                d3.selectAll("#tradeRect2").remove();
+                d3.selectAll("#t1").remove()
+                d3.selectAll("#t2").remove()
+                d3.selectAll("#t3").remove()
+                d3.selectAll("#t4").remove()
+                d3.selectAll("#t5").remove()
+                d3.selectAll("#t6").remove()
+                d3.selectAll("#r1").remove()
+                d3.selectAll("#r2").remove()
+                d3.selectAll("#r3").remove()
+                d3.selectAll("#r4").remove()
+                d3.selectAll("#r5").remove()
+                d3.selectAll("#r6").remove()
+
+
+                var slider = document.getElementById("Year");
+                selected_year = slider.value;
+
+                var drop_down = document.getElementById("drop_down");
+                selected_type = drop_down.value;
+
+                if(selected_type != 'oil_trade'){
+                    //Showing production values
+                    valueMap(features, oil_stats, selected_type, selected_year);
+                }
+                else{
+                    data = trade_movements;
+                    //Showing trade area movements
+                    svg.selectAll('path')
+                            .style('fill', 'white');
+                    tradeMap(features, data, selected_year);
+                }
+            }
+
+            function constructEmptyMap(features){
+                //Bind data and create one path per GeoJSON feature
+                //var drop_down = document.getElementById("drop_down");
+                //selected_type = drop_down.value;
+
+                svg.selectAll("path")
+                    .data(features)
+                    .enter()
+                    .append("path")
+                    .attr('id', function(d) {return d.properties.interarea_category})
+                    .attr("d", path)
+                    .style("fill", 'white')
+                    .style("stroke", 'black')
+                     .on('mouseover',function(d){
+                        d3.select(this).append('svg:title').text(function(d){ 
+                            
+                            return d.properties.production_category;
+                        })
+                    })}
+
+            function valueMap(features, oil_stats, selected_type, selected_year){
+                data = oil_stats[selected_type][selected_year];
+
+                svg.selectAll("path")
+                    .data(features)
+                    .on("click", function(d, i){return buildValueChart(d.properties.production_category, 
+                                                                    oil_stats[selected_type])})
+                    
+                    .transition()
+                    .duration(250)
+                    .style("fill", function(d){return fillMapData(d.properties.production_category, data)})
+
+                    //console.log(d3.rgb("#f0f9e8"))
+
+                d3.select("#map")
+                    .append('svg:text')
+                    .attr("id","t1")
+                    .attr("transform","translate(60,500)")
+                    .text("<=1000")
+
+                d3.select("#map")
+                    .append('svg:rect')
+                    .attr("id","r1")
+                    .style("fill","#f0f9e8") 
+                    .attr("border","black")
+                    .attr("transform","translate(80,470)")
+                    .attr("width",15)
+                    .attr("height",15)
+
+                d3.select("#map")
+                    .append('svg:text')
+                    .attr("id","t2")
+                    .attr("transform","translate(120,500)")
+                    .text("<=2000")    
+                    
+                d3.select("#map")
+                    .append('svg:rect')
+                    .attr("id","r2")
+                    .style("fill","#bae4bc") 
+                    .attr("transform","translate(140,470)")
+                    .attr("width",15)
+                    .attr("height",15)
+                
+                d3.select("#map")
+                    .append('svg:text')
+                    .attr("id","t3")
+                    .attr("transform","translate(180,500)")
+                    .text("<=3000") 
+
+                d3.select("#map")
+                    .append('svg:rect')
+                    .attr("id","r3")
+                    .style("fill","#7bccc4") 
+                    .attr("transform","translate(200,470)")
+                    .attr("width",15)
+                    .attr("height",15)
+
+                d3.select("#map")
+                    .append('svg:text')
+                    .attr("id","t4")
+                    .attr("transform","translate(240,500)")
+                    .text("<=4000")    
+
+                d3.select("#map")
+                    .append('svg:rect')
+                    .attr("id","r4")
+                    .style("fill","#43a2ca") 
+                    .attr("transform","translate(260,470)")
+                    .attr("width",15)
+                    .attr("height",15)
+
+                d3.select("#map")
+                    .append('svg:text')
+                    .attr("id","t5")
+                    .attr("transform","translate(300,500)")
+                    .text("<=5000") 
+                        
+                d3.select("#map")
+                    .append('svg:rect')
+                    .attr("id","r5")
+                    .style("fill","#0868ac") 
+                    .attr("transform","translate(320,470)")
+                    .attr("width",15)
+                    .attr("height",15)
+
+                d3.select("#map")
+                    .append('svg:text')
+                    .attr("id","t6")
+                    .attr("transform","translate(360,500)")
+                    .text("<=14000")    
+
+                d3.select("#map")
+                    .append('svg:rect')
+                    .attr("id","r6")
+                    .style("fill","#19198c") 
+                    .attr("transform","translate(380,470)")
+                    .attr("width",15)
+                    .attr("height",15)
+                                    
+            }
+
+            function fillMapData(production_category, oil_values){
+                if (production_category == null){
+                    return "white";
+                }
+                return color(oil_values[production_category]);
+            }
+
+            function tradeMap(features, data, selected_year){
+                current_year = data[selected_year]
+                svg.selectAll("path")
+                    .data(features)
+                    .on("click", function(d, i){
+                        buildTradeChart(d.properties.interarea_category, data)
+                        return showTrade(d.properties.interarea_category, current_year)})
+                   
+            }
+
+            function showTrade(interarea_category, data){
+                if (interarea_category != null){
+                    data = data[interarea_category];
+                    keys = d3.keys(data);
+
+                    for (var i = 0; i < keys.length; i++){
+                        imp = data[keys[i]]['imp'];
+                        exp = data[keys[i]]['exp'];
+                        net = imp - exp;
+                        
+                        svg.selectAll('path[id="'+keys[i]+'"]')
+                            .transition()
+                            .duration(500)
+                            .style('fill', tradeColor(net))
+                    }
+                }
+            }
+
+            function buildValueChart(id, oil_stats){
+                d3.selectAll("path.line").remove();
+                d3.selectAll("g[id=yaxis]").remove();
+                d3.selectAll("g[id=xaxis]").remove();
+                d3.selectAll("#valChartText").remove();
+
+                var svg = d3.select("svg"),
+                margin = {top: 20, right: 20, bottom: 30, left: 50},
+                width = +svg.attr("width") - margin.left - margin.right,
+                height = +svg.attr("height") - margin.top - margin.bottom;
+
+                svg = svg.append("g")
+                        .attr("transform", "translate( 15 ," + margin.top + ")");
+
+                
+                years = d3.keys(oil_stats);
+                var stats = [];
+                for (var i = 0; i < years.length; i++){
+                    stats.push({"Date": years[i], "stat": oil_stats[years[i]][id]});
+                }
+                
+                var parseTime = d3.timeParse("%Y");
+
+                var x = d3.scaleTime().range([0, width]);
+
+                var y = d3.scaleLinear().range([height, 0]);
+
+                // define the line
+                var valueline = d3.line()
+                    .x(function(d) { return x(d.Date); })
+                    .y(function(d) { return y(d.stat); });
+
+                d3.select("#line")
+                            .attr("width", width + margin.left + margin.right)
+                            .attr("height", height + margin.top + margin.bottom)
+                            .append("g")
+                            .attr("transform",
+                                  "translate(" + margin.left + "," + margin.top + ")");
+
+                stats.forEach(function(d) {
+                      d.Date = parseTime(d.Date);
+                      d.stat = +d.stat;
+                  });
+
+                // sort years ascending
+                stats.sort(function(a, b){
+                    return a["Date"]-b["Date"];
+                    })
+
+                x.domain(d3.extent(stats, function(d) { return d.Date; }));
+                y.domain([0, d3.max(stats, function(d) {return d.stat; })]);
+
+                
+                // Add the valueline path.
+                d3.select("#line")
+                    .append("path")
+                    .data([stats])
+                    .attr("class", "line")
+                    .attr("d", valueline)
+                    .attr("transform", "translate(40,0)")
+                    //.on('mouseover',function(d){console.log(y(d))}
+                        
+                    ;
+                    
+                // Add the X Axis
+                d3.select("#line")
+                    .append("g")
+                    .attr("id","xaxis")
+                    .attr("transform", "translate(40," + height + ")")
+                    .call(d3.axisBottom(x).ticks(3));
+
+                // Add the Y Axis
+                d3.select("#line")
+                    .append("g")
+                    .attr("id","yaxis")
+                    .attr("transform", "translate(40,0)")
+                    .call(d3.axisLeft(y));
+
+               d3.select("#line")
+                  .append("svg:text")
+                  .attr("id","valChartText")
+                  .attr("transform","translate(200,490)")
+                  .text("Trends in Oil Produciton (Thousand Barrels Daily Averages by Year)")    
+            }
+
+            function buildTradeChart(id, oil_trade){
+                d3.selectAll("path.line").remove();
+                
+
+                years = d3.keys(oil_trade);
+                var stats = [];
+                for (var i = 0; i < years.length; i++){
+                    stats.push({"Date": years[i], "Import":oil_trade[years[i]][id]["total"]["imp"], 
+                                "Export":oil_trade[years[i]][id]["total"]["exp"]});
+                }
+                
+                var parseTime = d3.timeParse("%Y");
+
+                var x = d3.scaleTime().range([0, width]);
+                var y = d3.scaleLinear().range([height, 0]);
+
+                // define the line
+                var valueline = d3.line()
+                    .x(function(d) { return x(d.Date); })
+                    .y(function(d) { return y(d.Import); });
+
+                var valueline2 = d3.line()
+                    .x(function(d) { return x(d.Date); })
+                    .y(function(d) { return y(d.Export); });
+
+                d3.select("#line")
+                            .attr("width", width + margin.left + margin.right)
+                            .attr("height", height + margin.top + margin.bottom)
+                            .append("g")
+                            .attr("transform",
+                                  "translate(" + margin.left + "," + margin.top + ")");
+
+                stats.forEach(function(d) {
+                      d.Date = parseTime(d.Date);
+                      d.Export = +d.Export;
+                      d.Import = +d.Import;
+                  });
+
+                // sort years ascending
+                stats.sort(function(a, b){
+                    return a["Date"]-b["Date"];
+                    })
+
+                x.domain(d3.extent(stats, function(d) { return d.Date; }));
+                y.domain([0, d3.max(stats, function(d) {return Math.max(d.Import, d.Export); })]);
+
+                // Add the valueline path.
+                d3.select("#line")
+                    .append("path")
+                    .data([stats])
+                    .attr("d", valueline)
+                    .attr("transform", "translate(40,0)")
+                    .attr("stroke", "red")
+                    .attr("id", 'import')
+                    .attr("fill", "none")
+                    ;
+                d3.select("#line")
+                    .append("path")
+                    .data([stats])
+                    .attr("d", valueline2)
+                    .attr("transform", "translate(40,0)")
+                    .attr("stroke", "green")
+                    .attr("id", "export")
+                    .attr("fill", "none");
+                // Add the X Axis
+                d3.select("#line")
+                    .append("g")
+                    .attr("id","xaxis2")
+                    .attr("transform", "translate(40," + height + ")")
+                    .call(d3.axisBottom(x).ticks(3));
+
+                // Add the Y Axis
+                d3.select("#line")
+                    .append("g")
+                    .attr("id","yaxis2")
+                    .attr("transform", "translate(40,0)")
+                    .call(d3.axisLeft(y))
+                
+               d3.select("#line")
+                  .append("svg:text")
+                  .attr("id","tradeImport")
+                  .attr("transform","translate(500,20)")
+                  .text("Import");
+                 
+                d3.select('#line')
+                    .append("svg:rect")
+                    .attr("id","tradeRect1")
+                    .attr("transform","translate(480,10)")
+                    .attr("width",10)
+                    .attr("height",10)
+                    .attr("fill","Red");
+
+                d3.select("#line")
+                  .append("svg:text")
+                  .attr("id","tradeExport")
+                  .attr("transform","translate(600,20)")
+                  .text("Export"); 
+                
+                d3.select('#line')
+                    .append("svg:rect")
+                    .attr("id","tradeRect2")
+                    .attr("transform","translate(580,10)")
+                    .attr("width",10)
+                    .attr("height",10)
+                    .attr("fill","Green");    
+
+                d3.select("#line")
+                  .append("svg:text")
+                  .attr("id","tradeChartText")
+                  .attr("transform","translate(200,490)")
+                  .text("Trends in Oil Trade (Imports and Exports of Crude in Million Tonnes per Year)");
+                  
+                ;    
+            }
+
+        }
+
+
+
+
+            .style('border', 'none')
+
+
+
+
+        //Create SVG element
+        var svg = d3.select("body")
+            .append("svg")
+            .attr("width", w)
+            .attr("height", h);
+
+
+        //Load in GeoJSON data
+        d3.json("countrycontinent.json", function(error, countries) {
+            var features = countries.features;
+            //Bind data and create one path per GeoJSON feature
+            svg.selectAll("path")
+                .data(features)
+                .enter()
+                .append("path")
+                .attr('id', function(d) {
+                    return d.properties.name
+                })
+                .attr("d", path)
+                .attr('transform', 'scale(2)')
+                //.attr("transform", "translate(-800,200)")
+                .style("fill", "#222222")
+                .style("stroke", 'Black')
+
+
+
+
+                .on('mouseover', function(d) {
+                    var name = d.properties.name;
+
+                    //if(typeof name !== null){
+                    // return document.getElementById('name').innerHTML=name;
+                    //}
+                    tooltip.transition()
+                        .style('opacity', 1)
+
+                    tooltip.html(name)
+                        .style('left', (d3.event.pageX) + "px")
+                        .style('top', (d3.event.pageY) + "px")
+
+
+                    //d3.select(this).append('svg:title').text(function(d){return d.properties.name});
+                })
+
+
+
+                .on('mouseout', function() {
+                    tooltip.transition()
+                        .style('opacity', 0);
+                    d3.select(this)
+                        .style('opacity', 1)
+
+                })
+
+                .on('click', function(d, i) {
+                        //d3.select(this).style("fill", "steelblue")
+                        length = countries.features.length
+
+                        console.log(d.properties.name)
+
+
+
+                        //console.log(d3.select(this))
+
+
+                        id = 'Thailand';
+
+                        //console.log(countries.features[1].geometry)
+                        if (d.properties.name == 'Pakistan') {
+
+                            svg.selectAll('path[id=' + id + ']')
+                                .style('fill', 'darkorange')
+
+                        }
+                    }
+
+        });
+    </script>-->
+</body>
+</html>
+
