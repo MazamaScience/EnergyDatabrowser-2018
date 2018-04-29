@@ -47,18 +47,87 @@
                         </td>
                       </tr>
 
+                      <tr id="resource_row">
+                        <td class="label_td">
+                          <label class="radio_label">Resource:</label>
+                        </td>
+                        <td>
+                        <span id="oil_span" class="radio_span selected" title="oil">
+                            <input type="radio" name="resource" id="oil" value="oil" checked="checked" onclick="updateDiffChart()">
+                            <span>Oil</span>
+                          </span>
+                          <span id="coal_span" class="radio_span selected" title="coal">
+                            <input type="radio" name="resource" id="coal" value="coal" 
+                            onclick="updateDiffChart()">
+                            <span>Coal</span>
+                          </span>
+                          <span id="gas_span" class="radio_span selected" title="gas">
+                            <input type="radio" name="resource" id="gas" value="gas" 
+                            onclick="updateDiffChart()">
+                            <span>Gas</span>
+                          </span>
+                          <span id="hydro_span" class="radio_span selected" title="hydro">
+                            <input type="radio" name="resource" id="hydro" value="hydro" 
+                             onclick="updateDiffChart()">
+                            <span>Hydro</span>
+                          </span>
+                          <span id="nuclear_span" class="radio_span selected" title="nuclear">
+                            <input type="radio" name="resource" id="nuclear" value="nuclear" 
+                             onclick="updateDiffChart()">
+                            <span>Nuclear</span>
+                          </span>
+                          <span id="renewables_span" class="radio_span selected" title="renewables">
+                            <input type="radio" name="resource" id="renewables" value="renewables" 
+                            onclick="updateDiffChart()">
+                            <span>Renewables</span>
+                          </span>
+                          <span id="solar_span" class="radio_span selected" title="solar">
+                            <input type="radio" name="resource" id="solar" value="solar" 
+                            onclick="updateDiffChart()">
+                            <span>Solar</span>
+                          </span>
+                          <span id="wind_span" class="radio_span selected" title="wind">
+                            <input type="radio" name="resource" id="wind" value="wind" 
+                            onclick="updateDiffChart()">
+                            <span>Wind</span>
+                          </span>
+                          </td>
+                      </tr>
+
+
                       <tr id="units_row">
                         <td class="label_td">
                           <label class="radio_label">Units:</label>
                         </td>
                         <td>
-                          <span id="mtoe_span" class="radio_span selected" title="million tonnes of oil equivalent per year">
-                            <input type="radio" name="units" id="mtoe" value="mtoe" checked="checked" onclick=drawStack()>
+                          <span id="bbl_span" class="radio_span selected" title="bbl">
+                            <input type="radio" name="units" id="bbl" value="bbl" checked="checked" onclick="updateDiffChart()">
+                            <span>bbl</span>
+                          </span>
+                          <span id="ft3_span" class="radio_span" title="ft3">
+                            <input type="radio" name="units" id="ft3" value="ft3" 
+                            onclick="updateDiffChart()">
+                            <span>ft3</span>
+                          </span>
+                          <span id="m3_span" class="radio_span" title="m3">
+                            <input type="radio" name="units" id="m3" value="m3"
+                            onclick="updateDiffChart()">
+                            <span>m3</span>
+                          </span>
+                          <span id="mtoe_span" class="radio_span" title="mtoe">
+                            <input type="radio" name="units" id="mtoe" value="mtoe"
+                            onclick="updateDiffChart()">
                             <span>mtoe</span>
                           </span>
-                          <span id="joule_span" class="radio_span" title="Exajoules per year">
-                            <input type="radio" name="units" id="joule" value="joule">
-                            <span>J</span>
+                          <span id="ton_span" class="radio_span" title="ton">
+                            <input type="radio" name="units" id="ton" value="ton"
+                            onclick="updateDiffChart()">
+                            <span>ton</span>
+                          </span>
+                          <span id="twh_span" class="radio_span" title="twh">
+                            <input type="radio" name="units" id="twh" value="twh"
+                            onclick="updateDiffChart()">
+                            <span>twh</span>
                           </span>
                         </td>
                       </tr>
