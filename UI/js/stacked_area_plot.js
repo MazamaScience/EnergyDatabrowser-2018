@@ -1,11 +1,7 @@
-d3.queue()
-    .defer(d3.json, "../Data/BPStatReview/bp_stat_review_2017_combined.json")
-    .await(resourceChart);
 
 // Variable to toggle plots
 var energyPlotFlag = 0;
-var merged_json;
-//Specific colors and symbols for all resources
+// Specific colors and symbols for all resources
 var markers = {
     'nuclear': {
         'symbol': 18,
@@ -30,13 +26,13 @@ var markers = {
 };
 
 // Function to toggle between creating a new plot and updating it
-function toggleAllEnergyPlots(unit, country, countryName, resourcePattern, percentage){
+function toggleAllEnergyPlots(countryID, country){
   if(energyPlotFlag == 0) {
-    plotResourceCharts(unit, country, countryName, resourcePattern, percentage)
+    resourceChart(error, countryID, country)
     energyPlotFlag ++;
   }
   else {
-    updateResourceCharts(unit, country, countryName, resourcePattern, percentage)
+   updateChart(error, countryID, country)
   }
 }
 
@@ -94,21 +90,20 @@ function normalizeResources(stacked_resource_data, line_resource_data, cummulati
 }
 
 //Function to create a new plot, which shows all resources
-function resourceChart(error, loaded_json) {
-    merged_json = loaded_json;
-    var cid_sp = document.getElementById("countryID");
-    var countryID_sp = cid_sp.options[cid_sp.selectedIndex].value;
-    var country_sp = cid_sp.options[cid_sp.selectedIndex].text;
+function resourceChart(error, countryID_sp, country_sp) {
+    // var cid_sp = document.getElementById("countryID");
+    // var countryID_sp = cid_sp.options[cid_sp.selectedIndex].value;
+    // var country_sp = cid_sp.options[cid_sp.selectedIndex].text;
     var utility = document.querySelector('input[name = "utility"]:checked').value;
-    var pct=document.getElementById("percent").checked;
+    var pct = document.getElementById("percent").checked;
     plotResourceCharts('mtoe', countryID_sp, country_sp, utility, pct);
 }
 
 //Update the chart as the radio button changes
-function updateChart() {
-    var cid_sp = document.getElementById("countryID");
-    var countryID_sp = cid_sp.options[cid_sp.selectedIndex].value;
-    var country_sp = cid_sp.options[cid_sp.selectedIndex].text;
+function updateChart(error, countryID_sp, country_sp) {
+    // var cid_sp = document.getElementById("countryID");
+    // var countryID_sp = cid_sp.options[cid_sp.selectedIndex].value;
+    // var country_sp = cid_sp.options[cid_sp.selectedIndex].text;
     var utility = document.querySelector('input[name = "utility"]:checked').value;
     var pct=document.getElementById("percent").checked;
     updateResourceCharts('mtoe', countryID_sp, country_sp, utility, pct);
@@ -131,7 +126,7 @@ function plotResourceCharts(unit, country, country_name, resource_pattern, perce
     //The order of resources have to be fixed for stacked area
     for (var i in resources) {
         resource = resources[i];
-        country_resource = merged_json[unit][resource][country];
+        country_resource = data_json[unit][resource][country];
         //Parsing value from all years
         years = d3.keys(country_resource);
 
@@ -222,7 +217,6 @@ function plotResourceCharts(unit, country, country_name, resource_pattern, perce
     
 }
 
-
 //Updating as the buttons change
 function updateResourceCharts(unit, country, country_name, resource_pattern, percentage) {
     var stacked_resource_data = [];
@@ -235,7 +229,7 @@ function updateResourceCharts(unit, country, country_name, resource_pattern, per
     //The order of resources have to be fixed for stacked area
     for (var i in resources) {
         resource = resources[i];
-        country_resource = merged_json[unit][resource][country];
+        country_resource = data_json[unit][resource][country];
         //Parsing value from all years
         years = d3.keys(country_resource);
 
@@ -307,7 +301,6 @@ function updateResourceCharts(unit, country, country_name, resource_pattern, per
     };
     Plotly.update('consumptionChart', line_trace, layout);
 }
-
 
 //Allowing functionality to enable or disable tooltip
 function toggleTooltip() {
