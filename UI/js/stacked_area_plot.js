@@ -178,10 +178,6 @@ function plotResourceCharts(unit, country, country_name, resource_pattern, perce
         subtitle = " Decreased by " +  pct_chg + "% since 2000"
     }
 
-    
-
-    
-
     if(percentage == true){
       normalized_values = normalizeResources(stacked_resource_data, 
                                                   line_resource_data, cummulative_values, false);
@@ -190,9 +186,6 @@ function plotResourceCharts(unit, country, country_name, resource_pattern, perce
 
     }
 
-    //var div = document.getElementById('stackChart');
-    //div.innerHTML += Math.round((stacked_trace.y[51]-stacked_trace.y[36])/stacked_trace.y[36]*10000)/100; 
-    
     var layout = {
         title: country_name + ' energy resource '+ resource_pattern + ' for all years',
         annotations: [{ 
