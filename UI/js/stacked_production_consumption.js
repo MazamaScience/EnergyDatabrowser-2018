@@ -124,7 +124,7 @@ var traceflag = "tozeroy";
     var layout = {
         title: country_text + " " + resource + ' trends for ' + years[0] + ' - ' + years[years.length - 1 ]
     };
-    Plotly.newPlot('stackChart_production_consumption', resource_data,);
+    Plotly.newPlot('stackChart_production_consumption', resource_data, layout, {displaylogo: false});
 }
 
 function updateStackChart(unit, country_id,country_text, resource)
@@ -229,5 +229,5 @@ var traceflag = "tozeroy";
     var layout = {
         title: country_text + " " + resource + ' trends for ' + years[0] + ' - ' + years[years.length - 1 ]
     };
-    Plotly.newPlot('stackChart_production_consumption', resource_data, layout);
+    Plotly.newPlot('stackChart_production_consumption', resource_data, layout, {displaylogo: false});
 }
