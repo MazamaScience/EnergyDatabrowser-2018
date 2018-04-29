@@ -13,65 +13,79 @@ function ready(error, loaded_json) {
 	document.getElementById("oil").checked = true;
 	document.getElementById("mtoe").checked = true;
 	grayOut("oil");
+	loadMap('mtoe','2016','oil');
 
 
-	//printFilter('mtoe','2016', 'oil');
 }
-/*
-function printFilter(unit, year, res) {
+
+// This function loads oil data for all the countries 
+
+function loadMap(unit, year, res) {
 	var resource_data = []
-		console
-	
-		for ( var country in data_json[unit][res])
-		{
-			var country_resource = data_json[unit][res][country];
 
-			// Get all years data 
+	for (var ix = 0; ix < mapping_json.length; ix++) {
+		
+		if (data_json[unit][res][mapping_json[ix]['value1']]) {
+		var country_resource = data_json[unit][res][mapping_json[ix]['value1']];
+		values = [];
+		if ( country_resource[year]['production'] == null && country_resource[year]['consumption'] == null) { values.push(
+		0
+		); }
+		else if (country_resource[year]['production'] == null && country_resource[year]['consumption'] != null) {values.push(
+			0 - country_resource[year]['consumption']
+			); }
+		else if (country_resource[year]['production'] != null && country_resource[year]['consumption'] == null)
+			{ values.push(
+			 country_resource[year]['production']
+			); }
+		else {
+		values.push(
+			country_resource[year]['production'] - country_resource[year]['consumption']
+			);
+		}
+		}
+		else {
 			values = [];
-			if ( country_resource[year]['production'] == null && country_resource[year]['consumption'] == null) { values.push(
-				0
-				); }
-			else if (country_resource[year]['production'] == null && country_resource[year]['consumption'] != null) {values.push(
-				0 - country_resource[year]['consumption']
-				); }
-			else if (country_resource[year]['production'] != null && country_resource[year]['consumption'] == null)
-				{ values.push(
-				 country_resource[year]['production']
-				); }
-			else {
-			values.push(
-				country_resource[year]['production'] - country_resource[year]['consumption']
-				);
-			}
-			var trace = {
-				country: country,
-				year: year,
-				resource: res,
-				val: values
-			}
+			values.push(null);
+		}
 
-			resource_data.push(trace);
+		var trace = {
+		mzm_country: mapping_json[ix]['value1'],
+		country: mapping_json[ix]['value2'],
+		year: year,
+		resource: res,
+		val: values
+		}
+
+		resource_data.push(trace);
+
+		res_data = resource_data;
 	}
 
-	res_data = resource_data;
-	console.log(res_data);
 
 	var i = 0;
-	for (i = 0; i < statesData.features.length; i++) {
+	for (var i = 0; i < statesData.features.length; i++) {
 		var feature = statesData.features[i];
-	
-	if(feature.properties.name == res_data[i].country) {
+		feature.properties['value'] = null;
+		for (ix = 0; ix < res_data.length; ix++) {
+			
+			if(feature.id == res_data[ix].country) {
 
-		feature.properties['value'] = res_data[i].val[0];
+				feature.properties['value'] = res_data[ix].val[0];
+				feature.properties['unit'] = unit;
+				
+			}
+			feature.properties['mzm_id'] = res_data[ix].mzm_country;
+			
+		}
+
+		
 	}
+	refreshMapLocations()
 }
 
 
-	
-}
-*/
-
-function updateChart(){
+function updateMap(){
 
   // Get the resource 
   var resource;
@@ -110,155 +124,10 @@ function updateChart(){
   	units = document.getElementById("joule").value
   }
 
-  console.log(units)
+  // ReloadMap based on new information
+  loadMap(units, '2016', resource);
 
-  var cid_sp = document.getElementById("countryID");
-  try {
-  var countryID_sp = JSON.parse(String(cid_sp.options[cid_sp.selectedIndex].value));
-
-  if (Array.isArray(countryID_sp.value2))
-  	forGroup(countryID_sp.value2, countryID_sp.value3, units, '2016', resource)
-  else
-  	forIndividual(countryID_sp.value1, countryID_sp.value2, units, '2016', resource)
-  }
-
-  catch (err) {
-  console.log(err)
-  var countryID_sp = cid_sp.options[cid_sp.selectedIndex].value;
- 
-  }
-  var country_sp = cid_sp.options[cid_sp.selectedIndex].text;
-  
-  
-
-
-  //if(countryID_sp.val)
-  //if(Array.isArray(countryID_sp.value2))
-  //	forGroup(countryID_sp.value1, countryID_sp.value2);
-  //else if(countryID_sp)
 } 
-
-function forGroup(data_countries, geo_countries, unit, year, res){
-
-	var resource_data = []
-
-	for (var ix = 0; ix < geo_countries.length; ix++) {
-		
-		if (data_json[unit][res][data_countries[ix]]) {
-		var country_resource = data_json[unit][res][data_countries[ix]];
-		values = [];
-		if ( country_resource[year]['production'] == null && country_resource[year]['consumption'] == null) { values.push(
-		0
-		); }
-		else if (country_resource[year]['production'] == null && country_resource[year]['consumption'] != null) {values.push(
-			0 - country_resource[year]['consumption']
-			); }
-		else if (country_resource[year]['production'] != null && country_resource[year]['consumption'] == null)
-			{ values.push(
-			 country_resource[year]['production']
-			); }
-		else {
-		values.push(
-			country_resource[year]['production'] - country_resource[year]['consumption']
-			);
-		}
-		}
-		else {
-			values = [];
-			values.push(null);
-		}
-
-		var trace = {
-		country: geo_countries[ix],
-		year: year,
-		resource: res,
-		val: values
-		}
-
-		resource_data.push(trace);
-
-		res_data = resource_data;
-	}
-
-
-	var i = 0;
-	for (var i = 0; i < statesData.features.length; i++) {
-		var feature = statesData.features[i];
-		feature.properties['value'] = null;
-		for (ix = 0; ix < res_data.length; ix++) {
-			
-			if(feature.id == res_data[ix].country) {
-
-				feature.properties['value'] = res_data[ix].val[0];
-				feature.properties['unit'] = unit;
-			}
-			
-		}
-
-		
-	}
-	refreshMapLocations()
-}
-
-function forIndividual(data_country, geo_country, unit, year, res){
-
-	var resource_data = []
-	
-	if (data_json[unit][res][data_country]) {
-
-	var country_resource = data_json[unit][res][data_country];
-
-	// Get all years data 
-	values = [];
-	if ( country_resource[year]['production'] == null && country_resource[year]['consumption'] == null) { values.push(
-		0
-		); }
-	else if (country_resource[year]['production'] == null && country_resource[year]['consumption'] != null) {values.push(
-		0 - country_resource[year]['consumption']
-		); }
-	else if (country_resource[year]['production'] != null && country_resource[year]['consumption'] == null)
-		{ values.push(
-		 country_resource[year]['production']
-		); }
-	else {
-	values.push(
-		country_resource[year]['production'] - country_resource[year]['consumption']
-		);
-	}
-	}
-	else {
-		values = [];
-		values.push(null);
-	}
-	var trace = {
-		country: geo_country,
-		year: year,
-		resource: res,
-		val: values
-	}
-
-	resource_data.push(trace);
-
-	res_data = resource_data;
-
-
-	var i = 0;
-	for (i = 0; i < statesData.features.length; i++) {
-		var feature = statesData.features[i];
-		if(feature.id == res_data[0].country) {
-
-			feature.properties['value'] = res_data[0].val[0];
-			feature.properties['unit'] = unit;
-		
-		}
-		else {
-			feature.properties['value'] = null;
-		}
-	}
-	refreshMapLocations()
-
-
-}
 
 function refreshMapLocations() {
 	map.removeLayer(geojson);
@@ -270,7 +139,6 @@ function refreshMapLocations() {
 
 function grayOut(resource){
 	var units = unitMap[resource];
-	console.log(units)
 	var unit_list = ["bbl","ft3","m3","twh","mtoe","joule"]
 	for (var ui = 0; ui < unit_list.length; ui++){
 			document.getElementById(unit_list[ui] + '_span').style.color = 'gray';
