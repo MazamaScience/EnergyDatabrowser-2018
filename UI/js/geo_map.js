@@ -78,7 +78,9 @@ function resetHighlight(e) {
 }
 
 function zoomToFeature(e) {
-	
+	console.log(e.target.feature.properties.name)
+	console.log(e.target.feature.properties.mzm_id)
+	toggleAllEnergyPlots(e.target.feature.properties.name, e.target.feature.properties.mzm_id)
 	map.fitBounds(e.target.getBounds());
 }
 

@@ -73,9 +73,9 @@ function loadMap(unit, year, res) {
 
 				feature.properties['value'] = res_data[ix].val[0];
 				feature.properties['unit'] = unit;
-				
+				feature.properties['mzm_id'] = res_data[ix].mzm_country;
 			}
-			feature.properties['mzm_id'] = res_data[ix].mzm_country;
+			
 			
 		}
 
