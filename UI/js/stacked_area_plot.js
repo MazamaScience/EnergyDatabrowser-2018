@@ -2,6 +2,8 @@ d3.queue()
     .defer(d3.json, "../Data/BPStatReview/bp_stat_review_2017_combined.json")
     .await(resourceChart);
 
+// Variable to toggle plots
+var energyPlotFlag = 0;
 var merged_json;
 //Specific colors and symbols for all resources
 var markers = {
@@ -26,6 +28,17 @@ var markers = {
         'color': 'blue'
     }
 };
+
+// Function to toggle between creating a new plot and updating it
+function toggleAllEnergyPlots(unit, country, countryName, resourcePattern, percentage){
+  if(flag == 0) {
+    plotResourceCharts(unit, country, countryName, resourcePattern, percentage)
+    flag ++;
+  }
+  else {
+    updateResourceCharts(unit, country, countryName, resourcePattern, percentage)
+  }
+}
 
 //Divide two arrays
 function divideArray(A, B){
