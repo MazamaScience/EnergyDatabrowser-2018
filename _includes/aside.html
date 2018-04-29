@@ -1,8 +1,294 @@
+<!-- Abhinav's UI -->
+
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<link rel="shortcut icon" type="image/x-icon" href="docs/images/favicon.ico" />
+
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.3.1/dist/leaflet.css" integrity="sha512-Rksm5RenBEKSKFjgI3a41vrjkw4EVPlJ3+OiI65vTjIdo9brlAacEuKOiQ5OFh7cOI1bkDwLqdLw3Zg0cRJAAQ==" crossorigin=""/>
+<script src="https://unpkg.com/leaflet@1.3.1/dist/leaflet.js" integrity="sha512-/Nsx9X4HebavoBvEBuyp3I7od5tA0UzAxs+j83KgC8PU0kgB4XiK4Lfe4y4cgBtaRJQEIFCW+oC506aPT2L1zw==" crossorigin="">
+</script>
+
+<style>
+
+#map {
+	width: 100%;
+	height: 100%;
+	float: center
+}
+</style>
+
+<style>
+#map { width: 800px; height: 600px; float: center}
+.info { padding: 6px 8px; 
+		font: 14px/16px Arial, Helvetica, sans-serif; 
+		background: white; 
+		background: rgba(255,255,255,0.8); 
+		box-shadow: 0 0 15px rgba(0,0,0,0.2); 
+		border-radius: 5px; } 
+.info h4 { margin: 0 0 5px; color: #777; }
+.legend { text-align: left; line-height: 18px; color: #555; } 
+.legend i { width: 18px; height: 18px; float: left; margin-right: 8px; opacity: 0.7; }
+</style>
+
+<!-- Actual Aside HTML -->
+
 <section class="cta">
     <div class="cta-content">
         <div class="container">
-            <h2>Oil Production in the Country</h2>
+            <h2>Oil Production Trend in the World</h2>
             <!-- <a href="/funds" class="btn btn-outline btn-xl page-scroll">How I can?!</a> -->
+
+<!-- End of Actual Aside HTML -->
+
+<!-- Abhinav's viz - Start -->
+			<center>
+            <div id="radio_table_div">
+                  <table class="layout">
+                    <tbody>
+
+                      <tr id="data_row">
+                        <td class="label_td">
+                          <label>Data:</label>
+                        </td>
+                        <td>
+                          <span>BP Statistical Review 2017</span>
+                        </td>
+                      </tr>
+
+                      <tr id="units_row">
+                        <td class="label_td">
+                          <label class="radio_label">Units:</label>
+                        </td>
+                        <td>
+                          <span id="bbl_span" class="radio_span" title="Exajoules per year">
+                            <input type="radio" name="units" id="bbl" value="bbl" checked="checked" onclick=updateChart()>
+                            <span>bbl</span>
+                          </span>
+                          <span id="ft3_span" class="radio_span" title="Exajoules per year">
+                            <input type="radio" name="units" id="ft3" value="ft3" checked="checked" onclick=updateChart()>
+                            <span>ft</span>
+                          </span>
+                          <span id="m3_span" class="radio_span" title="Exajoules per year">
+                            <input type="radio" name="units" id="m3" value="m3" checked="checked" onclick=updateChart()>
+                            <span>m</span>
+                          </span>
+                          <span id="twh_span" class="radio_span" title="Exajoules per year">
+                            <input type="radio" name="units" id="twh" value="twh" checked="checked" onclick=updateChart()>
+                            <span>twh</span>
+                          </span>
+                          <span id="mtoe_span" class="radio_span selected" title="million tonnes of oil equivalent per year">
+                            <input type="radio" name="units" id="mtoe" value="mtoe" checked="checked" onclick=updateChart()>
+                            <span>mtoe</span>
+                          </span>
+                          <span id="joule_span" class="radio_span" title="Exajoules per year">
+                            <input type="radio" name="units" id="joule" value="joule" checked="checked" onclick=updateChart()>
+                            <span>J</span>
+                          </span>
+                        </td>
+                      </tr>
+
+                      <tr id="toggle_row">
+                        <td class="toggle_td">
+                          <label class="toggle_label">Resource</label>
+                        </td>
+                        <td>
+                          <span id="coalspan" class="toggle_radio_span selected" title="coal">
+                            <input type="radio" name="toggle" id="coal" value="coal" checked="checked" onclick=updateChart()>
+                            <span>Coal</span>
+                          </span>
+                          <span id="oilspan" class="toggle_radio_span selected" title="oil">
+                            <input type="radio" name="toggle" id="oil" value="oil" onclick=updateChart()>
+                            <span>Oil</span>
+                          </span>
+                          <span id="gasspan" class="toggle_radio_span selected" title="gas">
+                            <input type="radio" name="toggle" id="gas" value="gas" onclick=updateChart()>
+                            <span>Gas</span>
+                          </span>
+                          <span id="nucspan" class="toggle_radio_span selected" title="nuc">
+                            <input type="radio" name="toggle" id="nuc" value="nuclear" onclick=updateChart()>
+                            <span>Nuclear</span>
+                          </span>
+                          <span id="hydspan" class="toggle_radio_span selected" title="hyd">
+                            <input type="radio" name="toggle" id="hyd" value="hydro" onclick=updateChart()>
+                            <span>Hydropower</span>
+                          </span>
+                        </td>
+                      </tr>
+
+                    </tbody>
+                  </table>
+                </div>
+<div id="countryID_div">
+                  <label for="countryID">Country / Group:</label>
+                  <select id="countryID" name="countryID" onchange="updateChart()">
+        
+                    <optgroup label="Groups of Nations">
+                      <option selected="" value="BP_WORLD">World</option>
+<!--
+                      <option value="BP_WORLD1">World (-OECD -FSU)</option>
+-->
+                      <option value="BP_FSU">Former Soviet Union</option>
+                      <option value="BP_EU0">Europe (-FSU)</option>
+                      <option value="BP_EU1">Europe (+FSU)</option>
+                      <option value="BP_EU2">Eurozone</option>
+                      <option value="BP_OPEC10">OPEC-10</option>
+                      <option value="BP_OPEC">OPEC</option>
+                      <option value="BP_GCC">GCC</option>
+                      <option value="BP_GECF11">GECF-11</option>
+                      <option value="BP_GECF">GECF</option>
+                      <option value="BP_NON_OPEC">Non-OPEC</option>
+                      <option value="BP_OECD">OECD</option>
+                      <option value="BP_OECD1">OECD (-USA)</option>
+                      <option value="BP_G7">G7</option>
+                      <option value="BP_O5">O5</option>
+                      <option value="BP_G75">G7 + O5</option>
+                    </optgroup>
+        
+                    <optgroup label="Oil Producing Regions">
+                      <option value="BP_CRB">Caribbean</option>
+                      <option value="BP_NSE">North Sea</option>
+                      <option value="BP_PRG">Persian Gulf</option>
+                      <option value="BP_WAF">West Africa</option>
+                    </optgroup>
+        
+                    <optgroup label="North America">
+                      <option value='{"value1":"BP_TNA","value2":["CA","MX","US"],"value3":["CAN","MEX","USA"]}'>Total North America</option>
+                      <option value='{"value1":"CA","value2":"CAN"}'>Canada</option>
+                      <option value='{"value1":"MX","value2":"MEX"}'>Mexico</option>
+                      <option value='{"value1":"US","value2":"USA"}'>USA</option>
+                    </optgroup>
+        
+                    <optgroup label="South America">
+                      <option value='{"value1":"BP_TSCA","value2":["AR","BO","BR","CL","CO","EC","PE","TT","VE"],"value3":["ARG","BOL","BRA","CHL","COL","ECU","PER","TTO","VEN"]}'>Total S. &amp; Cent. America</option>
+                      <option value='{"value1":"AR","value2":"ARG"}'>Argentina</option>
+                      <option value='{"value1":"BO","value2":"BOL"}'>Bolivia</option>
+                      <option value='{"value1":"BR","value2":"BRA"}'>Brazil</option>
+                      <option value='{"value1":"CL","value2":"CHL"}'>Chile</option>
+                      <option value='{"value1":"CO","value2":"COL"}'>Colombia</option>
+                      <option value='{"value1":"EC","value2":"ECU"}'>Ecuador</option>
+                      <option value='{"value1":"PE","value2":"PER"}'>Peru</option>
+                      <option value='{"value1":"TT","value2":"TTO"}'>Trinidad and Tobago</option>
+                      <option value='{"value1":"VE","value2":"VEN"}'>Venezuela</option>
+                    </optgroup>
+        
+                    <optgroup label="Europe &amp; Eurasia">
+                      <option value='{"value1":"BP_TEE","value2":["AT","AZ","BY","BP_BELU","BP_BELU","BG","CZ","DK","FI","FR","DE","GR","HU","IS","IE","IT","KZ","LT","NL","NO","PL","PT","RO","RU","SK","ES","SE","CH","TR","TM","UA","GB","UZ"],"value3":["AUT","AZE","BLR","BEL","LUX","BGR","CZE","DNK","FIN","FRA","DEU","GRC","HUN","ISL","IRL","ITA","KAZ","LTU","NLD","NOR","POL","PRT","ROU","RUS","SVK","ESP","SWE","CHE","TUR","TKM","UKR","GBR","UZB"]}'>Total Europe &amp; Eurasia</option>
+                      <option value='{"value1":"AT","value2":"AUT"}'>Austria</option>
+                      <option value='{"value1":"AZ","value2":"AZE"}'>Azerbaijan</option>
+                      <option value='{"value1":"BY","value2":"BLR"}'>Belarus</option>
+                      <option value='{"value1":"BP_BELU","value2":["BP_BELU","BP_BELU"],"value3":["BEL","LUX"]}'>Belgium and Luxembourg</option>
+                      <option value='{"value1":"BG","value2":"BGR"}'>Bulgaria</option>
+                      <option value='{"value1":"CZ","value2":"CZE"}'>Czech Republic</option>
+                      <option value='{"value1":"DK","value2":"DNK"}'>Denmark</option>
+                      <option value='{"value1":"FI","value2":"FIN"}'>Finland</option>
+                      <option value='{"value1":"FR","value2":"FRA"}'>France</option>
+                      <option value='{"value1":"DE","value2":"DEU"}'>Germany</option>
+                      <option value='{"value1":"GR","value2":"GRC"}'>Greece</option>
+                      <option value='{"value1":"HU","value2":"HUN"}'>Hungary</option>
+                      <option value='{"value1":"IS","value2":"ISL"}'>Iceland</option>
+                      <option value='{"value1":"IE","value2":"IRL"}'>Ireland</option>
+                      <option value='{"value1":"IT","value2":"ITA"}'>Italy</option>
+                      <option value='{"value1":"KZ","value2":"KAZ"}'>Kazakhstan</option>
+                      <option value='{"value1":"LT","value2":"LTU"}'>Lithuania</option>
+                      <option value='{"value1":"NL","value2":"NLD"}'>Netherlands</option>
+                      <option value='{"value1":"NO","value2":"NOR"}'>Norway</option>
+                      <option value='{"value1":"PL","value2":"POL"}'>Poland</option>
+                      <option value='{"value1":"PT","value2":"PRT"}'>Portugal</option>
+                      <option value='{"value1":"RO","value2":"ROU"}'>Romania</option>
+                      <option value='{"value1":"RU","value2":"RUS"}'>Russian Federation</option>
+                      <option value='{"value1":"SK","value2":"SVK"}'>Slovakia</option>
+                      <option value='{"value1":"ES","value2":"ESP"}'>Spain</option>
+                      <option value='{"value1":"SE","value2":"SWE"}'>Sweden</option>
+                      <option value='{"value1":"CH","value2":"CHE"}'>Switzerland</option>
+                      <option value='{"value1":"TR","value2":"TUR"}'>Turkey</option>
+                      <option value='{"value1":"TM","value2":"TKM"}'>Turkmenistan</option>
+                      <option value='{"value1":"UA","value2":"UKR"}'>Ukraine</option>
+                      <option value='{"value1":"GB","value2":"GBR"}'>United Kingdom</option>
+                      <option value='{"value1":"UZ","value2":"UZB"}'>Uzbekistan</option>
+                    </optgroup>
+        
+                    <optgroup label="Middle East">
+                      <option value='{"value1":"BP_TME","value2":["BH","IR","IQ","IL","KW","OM","QA","SA","SY","YE","AE"],"value3":["BHR","IRN","IRQ","ISR","KWT","OMN","QAT","SAU","SYR","YEM","ARE"]}'>Total Middle East</option>
+                      <option value='{"value1":"BP_GCC","value2":["BH","KW","OM","QA","SA","AE"],"value3":["BHR","KWT","OMN","QAT","SAU","ARE"]}'>Gulf Cooperation Council</option>
+                      <option value='{"value1":"BH","value2":"BHR"}'>Bahrain</option>
+                      <option value='{"value1":"IR","value2":"IRN"}'>Iran</option>
+                      <option value='{"value1":"IQ","value2":"IRQ"}'>Iraq</option>
+                      <option value='{"value1":"IL","value2":"ISR"}'>Israel</option>
+                      <option value='{"value1":"KW","value2":"KWT"}'>Kuwait</option>
+                      <option value='{"value1":"OM","value2":"OMN"}'>Oman</option>
+                      <option value='{"value1":"QA","value2":"QAT"}'>Qatar</option>
+                      <option value='{"value1":"SA","value2":"SAU"}'>Saudi Arabia</option>
+                      <option value='{"value1":"SY","value2":"SYR"}'>Syria</option>
+                      <option value='{"value1":"YE","value2":"YEM"}'>Yemen</option>
+                      <option value='{"value1":"AE","value2":"ARE"}'>United Arab Emirates</option>
+                    </optgroup>
+        
+                    <optgroup label="Africa">
+                      <option value='{"value1":"BP_TAF","value2":["DZ","AO","CM","TD","CG","EG","GQ","GA","LY","NG","ZA","SD","TN","ZW"],"value3":["AGO","CMR","TCD","COG","EGY","GNQ","GAB","LBY","NGA","ZAF","SDN","TUN","ZWE"]}'>Total Africa</option>
+                      <option value='{"value1":"DZ","value2":"DZA"}'>Algeria</option>
+                      <option value='{"value1":"AO","value2":"AGO"}'>Angola</option>
+                      <option value='{"value1":"CM","value2":"CMR"}'>Cameroon</option>
+                      <option value='{"value1":"TD","value2":"TCD"}'>Chad</option>
+                      <option value='{"value1":"CG","value2":"COG"}'>Congo</option>
+                      <option value='{"value1":"EG","value2":"EGY"}'>Egypt</option>
+                      <option value='{"value1":"GQ","value2":"GNQ"}'>Equatorial Guinea</option>
+                      <option value='{"value1":"GA","value2":"GAB"}'>Gabon</option>
+                      <option value='{"value1":"LY","value2":"LBY"}'>Libya</option>
+                      <option value='{"value1":"NG","value2":"NGA"}'>Nigeria</option>
+                      <option value='{"value1":"ZA","value2":"ZAF"}'>South Africa</option>
+                      <option value='{"value1":"SD","value2":"SDN"}'>Sudan</option>
+                      <option value='{"value1":"TN","value2":"TUN"}'>Tunisia</option>
+                      <option value='{"value1":"ZW","value2":"ZWE"}'>Zimbabwe</option>
+                    </optgroup>
+        
+                    <optgroup label="Asia-Pacific">
+                      <option value='{"value1":"BP_TAP","value2":["AU","BD","BN","CN","HK","IN","ID","JP","MY","MM","NZ","PK","PH","SG","KR","TW","TH","VN"],"value3":["AUS","BGD","BRN","CHN","HKG","IND","IDN","JPN","MYS","MMR","NZL","PAK","PHL","SGP","KOR","TWN","THA","VNM"]}'>Total Asia-Pacific</option>
+                      <option value='{"value1":"AU","value2":"AUS"}'>Australia</option>
+                      <option value='{"value1":"BD","value2":"BGD"}'>Bangladesh</option>
+                      <option value='{"value1":"BN","value2":"BRN"}'>Brunei</option>
+                      <option value='{"value1":"CN","value2":"CHN"}'>China</option>
+                      <option value='{"value1":"HK","value2":"HKG"}'>Hong Kong</option>
+                      <option value='{"value1":"IN","value2":"IND"}'>India</option>
+                      <option value='{"value1":"ID","value2":"IDN"}'>Indonesia</option>
+                      <option value='{"value1":"JP","value2":"JPN"}'>Japan</option>
+                      <option value='{"value1":"MY","value2":"MYS"}'>Malaysia</option>
+                      <option value='{"value1":"MM","value2":"MMR"}'>Myanmar</option>
+                      <option value='{"value1":"NZ","value2":"NZL"}'>New Zealand</option>
+                      <option value='{"value1":"PK","value2":"PAK"}'>Pakistan</option>
+                      <option value='{"value1":"PH","value2":"PHL"}'>Philippines</option>
+                      <option value='{"value1":"SG","value2":"SGP"}'>Singapore</option>
+                      <option value='{"value1":"KR","value2":"KOR"}'>South Korea</option>
+                      <option value='{"value1":"TW","value2":"TWN"}'>Taiwan</option>
+                      <option value='{"value1":"TH","value2":"THA"}'>Thailand</option>
+                      <option value='{"value1":"VN","value2":"VNM"}'>Vietnam</option>
+                    </optgroup>
+        
+                  </select>
+                </div>
+
+<div id='map'></div>
+
+<script src="js/plotly.min.js"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script type="text/javascript" src="https://d3js.org/d3.v4.min.js"></script>
+    <script src="https://d3js.org/d3-geo-projection.v2.min.js"></script>
+    <script src="https://d3js.org/d3-collection.v1.min.js"></script>
+    <script src="https://d3js.org/d3-dispatch.v1.min.js"></script>
+    <script src="https://d3js.org/d3-dsv.v1.min.js"></script>
+    <script src="https://d3js.org/d3-request.v1.min.js"></script>
+    <script src="https://d3js.org/d3-queue.v3.min.js"></script>
+    <script src="https://d3js.org/colorbrewer.v1.min.js"></script> 
+    <script src="https://d3js.org/colorbrewer.v1.min.js"></script> 
+
+
+
+<script type="text/javascript" src="../Data/countries.js"></script>
+<script type="text/javascript" src="../Data/unitMap.js"></script>
+<script id= "first" type="text/javascript" src="js/spit_combined.js"></script>
+</center>
+<!-- Abinav's viz - End -->
+
         </div>
     </div>
     <div class="overlay"></div>
