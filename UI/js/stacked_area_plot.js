@@ -27,12 +27,13 @@ var markers = {
 
 // Function to toggle between creating a new plot and updating it
 function toggleAllEnergyPlots(countryID, country){
+
   if(energyPlotFlag == 0) {
-    resourceChart(error, countryID, country)
+    resourceChart(countryID, country)
     energyPlotFlag ++;
   }
   else {
-   updateChart(error, countryID, country)
+   updateChart(countryID, country)
   }
 }
 
@@ -90,7 +91,7 @@ function normalizeResources(stacked_resource_data, line_resource_data, cummulati
 }
 
 //Function to create a new plot, which shows all resources
-function resourceChart(error, countryID_sp, country_sp) {
+function resourceChart(countryID_sp, country_sp) {
     // var cid_sp = document.getElementById("countryID");
     // var countryID_sp = cid_sp.options[cid_sp.selectedIndex].value;
     // var country_sp = cid_sp.options[cid_sp.selectedIndex].text;
@@ -100,7 +101,7 @@ function resourceChart(error, countryID_sp, country_sp) {
 }
 
 //Update the chart as the radio button changes
-function updateChart(error, countryID_sp, country_sp) {
+function updateChart(countryID_sp, country_sp) {
     // var cid_sp = document.getElementById("countryID");
     // var countryID_sp = cid_sp.options[cid_sp.selectedIndex].value;
     // var country_sp = cid_sp.options[cid_sp.selectedIndex].text;
@@ -171,7 +172,7 @@ function plotResourceCharts(unit, country, country_name, resource_pattern, perce
                 symbol: markers[resource]['symbol']
             },
         }
-
+        console.log(stacked_resource_data)
         stacked_resource_data.push(stacked_trace);
         line_resource_data.push(line_trace);
 
@@ -269,7 +270,7 @@ function updateResourceCharts(unit, country, country_name, resource_pattern, per
         y: line_resource_data
     }
 
-    console.log(stacked_trace.y[4][51])
+    
 
     var pct_chg = Math.round((stacked_trace.y[4][51]-stacked_trace.y[4][36])/stacked_trace.y[4][36]*10000)/100
     
