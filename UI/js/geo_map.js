@@ -80,7 +80,7 @@ function resetHighlight(e) {
 function zoomToFeature(e) {
 	console.log(e.target.feature.properties.name)
 	console.log(e.target.feature.properties.mzm_id)
-	toggleAllEnergyPlots(e.target.feature.properties.name, e.target.feature.properties.mzm_id)
+	toggleAllEnergyPlots(e.target.feature.properties.mzm_id,e.target.feature.properties.name)
 	map.fitBounds(e.target.getBounds());
 }
 
