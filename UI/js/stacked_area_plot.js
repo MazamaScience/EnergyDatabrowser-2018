@@ -31,9 +31,9 @@ var markers = {
 
 // Function to toggle between creating a new plot and updating it
 function toggleAllEnergyPlots(unit, country, countryName, resourcePattern, percentage){
-  if(flag == 0) {
+  if(energyPlotFlag == 0) {
     plotResourceCharts(unit, country, countryName, resourcePattern, percentage)
-    flag ++;
+    energyPlotFlag ++;
   }
   else {
     updateResourceCharts(unit, country, countryName, resourcePattern, percentage)
