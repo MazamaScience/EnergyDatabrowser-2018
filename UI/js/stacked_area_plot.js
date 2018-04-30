@@ -314,9 +314,9 @@ function updateResourceCharts(unit, country, country_name, resource_pattern, per
 //Allowing functionality to enable or disable tooltip
 function toggleTooltip() {
 
-    var toggle = document.querySelector('input[name = "toggle"]:checked').value;
-
+    var toggle = document.querySelector('input[name = "toggle_tt"]:checked').value;
     if (toggle == "off") {
+        console.log("err")
         Plotly.d3.selectAll(".hoverlayer").style("opacity", 0);
     } else {
       Plotly.d3.selectAll(".hoverlayer").style("opacity", 1);
