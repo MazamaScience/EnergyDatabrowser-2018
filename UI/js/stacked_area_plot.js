@@ -25,15 +25,22 @@ var markers = {
     }
 };
 
+// Global variables to handle radio buttons
+var countryID_global = null;
+var country_global = null;
+
 // Function to toggle between creating a new plot and updating it
 function toggleAllEnergyPlots(countryID, country){
 
+  countryID_global = countryID;
+  country_global = country;
+
   if(energyPlotFlag == 0) {
-    resourceChart(countryID, country)
+    resourceChart()
     energyPlotFlag ++;
   }
   else {
-   updateChart(countryID, country)
+   updateChart()
   }
 }
 
@@ -91,23 +98,24 @@ function normalizeResources(stacked_resource_data, line_resource_data, cummulati
 }
 
 //Function to create a new plot, which shows all resources
-function resourceChart(countryID_sp, country_sp) {
+function resourceChart() {
+    // var cid_sp = document.getElementById("countryID");
+    // var countryID_sp = cid_sp.options[cid_sp.selectedIndex].value;
+    // var country_sp = cid_sp.options[cid_sp.selectedIndex].text;
+
+    var utility = document.querySelector('input[name = "utility"]:checked').value;
+    var pct = document.getElementById("percent").checked;
+    plotResourceCharts('mtoe', countryID_global, country_global, utility, pct);
+}
+
+//Update the chart as the radio button changes
+function updateChart(countryID, country) {
     // var cid_sp = document.getElementById("countryID");
     // var countryID_sp = cid_sp.options[cid_sp.selectedIndex].value;
     // var country_sp = cid_sp.options[cid_sp.selectedIndex].text;
     var utility = document.querySelector('input[name = "utility"]:checked').value;
     var pct = document.getElementById("percent").checked;
-    plotResourceCharts('mtoe', countryID_sp, country_sp, utility, pct);
-}
-
-//Update the chart as the radio button changes
-function updateChart(countryID_sp, country_sp) {
-    // var cid_sp = document.getElementById("countryID");
-    // var countryID_sp = cid_sp.options[cid_sp.selectedIndex].value;
-    // var country_sp = cid_sp.options[cid_sp.selectedIndex].text;
-    var utility = document.querySelector('input[name = "utility"]:checked').value;
-    var pct=document.getElementById("percent").checked;
-    updateResourceCharts('mtoe', countryID_sp, country_sp, utility, pct);
+    updateResourceCharts('mtoe', countryID_global, country_global, utility, pct);
 }
 
 //Plotting all resources
@@ -172,7 +180,6 @@ function plotResourceCharts(unit, country, country_name, resource_pattern, perce
                 symbol: markers[resource]['symbol']
             },
         }
-        console.log(stacked_resource_data)
         stacked_resource_data.push(stacked_trace);
         line_resource_data.push(line_trace);
 
@@ -208,6 +215,7 @@ function plotResourceCharts(unit, country, country_name, resource_pattern, perce
             }
         }],
     };
+
     Plotly.newPlot('stackChart', stacked_resource_data, layout);
     
     var layout = {
