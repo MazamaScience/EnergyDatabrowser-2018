@@ -56,7 +56,7 @@ header .device-container .screen img { border-radius: 3px; }
   header .header-content .header-content-inner h1 { font-size: 35px; }
   header .device-container { max-width: none; max-height: calc(0vh); margin: 100px auto 0; } }
 @media (min-width: 992px) { header .header-content .header-content-inner h1 { font-size: 50px; } }
-section { padding: 75px 0; }
+section { padding: 100px 0; }
 section h2 { font-size: 50px; }
 section.download { padding: 150px 0; position: relative; }
 section.download h2 { margin-top: 0; font-size: 50px; }

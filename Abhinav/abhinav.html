@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html>
+<head>
+  
+  <title>Net Consumption - Production</title>
+
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <link rel="shortcut icon" type="image/x-icon" href="docs/images/favicon.ico" />
+
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.3.1/dist/leaflet.css" integrity="sha512-Rksm5RenBEKSKFjgI3a41vrjkw4EVPlJ3+OiI65vTjIdo9brlAacEuKOiQ5OFh7cOI1bkDwLqdLw3Zg0cRJAAQ==" crossorigin=""/>
+    <script src="https://unpkg.com/leaflet@1.3.1/dist/leaflet.js" integrity="sha512-/Nsx9X4HebavoBvEBuyp3I7od5tA0UzAxs+j83KgC8PU0kgB4XiK4Lfe4y4cgBtaRJQEIFCW+oC506aPT2L1zw==" crossorigin=""></script>
+
+
+  <style>
+    html, body {
+      height: 100%;
+      margin: 0;
+    }
+    #map {
+      width: 600px;
+      height: 400px;
+    }
+  </style>
+
+  <style>#map { width: 800px; height: 500px; }
+.info { padding: 6px 8px; font: 14px/16px Arial, Helvetica, sans-serif; background: white; background: rgba(255,255,255,0.8); box-shadow: 0 0 15px rgba(0,0,0,0.2); border-radius: 5px; } .info h4 { margin: 0 0 5px; color: #777; }
+.legend { text-align: left; line-height: 18px; color: #555; } .legend i { width: 18px; height: 18px; float: left; margin-right: 8px; opacity: 0.7; }</style>
+</head>
+<body>
+<div id="radio_table_div">
+                  <table class="layout">
+                    <tbody>
+
+                      <tr id="data_row">
+                        <td class="label_td">
+                          <label>Data:</label>
+                        </td>
+                        <td>
+                          <span>BP Statistical Review 2017</span>
+                        </td>
+                      </tr>
+
+                      <tr id="units_row">
+                        <td class="label_td">
+                          <label class="radio_label">Units:</label>
+                        </td>
+                        <td>
+                          <span id="bbl_span" class="radio_span" title="Exajoules per year">
+                            <input type="radio" name="units" id="bbl" value="bbl" checked="checked" onclick=updateMap()>
+                            <span>bbl</span>
+                          </span>
+                          <span id="ft3_span" class="radio_span" title="Exajoules per year">
+                            <input type="radio" name="units" id="ft3" value="ft3" checked="checked" onclick=updateMap()>
+                            <span>ft</span>
+                          </span>
+                          <span id="m3_span" class="radio_span" title="Exajoules per year">
+                            <input type="radio" name="units" id="m3" value="m3" checked="checked" onclick=updateMap()>
+                            <span>m</span>
+                          </span>
+                          <span id="twh_span" class="radio_span" title="Exajoules per year">
+                            <input type="radio" name="units" id="twh" value="twh" checked="checked" onclick=updateMap()>
+                            <span>twh</span>
+                          </span>
+                          <span id="mtoe_span" class="radio_span selected" title="million tonnes of oil equivalent per year">
+                            <input type="radio" name="units" id="mtoe" value="mtoe" checked="checked" onclick=updateMap()>
+                            <span>mtoe</span>
+                          </span>
+                          <span id="joule_span" class="radio_span" title="Exajoules per year">
+                            <input type="radio" name="units" id="joule" value="joule" checked="checked" onclick=updateMap()>
+                            <span>J</span>
+                          </span>
+                        </td>
+                      </tr>
+
+                      <tr id="toggle_row">
+                        <td class="toggle_td">
+                          <label class="toggle_label">Resource</label>
+                        </td>
+                        <td>
+                          <span id="coalspan" class="toggle_radio_span selected" title="coal">
+                            <input type="radio" name="toggle" id="coal" value="coal" checked="checked" onclick=updateMap()>
+                            <span>Coal</span>
+                          </span>
+                          <span id="oilspan" class="toggle_radio_span selected" title="oil">
+                            <input type="radio" name="toggle" id="oil" value="oil" onclick=updateMap()>
+                            <span>Oil</span>
+                          </span>
+                          <span id="gasspan" class="toggle_radio_span selected" title="gas">
+                            <input type="radio" name="toggle" id="gas" value="gas" onclick=updateMap()>
+                            <span>Gas</span>
+                          </span>
+                          <span id="nucspan" class="toggle_radio_span selected" title="nuc">
+                            <input type="radio" name="toggle" id="nuc" value="nuclear" onclick=updateMap()>
+                            <span>Nuclear</span>
+                          </span>
+                          <span id="hydspan" class="toggle_radio_span selected" title="hyd">
+                            <input type="radio" name="toggle" id="hyd" value="hydro" onclick=updateMap()>
+                            <span>Hydropower</span>
+                          </span>
+                        </td>
+                      </tr>
+
+                    </tbody>
+                  </table>
+                </div>
+
+
+<div id='map'></div>
+<div id="databrowser">
+    <table>
+      <tbody>
+        <tr>
+
+          <td id="controls_td">
+
+            <div id="controls_div">
+              <form id="controls_form" name="controls_form">
+
+                <input id="language" type="hidden" name="language" value="en">
+                <input id="plottype" type="hidden" name="plottype" value="Exports">
+                <input id="datasource" type="hidden" name="datasource" value="BP_2017">
+
+                <div id="radio_table_div">
+                  <table class="layout">
+                    <tbody>
+
+                      <tr id="data_row">
+                        <td class="label_td">
+                          <label>Data:</label>
+                        </td>
+                        <td>
+                          <span>BP Statistical Review 2017</span>
+                        </td>
+                      </tr>
+
+                      <tr id="units_row">
+                        <td class="label_td">
+                          <label class="radio_label">Units:</label>
+                        </td>
+                        <td>
+                          <span id="mtoe_span" class="radio_span selected" title="million tonnes of oil equivalent per year">
+                            <input type="radio" name="units" id="mtoe" value="mtoe" checked="checked" onclick=drawStack()>
+                            <span>mtoe</span>
+                          </span>
+                          <span id="joule_span" class="radio_span" title="Exajoules per year">
+                            <input type="radio" name="units" id="joule" value="joule">
+                            <span>J</span>
+                          </span>
+                        </td>
+                      </tr>
+
+                      <tr id="toggle_row">
+                        <td class="toggle_td">
+                          <label class="toggle_label">Toggle Tooltip:</label>
+                        </td>
+                        <td>  
+                          <span id="toggle_on_span" class="toggle_radio_span selected" title="Tooltip On">
+                            <input type="radio" name="toggle_tt" id="on" value="on" checked="checked" onclick=toggleTooltip()>
+                            <span>On</span>
+                          </span>
+                          <span id="toggle_off_span" class="toggle_radio_span selected" title="Tooltip Off">
+                            <input type="radio" name="toggle_tt" id="off" value="off" onclick=toggleTooltip()>
+                            <span>Off</span>
+                          </span>
+                        </td>
+                      </tr>
+
+                      <tr id="util_row">
+                        <td class="util_td">
+                          <label class="toggle_label">Utility Type:</label>
+                        </td>
+                        <td>
+                          <span id="cons_span" class="util_radio_span selected" title="Consumption">
+                            <input type="radio" name="utility" id="consumption" value="consumption" checked="checked" onclick=updateChart()>
+                            <span>Consumption</span>
+                          </span>
+                          <span id="prod_span" class="util_radio_span selected" title="Production">
+                            <input type="radio" name="utility" id="production" value="production" onclick=updateChart()>
+                            <span>Production</span>
+                          </span>
+                        </td>
+                      </tr>
+                      <tr id="extra_row">
+                        <td class="util_td">
+                          <label class="toggle_label">Display Option:</label>
+                        </td>
+                        <td class="extra_td">
+                          <span id="percent_span">
+                            <input type="checkbox" name="percent" id="percent" value="pct" onclick=updateChart()>
+                            <label class="checkbox-label" for="percent">percent</label>
+                          </span>
+                        </td>
+                      </tr>
+
+                    </tbody>
+                  </table>
+                </div>
+
+                 <!-- countryID_div -->
+        
+
+                </div>
+
+              </form>
+            </div> <!-- END of controls_div -->
+
+          </td> <!-- END of controls_td -->
+
+          </td>
+
+        </tr>
+      </tbody>
+    </table>
+  </div>
+<script type="text/javascript" src="https://d3js.org/d3.v4.min.js"></script>
+<script type="text/javascript" src="js/stacked_area_plot.js"></script>  
+
+
+<div id='wrapper'>
+        <div id="consumptionChart" style="width:600px;height:500px;float:left;"></div> 
+         <div id="stackChart" style="width:600px;height:500px;float:right;"></div> 
+</div>
+
+<script src="js/plotly.min.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script type="text/javascript" src="https://d3js.org/d3.v4.min.js"></script>
+    <script src="https://d3js.org/d3-geo-projection.v2.min.js"></script>
+    <script src="https://d3js.org/d3-collection.v1.min.js"></script>
+    <script src="https://d3js.org/d3-dispatch.v1.min.js"></script>
+    <script src="https://d3js.org/d3-dsv.v1.min.js"></script>
+    <script src="https://d3js.org/d3-request.v1.min.js"></script>
+    <script src="https://d3js.org/d3-queue.v3.min.js"></script>
+    <script src="https://d3js.org/colorbrewer.v1.min.js"></script> 
+    <script src="https://d3js.org/colorbrewer.v1.min.js"></script> 
+
+
+<script type="text/javascript" src ="../Data/mapping.js"></script>
+<script type="text/javascript" src="../Data/countries.js"></script>
+<script type="text/javascript" src="../Data/unitMap.js"></script>
+<script id= "first" type="text/javascript" src="js/map_data.js"></script>
+
+
+
+
+
+</body>
+</html>

@@ -8,9 +8,11 @@ function ready(error, loaded_json)
 {
   merged_json = loaded_json;
   var cid_sp = document.getElementById("countryID");
-    var countryID_sp = cid_sp.options[cid_sp.selectedIndex].value;
-    var country_sp = cid_sp.options[cid_sp.selectedIndex].text;
-  plotStackChart("mtoe",countryID_sp,country_sp,"oil");
+  var countryID_sp = cid_sp.options[cid_sp.selectedIndex].value;
+  var country_sp = cid_sp.options[cid_sp.selectedIndex].text;
+  var unit = document.querySelector('input[name = "units"]:checked').value;
+  var resource = document.querySelector('input[name = "resource"]:checked').value;
+  plotStackChart(unit,countryID_sp,country_sp,resource);
 
 }
 
@@ -19,7 +21,9 @@ function updateDiffChart()
     var cid_sp = document.getElementById("countryID");
     var countryID_sp = cid_sp.options[cid_sp.selectedIndex].value;
     var country_sp = cid_sp.options[cid_sp.selectedIndex].text;
-    updateStackChart("mtoe",countryID_sp,country_sp,"oil");
+    var unit = document.querySelector('input[name = "units"]:checked').value;
+    var resource = document.querySelector('input[name = "resource"]:checked').value;
+    updateStackChart(unit,countryID_sp,country_sp,resource);
 
 }
 
@@ -124,7 +128,7 @@ var traceflag = "tozeroy";
     var layout = {
         title: country_text + " " + resource + ' trends for ' + years[0] + ' - ' + years[years.length - 1 ]
     };
-    Plotly.newPlot('stackChart_production_consumption', resource_data,);
+    Plotly.newPlot('stackChart_production_consumption', resource_data, layout, {displaylogo: false});
 }
 
 function updateStackChart(unit, country_id,country_text, resource)
@@ -229,5 +233,5 @@ var traceflag = "tozeroy";
     var layout = {
         title: country_text + " " + resource + ' trends for ' + years[0] + ' - ' + years[years.length - 1 ]
     };
-    Plotly.newPlot('stackChart_production_consumption', resource_data, layout);
+    Plotly.newPlot('stackChart_production_consumption', resource_data, layout, {displaylogo: false});
 }
