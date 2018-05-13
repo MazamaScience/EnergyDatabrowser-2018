@@ -7,7 +7,7 @@
 
 // Queue the combined data and pass it to ready function
 d3.queue()
-	.defer(d3.json, "../Data/BPStatReview/bp_stat_review_2017_combined.json")
+	.defer(d3.json, "https://mazamascience.github.io/EnergyDatabrowser-2018/Data/BPStatReview/bp_stat_review_2017_combined.json")
 	.await(ready);
 
 // Global variables
