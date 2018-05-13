@@ -262,8 +262,7 @@
   <style>
   #map { width: 1100px; height: 500px; margin: 0 auto}
  .info { padding: 6px 8px; font: 14px/16px Arial, Helvetica, sans-serif; 
- 		background: white; 
- 		background: rgba(255,255,255,0.8); 
+ 		background: #33cccc; 
  		border-radius: 5px; 
  	   } 
  .info h4 { margin: 0 0 5px; color: #777; }
@@ -349,11 +348,135 @@
 
 	
 
-
+	<a href="#aside">
 	<div id='map'></div>
+	</a>
 
 	<!-- Start of Jay's UI -->
-	<div id="databrowser">
+
+<!-- End of Jay's UI -->
+
+	<script src="js/plotly.min.js"></script>
+  	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script type="text/javascript" src="https://d3js.org/d3.v4.min.js"></script>
+    <script src="https://d3js.org/d3-geo-projection.v2.min.js"></script>
+    <script src="https://d3js.org/d3-collection.v1.min.js"></script>
+    <script src="https://d3js.org/d3-dispatch.v1.min.js"></script>
+    <script src="https://d3js.org/d3-dsv.v1.min.js"></script>
+    <script src="https://d3js.org/d3-request.v1.min.js"></script>
+    <script src="https://d3js.org/d3-queue.v3.min.js"></script>
+    <script src="https://d3js.org/colorbrewer.v1.min.js"></script> 
+    <script src="https://d3js.org/colorbrewer.v1.min.js"></script> 
+
+
+	<script type="text/javascript" src ="../Data/mapping.js"></script>
+	<script type="text/javascript" src="../Data/countries.js"></script>
+	<script type="text/javascript" src="../Data/unitMap.js"></script>
+	<script id= "first" type="text/javascript" src="js/map_data.js"></script>
+     
+  <!-- End Abhinav's Map UI -->
+
+  
+
+
+  
+</div>
+</div>
+</div>
+</section>
+
+  
+    <section id="features" class="features">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12 text-center">
+                    <div class="section-heading">
+                        <h2>Unlimited Features, Unlimited Fun</h2>
+                        <p class="text-muted">Check out what you can do with this app theme!</p>
+                        <hr>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="device-container">
+                        <div class="device-mockup iphone6_plus portrait white">
+                            <div class="device">
+                                <div class="screen">
+                                    <!-- Demo image for screen mockup, you can put an image here, some HTML, an animation, video, or anything else! -->
+                                    <img src="/img/demo-screen-1.jpg" class="img-responsive" alt=""> </div>
+                                <div class="button">
+                                    <!-- You can hook the "home button" to some JavaScript events or just remove it -->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-8">
+                    <div class="container-fluid">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="feature-item">
+                                    <i class="icon-screen-smartphone text-primary"></i>
+                                    <h3>Device Mockups</h3>
+                                    <p class="text-muted">Ready to use HTML/CSS device mockups, no Photoshop required!</p>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="feature-item">
+                                    <i class="icon-camera text-primary"></i>
+                                    <h3>Flexible Use</h3>
+                                    <p class="text-muted">Put an image, video, animation, or anything else in the screen!</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="feature-item">
+                                    <i class="icon-present text-primary"></i>
+                                    <h3>Free to Use</h3>
+                                    <p class="text-muted">As always, this theme is free to download and use for any purpose!</p>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="feature-item">
+                                    <i class="icon-lock-open text-primary"></i>
+                                    <h3>Open Source</h3>
+                                    <p class="text-muted">Since this theme is MIT licensed, you can use it commercially!</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-8">
+                  <h3>Hosts it in the best cloud hosting on the market</h3>
+                  <a target="_blank" href="https://m.do.co/c/a29d90274371" style="color:black" class="btn btn-outline btn-xl">Digital Ocean</a>  
+                </div>
+
+            </div>
+    </section>
+
+  <!-- Jay's UI -->
+<!-- Hide UnHide Logic -->
+
+
+<section id="aside" class="map bg-primary text-center">
+  <!--   <div class="container">
+            <div class="col-md-8"> -->
+
+<!-- Actual Aside HTML -->
+<!-- 
+<section class="cta">
+    <div class="cta-content">
+        <div class="container"> -->
+            <!-- <h2>Energy Production Trend:</h2> -->
+            <!-- <a href="/funds" class="btn btn-outline btn-xl page-scroll">How I can?!</a> -->
+
+<!-- End of Actual Aside HTML -->
+
+<!-- Start of Jay's UI -->
+<center>
+  <div id="databrowser">
     <table>
       <tbody>
         <tr>
@@ -459,135 +582,22 @@
       </tbody>
     </table>
   </div>
-  
+</center>
 
-  	<script type="text/javascript" src="https://d3js.org/d3.v4.min.js"></script>
-	<script type="text/javascript" src="js/stacked_area_plot.js"></script>  
-
-	<div id='wrapper'>
-        <div id="consumptionChart" style="width:600px;height:500px;float:left;"></div> 
-         <div id="stackChart" style="width:600px;height:500px;float:right;"></div> 
-	</div>
-<!-- End of Jay's UI -->
-
-	<script src="js/plotly.min.js"></script>
-  	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-    <script type="text/javascript" src="https://d3js.org/d3.v4.min.js"></script>
-    <script src="https://d3js.org/d3-geo-projection.v2.min.js"></script>
-    <script src="https://d3js.org/d3-collection.v1.min.js"></script>
-    <script src="https://d3js.org/d3-dispatch.v1.min.js"></script>
-    <script src="https://d3js.org/d3-dsv.v1.min.js"></script>
-    <script src="https://d3js.org/d3-request.v1.min.js"></script>
-    <script src="https://d3js.org/d3-queue.v3.min.js"></script>
-    <script src="https://d3js.org/colorbrewer.v1.min.js"></script> 
-    <script src="https://d3js.org/colorbrewer.v1.min.js"></script> 
+<script type="text/javascript" src="https://d3js.org/d3.v4.min.js"></script>
+<script type="text/javascript" src="js/stacked_area_plot.js"></script>  
 
 
-	<script type="text/javascript" src ="../Data/mapping.js"></script>
-	<script type="text/javascript" src="../Data/countries.js"></script>
-	<script type="text/javascript" src="../Data/unitMap.js"></script>
-	<script id= "first" type="text/javascript" src="js/map_data.js"></script>
-     
-  <!-- End Abhinav's Map UI -->
-
-  
-
-
-  
+<div id='wrapper' style="width:95%; display: table; margin:0 auto;">
+        <div id="consumptionChart" style="float:left; width:550px; position:relative"></div> 
+         <div id="stackChart" style="float:right; width:550px; position:relative"</div> 
 </div>
-</div>
-</div>
-</section>
-
-  
-    <section id="features" class="features">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-12 text-center">
-                    <div class="section-heading">
-                        <h2>Unlimited Features, Unlimited Fun</h2>
-                        <p class="text-muted">Check out what you can do with this app theme!</p>
-                        <hr>
-                    </div>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-md-4">
-                    <div class="device-container">
-                        <div class="device-mockup iphone6_plus portrait white">
-                            <div class="device">
-                                <div class="screen">
-                                    <!-- Demo image for screen mockup, you can put an image here, some HTML, an animation, video, or anything else! -->
-                                    <img src="/img/demo-screen-1.jpg" class="img-responsive" alt=""> </div>
-                                <div class="button">
-                                    <!-- You can hook the "home button" to some JavaScript events or just remove it -->
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-8">
-                    <div class="container-fluid">
-                        <div class="row">
-                            <div class="col-md-6">
-                                <div class="feature-item">
-                                    <i class="icon-screen-smartphone text-primary"></i>
-                                    <h3>Device Mockups</h3>
-                                    <p class="text-muted">Ready to use HTML/CSS device mockups, no Photoshop required!</p>
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="feature-item">
-                                    <i class="icon-camera text-primary"></i>
-                                    <h3>Flexible Use</h3>
-                                    <p class="text-muted">Put an image, video, animation, or anything else in the screen!</p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-6">
-                                <div class="feature-item">
-                                    <i class="icon-present text-primary"></i>
-                                    <h3>Free to Use</h3>
-                                    <p class="text-muted">As always, this theme is free to download and use for any purpose!</p>
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="feature-item">
-                                    <i class="icon-lock-open text-primary"></i>
-                                    <h3>Open Source</h3>
-                                    <p class="text-muted">Since this theme is MIT licensed, you can use it commercially!</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-8">
-                  <h3>Hosts it in the best cloud hosting on the market</h3>
-                  <a target="_blank" href="https://m.do.co/c/a29d90274371" style="color:black" class="btn btn-outline btn-xl">Digital Ocean</a>  
-                </div>
-
-            </div>
-    </section>
-
-  <!-- Abhinav's UI -->
 
 
-<!-- Actual Aside HTML -->
+<!-- Jay's viz - End -->
 
-<section class="cta">
-    <div class="cta-content">
-        <div class="container">
-            <h2>Oil Production Trend in the World</h2>
-            <!-- <a href="/funds" class="btn btn-outline btn-xl page-scroll">How I can?!</a> -->
-
-<!-- End of Actual Aside HTML -->
-
-
-<!-- Abinav's viz - End -->
-
-        </div>
-    </div>
+  <!--       </div>
+    </div> -->
     <div class="overlay"></div>
 </section>
 

@@ -21,8 +21,7 @@
   <style>
   #map { width: 1100px; height: 500px; margin: 0 auto}
  .info { padding: 6px 8px; font: 14px/16px Arial, Helvetica, sans-serif; 
- 		background: white; 
- 		background: rgba(255,255,255,0.8); 
+ 		background: #33cccc; 
  		border-radius: 5px; 
  	   } 
  .info h4 { margin: 0 0 5px; color: #777; }
@@ -108,125 +107,12 @@
 
 	
 
-
+	<a href="#aside">
 	<div id='map'></div>
+	</a>
 
 	<!-- Start of Jay's UI -->
-	<div id="databrowser">
-    <table>
-      <tbody>
-        <tr>
 
-          <td id="controls_td">
-
-            <div id="controls_div">
-              <form id="controls_form" name="controls_form">
-
-                <input id="language" type="hidden" name="language" value="en">
-                <input id="plottype" type="hidden" name="plottype" value="Exports">
-                <input id="datasource" type="hidden" name="datasource" value="BP_2017">
-
-                <div id="radio_table_div">
-                  <table class="layout">
-                    <tbody>
-
-                      <tr id="data_row">
-                        <td class="label_td">
-                          <label>Data:</label>
-                        </td>
-                        <td>
-                          <span>BP Statistical Review 2017</span>
-                        </td>
-                      </tr>
-
-                      <tr id="units_row">
-                        <td class="label_td">
-                          <label class="radio_label">Units:</label>
-                        </td>
-                        <td>
-                          <span id="mtoe_span" class="radio_span selected" title="million tonnes of oil equivalent per year">
-                            <input type="radio" name="units" id="mtoe" value="mtoe" checked="checked" onclick=drawStack()>
-                            <span>mtoe</span>
-                          </span>
-                          <span id="joule_span" class="radio_span" title="Exajoules per year">
-                            <input type="radio" name="units" id="joule" value="joule">
-                            <span>J</span>
-                          </span>
-                        </td>
-                      </tr>
-
-                      <tr id="toggle_row">
-                        <td class="toggle_td">
-                          <label class="toggle_label">Toggle Tooltip:</label>
-                        </td>
-                        <td>  
-                          <span id="toggle_on_span" class="toggle_radio_span selected" title="Tooltip On">
-                            <input type="radio" name="toggle_tt" id="on" value="on" checked="checked" onclick=toggleTooltip()>
-                            <span>On</span>
-                          </span>
-                          <span id="toggle_off_span" class="toggle_radio_span selected" title="Tooltip Off">
-                            <input type="radio" name="toggle_tt" id="off" value="off" onclick=toggleTooltip()>
-                            <span>Off</span>
-                          </span>
-                        </td>
-                      </tr>
-
-                      <tr id="util_row">
-                        <td class="util_td">
-                          <label class="toggle_label">Utility Type:</label>
-                        </td>
-                        <td>
-                          <span id="cons_span" class="util_radio_span selected" title="Consumption">
-                            <input type="radio" name="utility" id="consumption" value="consumption" checked="checked" onclick=updateChart()>
-                            <span>Consumption</span>
-                          </span>
-                          <span id="prod_span" class="util_radio_span selected" title="Production">
-                            <input type="radio" name="utility" id="production" value="production" onclick=updateChart()>
-                            <span>Production</span>
-                          </span>
-                        </td>
-                      </tr>
-                      <tr id="extra_row">
-                        <td class="util_td">
-                          <label class="toggle_label">Display Option:</label>
-                        </td>
-                        <td class="extra_td">
-                          <span id="percent_span">
-                            <input type="checkbox" name="percent" id="percent" value="pct" onclick=updateChart()>
-                            <label class="checkbox-label" for="percent">percent</label>
-                          </span>
-                        </td>
-                      </tr>
-
-                    </tbody>
-                  </table>
-                </div>
-
-                 <!-- countryID_div -->
-        
-
-                </div>
-
-              </form>
-            </div> <!-- END of controls_div -->
-
-          </td> <!-- END of controls_td -->
-
-          </td>
-
-        </tr>
-      </tbody>
-    </table>
-  </div>
-  
-
-  	<script type="text/javascript" src="https://d3js.org/d3.v4.min.js"></script>
-	<script type="text/javascript" src="js/stacked_area_plot.js"></script>  
-
-	<div id='wrapper'>
-        <div id="consumptionChart" style="width:600px;height:500px;float:left;"></div> 
-         <div id="stackChart" style="width:600px;height:500px;float:right;"></div> 
-	</div>
 <!-- End of Jay's UI -->
 
 	<script src="js/plotly.min.js"></script>

@@ -29,6 +29,7 @@ var markers = {
 var countryID_global = null;
 var country_global = null;
 
+
 // Function to toggle between creating a new plot and updating it
 function toggleAllEnergyPlots(countryID, country){
 
