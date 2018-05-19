@@ -1,30 +1,26 @@
-d3.queue()
-    .defer(d3.json, "../Data/BPStatReview/bp_stat_review_2017_combined.json")
-    .await(ready);
-
-var merged_json;
 var years = [];
-function ready(error, loaded_json)
-{
-  merged_json = loaded_json;
-  var cid_sp = document.getElementById("countryID");
-  var countryID_sp = cid_sp.options[cid_sp.selectedIndex].value;
-  var country_sp = cid_sp.options[cid_sp.selectedIndex].text;
-  var unit = document.querySelector('input[name = "units"]:checked').value;
-  var resource = document.querySelector('input[name = "resource"]:checked').value;
-  plotStackChart(unit,countryID_sp,country_sp,resource);
+var diffPlotFlag = 0;
 
+function toggleDiffChart(unit, country_id, country_text, resource)
+{
+  if(diffPlotFlag == 0)
+  {   
+    plotStackChart(unit,countryID_sp,country_sp,resource);
+    diffPlotFlag++;
+  };
+  else 
+  {
+    updateDiffChart(country_id, country_text);
+  };
 }
 
-function updateDiffChart()
-{
-    var cid_sp = document.getElementById("countryID");
-    var countryID_sp = cid_sp.options[cid_sp.selectedIndex].value;
-    var country_sp = cid_sp.options[cid_sp.selectedIndex].text;
+function updateDiffChart(country_id, country_text)
+{   
+    var countryID_sp = country_id;
+    var country_sp = country_text;
     var unit = document.querySelector('input[name = "units"]:checked').value;
     var resource = document.querySelector('input[name = "resource"]:checked').value;
     updateStackChart(unit,countryID_sp,country_sp,resource);
-
 }
 
 function plotStackChart(unit, country_id,country_text, resource)
@@ -32,10 +28,10 @@ function plotStackChart(unit, country_id,country_text, resource)
 var resource_data = [];
 var traceflag = "tozeroy";
 
-    for (data in merged_json[unit][resource])
+    for (data in data_json[unit][resource])
       {
         
-        country_data = merged_json[unit][resource][country_id];
+        country_data = data_json[unit][resource][country_id];
         //Parsing value from all years
         years = d3.keys(country_data);
        
@@ -136,10 +132,10 @@ function updateStackChart(unit, country_id,country_text, resource)
 var resource_data = [];
 var traceflag = "tozeroy";
 
-    for (data in merged_json[unit][resource])
+    for (data in data_json[unit][resource])
       {
         
-        country_data = merged_json[unit][resource][country_id];
+        country_data = data_json[unit][resource][country_id];
         //Parsing value from all years
         years = d3.keys(country_data);
        
