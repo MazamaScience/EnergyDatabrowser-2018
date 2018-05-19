@@ -1,27 +1,80 @@
 var years = [];
 var diffPlotFlag = 0;
+var countryID_sp = null;
+var country_sp = null;
 
 function toggleDiffChart(unit, country_id, country_text, resource)
-{
+{ countryID_sp = country_id;
+  country_sp = country_text;
   if(diffPlotFlag == 0)
-  {   
+  { 
     plotStackChart(unit,countryID_sp,country_sp,resource);
     diffPlotFlag++;
   };
   else 
   {
-    updateDiffChart(country_id, country_text);
+    updateDiffChart();
   };
 }
 
-function updateDiffChart(country_id, country_text)
+function updateDiffChart()
 {   
-    var countryID_sp = country_id;
-    var country_sp = country_text;
-    var unit = document.querySelector('input[name = "units"]:checked').value;
-    var resource = document.querySelector('input[name = "resource"]:checked').value;
+  var resource;
+  
+  if (document.getElementById("coal").checked) {
+  resource = document.getElementById("coal").value;
+  }
+  else if (document.getElementById("oil").checked) {
+    resource = document.getElementById("oil").value;
+  }
+  else if (document.getElementById("gas").checked) {
+    resource = document.getElementById("gas").value;
+  }
+  else if (document.getElementById("nuc").checked) {
+    resource = document.getElementById("nuc").value;
+  }
+  else {
+    resource = document.getElementById("hyd").value;
+  }
+
+  grayOut(resource);
+
+  // Get units
+  var units;
+  if (document.getElementById("mtoe").checked) {
+    units = document.getElementById("mtoe").value;
+  } else if (document.getElementById("bbl").checked) {
+    units = document.getElementById("bbl").value;
+  } else if (document.getElementById("ft3").checked) {
+    units = document.getElementById("ft3").value;
+  } else if (document.getElementById("twh").checked) {
+    units = document.getElementById("twh").value;
+  } else if (document.getElementById("m3").checked) {
+    units = document.getElementById("m3").value;
+  }
+  else {
+    units = document.getElementById("joule").value
+  }
+
     updateStackChart(unit,countryID_sp,country_sp,resource);
 }
+
+function grayOut(resource){
+  var units = unitMap[resource];
+  var unit_list = ["bbl","ft3","m3","twh","mtoe","joule"]
+  for (var ui = 0; ui < unit_list.length; ui++){
+      document.getElementById(unit_list[ui] + '_span').style.color = 'gray';
+      document.getElementById(unit_list[ui]).disabled = true;
+    for (var gi = 0; gi < units.length; gi++) {
+
+      if (units[gi] == unit_list[ui]){
+          document.getElementById(unit_list[ui] + '_span').style.color = 'black';
+        document.getElementById(units[gi]).disabled = false;
+      }
+    }
+  }
+}
+
 
 function plotStackChart(unit, country_id,country_text, resource)
 {
