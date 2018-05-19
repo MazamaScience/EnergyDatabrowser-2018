@@ -20,55 +20,55 @@ function toggleDiffChart(unit, country_id, country_text, resource)
 function updateDiffChart()
 {   
   var resource;
-  
-  if (document.getElementById("coal").checked) {
-  resource = document.getElementById("coal").value;
+
+  if (document.getElementById("coal_m").checked) {
+  resource = document.getElementById("coal_m").value;
   }
-  else if (document.getElementById("oil").checked) {
-    resource = document.getElementById("oil").value;
+  else if (document.getElementById("oil_m").checked) {
+    resource = document.getElementById("oil_m").value;
   }
-  else if (document.getElementById("gas").checked) {
-    resource = document.getElementById("gas").value;
+  else if (document.getElementById("gas_m").checked) {
+    resource = document.getElementById("gas_m").value;
   }
-  else if (document.getElementById("nuc").checked) {
-    resource = document.getElementById("nuc").value;
+  else if (document.getElementById("nuc_m").checked) {
+    resource = document.getElementById("nuc_m").value;
   }
   else {
-    resource = document.getElementById("hyd").value;
+    resource = document.getElementById("hyd_m").value;
   }
 
-  grayOut(resource);
+  grayRadio(resource);
 
   // Get units
   var units;
-  if (document.getElementById("mtoe").checked) {
-    units = document.getElementById("mtoe").value;
-  } else if (document.getElementById("bbl").checked) {
-    units = document.getElementById("bbl").value;
-  } else if (document.getElementById("ft3").checked) {
-    units = document.getElementById("ft3").value;
-  } else if (document.getElementById("twh").checked) {
-    units = document.getElementById("twh").value;
-  } else if (document.getElementById("m3").checked) {
-    units = document.getElementById("m3").value;
+  if (document.getElementById("mtoe_m").checked) {
+    units = document.getElementById("mtoe_m").value;
+  } else if (document.getElementById("bbl_m").checked) {
+    units = document.getElementById("bbl_m").value;
+  } else if (document.getElementById("ft3_m").checked) {
+    units = document.getElementById("ft3_m").value;
+  } else if (document.getElementById("twh_m").checked) {
+    units = document.getElementById("twh_m").value;
+  } else if (document.getElementById("m3_m").checked) {
+    units = document.getElementById("m3_m").value;
   }
   else {
-    units = document.getElementById("joule").value
+    units = document.getElementById("joule_m").value
   }
 
     updateStackChart(unit,countryID_sp,country_sp,resource);
 }
 
-function grayOut(resource){
+function grayRadio(resource){
   var units = unitMap[resource];
   var unit_list = ["bbl","ft3","m3","twh","mtoe","joule"]
   for (var ui = 0; ui < unit_list.length; ui++){
-      document.getElementById(unit_list[ui] + '_span').style.color = 'gray';
+      document.getElementById(unit_list[ui] + '_span_m').style.color = 'gray';
       document.getElementById(unit_list[ui]).disabled = true;
     for (var gi = 0; gi < units.length; gi++) {
 
       if (units[gi] == unit_list[ui]){
-          document.getElementById(unit_list[ui] + '_span').style.color = 'black';
+          document.getElementById(unit_list[ui] + '_span_m').style.color = 'black';
         document.getElementById(units[gi]).disabled = false;
       }
     }
