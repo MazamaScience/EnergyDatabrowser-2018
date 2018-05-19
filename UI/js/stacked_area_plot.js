@@ -1,7 +1,6 @@
-
-// Variable to toggle plots
+//  Variable to toggle plots
 var energyPlotFlag = 0;
-// Specific colors and symbols for all resources
+//  Specific colors and symbols for all resources
 var markers = {
     'nuclear': {
         'symbol': 18,
@@ -25,13 +24,12 @@ var markers = {
     }
 };
 
-// Global variables to handle radio buttons
+//  Global variables to handle radio buttons
 var countryID_global = null;
 var country_global = null;
 
-// Function to toggle between creating a new plot and updating it
+//  Function to toggle between creating a new plot and updating it
 function toggleAllEnergyPlots(countryID, country){
-
   countryID_global = countryID;
   country_global = country;
 
@@ -44,23 +42,23 @@ function toggleAllEnergyPlots(countryID, country){
   }
 }
 
-//Divide two arrays
+// Divide two arrays
 function divideArray(A, B){
   return(A.map(function(n, i) { return n / B[i]; }));
 }
 
-//Multiply Array
+// Multiply Array
 function multiplyConstant(A, constant){
-  //Return upto four decimal digits
+  // Return upto four decimal digits
   return(A.map(function(element) {return (element * constant).toFixed(4);}));
 }
 
-//Null Comparision
+// Null Comparision
 function fillZeros(A){
   return(A.map(function(element) {return (element || 0);}));
 }
 
-//Given two array of traces, normalize each chart
+// Given two array of traces, normalize each chart
 function normalizeResources(stacked_resource_data, line_resource_data, cummulative_values, update){
   for(resource in stacked_resource_data){
 
@@ -74,17 +72,17 @@ function normalizeResources(stacked_resource_data, line_resource_data, cummulati
     }
     
     normalized_stacked_value = divideArray(stacked_value, cummulative_values);
-    //Getting percentage of stacked values
+    // Getting percentage of stacked values
     normalized_stacked_value = multiplyConstant(normalized_stacked_value, 100)
     
-    //Getting percentage of individual resource value
+    // Getting percentage of individual resource value
     normalized_resource_value = divideArray(resource_value, cummulative_values);
     normalized_resource_value = multiplyConstant(normalized_resource_value, 100);
   
     if(update == false){
-      //Saving the normalized array back
+      // Saving the normalized array back
       stacked_resource_data[resource].y = normalized_stacked_value;
-      //Because the individual percentage should be shown
+      // Because the individual percentage should be shown
       stacked_resource_data[resource].text = normalized_resource_value;
       line_resource_data[resource].y = normalized_resource_value;
     }
@@ -97,54 +95,47 @@ function normalizeResources(stacked_resource_data, line_resource_data, cummulati
   return [stacked_resource_data, line_resource_data];
 }
 
-//Function to create a new plot, which shows all resources
+// Function to create a new plot, which shows all resources
 function resourceChart() {
-    // var cid_sp = document.getElementById("countryID");
-    // var countryID_sp = cid_sp.options[cid_sp.selectedIndex].value;
-    // var country_sp = cid_sp.options[cid_sp.selectedIndex].text;
-
     var utility = document.querySelector('input[name = "utility"]:checked').value;
     var pct = document.getElementById("percent").checked;
     plotResourceCharts('mtoe', countryID_global, country_global, utility, pct);
 }
 
-//Update the chart as the radio button changes
+// Update the chart as the radio button changes
 function updateChart(countryID, country) {
-    // var cid_sp = document.getElementById("countryID");
-    // var countryID_sp = cid_sp.options[cid_sp.selectedIndex].value;
-    // var country_sp = cid_sp.options[cid_sp.selectedIndex].text;
     var utility = document.querySelector('input[name = "utility"]:checked').value;
     var pct = document.getElementById("percent").checked;
     updateResourceCharts('mtoe', countryID_global, country_global, utility, pct);
 }
 
-//Plotting all resources
+// Plotting all resources
 function plotResourceCharts(unit, country, country_name, resource_pattern, percentage) {
-    //This array would have cummulative values of all resource traces
+    // This array would have cummulative values of all resource traces
     var stacked_resource_data = [];
-    //This array would have individual resource traces
+    // This array would have individual resource traces
     var line_resource_data = [];
-    //First resource would help populate all years
+    // First resource would help populate all years
     var first = true;
     var cummulative_values = [];
-    //All resources required to plot
+    // All resources required to plot
     var resources = ['nuclear', 'coal', 'oil', 'gas', 'hydro'];
 
     var subtitle = 0
 
-    //The order of resources have to be fixed for stacked area
+    // The order of resources have to be fixed for stacked area
     for (var i in resources) {
         resource = resources[i];
         country_resource = data_json[unit][resource][country];
-        //Parsing value from all years
+        // Parsing value from all years
         years = d3.keys(country_resource);
 
-        //Initializing the cummulative value array
+        // Initializing the cummulative value array
         if (first == true) {
             cummulative_values = new Array(years.length).fill(0);
             first = false;
         }
-        //But we have to display original value
+        // But we have to display original value
         var values = new Array(years.length).fill(0);
 
         for (var i = 0; i < years.length; i++) {
@@ -226,7 +217,7 @@ function plotResourceCharts(unit, country, country_name, resource_pattern, perce
     
 }
 
-//Updating as the buttons change
+// Updating as the buttons change
 function updateResourceCharts(unit, country, country_name, resource_pattern, percentage) {
     var stacked_resource_data = [];
     var line_resource_data = [];
@@ -235,19 +226,19 @@ function updateResourceCharts(unit, country, country_name, resource_pattern, per
     var resources = ['nuclear', 'coal', 'oil', 'gas', 'hydro'];
     var subtitle = 0
 
-    //The order of resources have to be fixed for stacked area
+    // The order of resources have to be fixed for stacked area
     for (var i in resources) {
         resource = resources[i];
         country_resource = data_json[unit][resource][country];
-        //Parsing value from all years
+        // Parsing value from all years
         years = d3.keys(country_resource);
 
-        //Initializing the cummulative value array
+        // Initializing the cummulative value array
         if (first == true) {
             cummulative_values = new Array(years.length).fill(0);
             first = false;
         }
-        //But we have to display original value
+        // But we have to display original value
         var values = new Array(years.length).fill(0);
 
         for (var i = 0; i < years.length; i++) {
@@ -260,7 +251,6 @@ function updateResourceCharts(unit, country, country_name, resource_pattern, per
         stacked_resource_data.push(cummulative_values.slice());
         line_resource_data.push(values);
     }
-
 
     if(percentage == true){
       normalized_values = normalizeResources(stacked_resource_data, 
@@ -277,8 +267,6 @@ function updateResourceCharts(unit, country, country_name, resource_pattern, per
     var line_trace = {
         y: line_resource_data
     }
-
-    
 
     var pct_chg = Math.round((stacked_trace.y[4][51]-stacked_trace.y[4][36])/stacked_trace.y[4][36]*10000)/100
     
@@ -311,7 +299,7 @@ function updateResourceCharts(unit, country, country_name, resource_pattern, per
     Plotly.update('consumptionChart', line_trace, layout);
 }
 
-//Allowing functionality to enable or disable tooltip
+//  Allowing functionality to enable or disable tooltip
 function toggleTooltip() {
 
     var toggle = document.querySelector('input[name = "toggle_tt"]:checked').value;
