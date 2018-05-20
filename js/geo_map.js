@@ -5,7 +5,32 @@
 ** The GeoJSON is received from map_data js file
 ** Author : Abhinav Garg 
 */
+// NEW PART FOR SMOOTH SCROLLING - AVANTI
+//For Smooth Scrolling
 
+window.smoothScroll = function(target) {
+    var scrollContainer = target;
+    do { //find scroll container
+        scrollContainer = scrollContainer.parentNode;
+        if (!scrollContainer) return;
+        scrollContainer.scrollTop += 1;
+    } while (scrollContainer.scrollTop == 0);
+
+    var targetY = 0;
+    do { //find the top of target relatively to the container
+        if (target == scrollContainer) break;
+        targetY += target.offsetTop;
+    } while (target = target.offsetParent);
+
+    scroll = function(c, a, b, i) {
+        i++; if (i > 30) return;
+        c.scrollTop = a + (b - a) / 30 * i;
+        setTimeout(function(){ scroll(c, a, b, i); }, 20);
+    }
+    // start scrolling
+    scroll(scrollContainer, scrollContainer.scrollTop, targetY, 0);
+}
+// END
 
 // Creating the leaflet map and configuring it 
 var map = L.map('map','100%','100%').setView([35.8, -36], 1);
@@ -85,16 +110,21 @@ function resetHighlight(e) {
 
 }
 
+
+function goonenergyplots(e) {
+
+	toggleAllEnergyPlots(e.target.feature.properties.mzm_id,e.target.feature.properties.name)
+	// window.location.href="#aside"
+	smoothScroll(document.getElementById('aside'))
+
+}
 // Map zooming feature
 function zoomToFeature(e) {
-
-	console.log(e.target.feature.properties.name)
-	console.log(e.target.feature.properties.mzm_id)
 
 	// This calls the function in the other two visualizaitons. The Mazama country code is passed 
 	// along with the name 
 	toggleAllEnergyPlots(e.target.feature.properties.mzm_id,e.target.feature.properties.name)
-	map.fitBounds(e.target.getBounds());
+	// map.fitBounds(e.target.getBounds());
 
 }
 
@@ -104,7 +134,8 @@ function onEachFeature(feature, layer) {
 	layer.on({
 		mouseover: highlightFeature,
 		mouseout: resetHighlight,
-		click: zoomToFeature
+		// click: zoomToFeature
+		click: goonenergyplots
 	});
 
 }

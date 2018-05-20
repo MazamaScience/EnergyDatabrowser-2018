@@ -5,22 +5,21 @@
             <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
                 <span class="sr-only">Toggle navigation</span> Menu <i class="fa fa-bars"></i>
             </button>
-            <a class="navbar-brand page-scroll" href="#page-top">
-                <img src = "{{ site.url }}/img/MS-FullLogo-Reverse.png" class="img-responsive" alt="">
-            </a>
+            
         </div>
 
         <!-- Collect the nav links, forms, and other content for toggling -->
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <img src = "{{ site.url }}/img/MS-FullLogo-Reverse.png" class="img-responsive" alt="" style="width:150px;height:50px;margin-top:10px;">
             <ul class="nav navbar-nav navbar-right">
                 <li>
-                    <a class="page-scroll" href=# >Home</a>
+                    <a class="page-scroll" onclick="smoothScroll(document.getElementById('mainNav'))">Home</a>
                 </li>
                 <li>
-                  <a class="page-scroll" href="#data">Data</a>
+                  <a class="page-scroll" onclick="smoothScroll(document.getElementById('data'))">Data</a>
                 </li>
                 <li>
-                    <a class="page-scroll" href="#download">Start Exploring!</a>
+                    <a class="page-scroll" onclick="smoothScroll(document.getElementById('download'))">Start Exploring!</a>
                 </li>
             </ul>
         </div>

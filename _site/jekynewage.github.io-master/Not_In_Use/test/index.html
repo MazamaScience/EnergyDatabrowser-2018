@@ -63,22 +63,21 @@
             <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
                 <span class="sr-only">Toggle navigation</span> Menu <i class="fa fa-bars"></i>
             </button>
-            <a class="navbar-brand page-scroll" href="#page-top">
-                <img src = "http://localhost:4000/img/MS-FullLogo-Reverse.png" class="img-responsive" alt="">
-            </a>
+            
         </div>
 
         <!-- Collect the nav links, forms, and other content for toggling -->
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <img src = "http://localhost:4000/img/MS-FullLogo-Reverse.png" class="img-responsive" alt="" style="width:150px;height:50px;margin-top:10px;">
             <ul class="nav navbar-nav navbar-right">
                 <li>
-                    <a class="page-scroll" href=# >Home</a>
+                    <a class="page-scroll" onclick="smoothScroll(document.getElementById('mainNav'))">Home</a>
                 </li>
                 <li>
-                  <a class="page-scroll" href="#data">Data</a>
+                  <a class="page-scroll" onclick="smoothScroll(document.getElementById('data'))">Data</a>
                 </li>
                 <li>
-                    <a class="page-scroll" href="#download">Start Exploring!</a>
+                    <a class="page-scroll" onclick="smoothScroll(document.getElementById('download'))">Start Exploring!</a>
                 </li>
             </ul>
         </div>
@@ -262,14 +261,15 @@
 
 
   <style>
-  #map { width: 1100px; height: 500px; margin: 0 auto}
+  #map { width: 100%; height: 500px; margin: 0 auto; padding-left: 5px;padding-right: 5px}
  .info { padding: 6px 8px; font: 14px/16px Arial, Helvetica, sans-serif; 
  		background: #33cccc; 
  		border-radius: 5px; 
  	   } 
  .info h4 { margin: 0 0 5px; color: #777; }
  .legend { text-align: left; line-height: 18px; color: #555; } 
- .legend i { width: 18px; height: 18px; float: left; margin-right: 8px; opacity: 0.7; }
+ .legend i { width: 18px; height: 18px; float: left; margin-right: 8px; opacity: 0.7;}
+ .leaflet-container{background:#d1d1d1;}
 
  </style>
 	<div id="radio_table_div">
@@ -350,9 +350,9 @@
 
 	
 
-	<a href="#aside">
+	<!-- <a href="#aside"> -->
 	<div id='map'></div>
-	</a>
+	<!-- </a> -->
 
 	<!-- Start of Jay's UI -->
 
@@ -462,7 +462,7 @@
 <!-- Hide UnHide Logic -->
 
 
-<section id="aside" class="map bg-primary text-center">
+<section id="aside" class="map bg-primary text-center" style="box-shadow: 10px 10px #0066b2;">
   <!--   <div class="container">
             <div class="col-md-8"> -->
 
@@ -591,8 +591,8 @@
 
 
 <div id='wrapper' style="width:95%; display: table; margin:0 auto;">
-        <div id="consumptionChart" style="float:left; width:550px; position:relative"></div> 
-         <div id="stackChart" style="float:right; width:550px; position:relative"</div> 
+        <div id="consumptionChart" style="float:left; width:50%; position:relative"></div> 
+         <div id="stackChart" style="float:right; width:50%; position:relative"</div> 
 </div>
 
 
