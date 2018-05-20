@@ -10,11 +10,11 @@ function toggleDiffChart(unit, country_id, country_text, resource)
   { 
     plotStackChart(unit,countryID_sp,country_sp,resource);
     diffPlotFlag++;
-  };
+  }
   else 
   {
     updateDiffChart();
-  };
+  }
 }
 
 function updateDiffChart()
@@ -37,7 +37,7 @@ function updateDiffChart()
     resource = document.getElementById("hyd_m").value;
   }
 
-  grayRadio(resource);
+  grayOutRadio(resource);
 
   // Get units
   var units;
@@ -56,22 +56,30 @@ function updateDiffChart()
     units = document.getElementById("joule_m").value
   }
 
-    updateStackChart(unit,countryID_sp,country_sp,resource);
+    updateStackChart(units,countryID_sp,country_sp,resource);
 }
 
-function grayRadio(resource){
-  var units = unitMap[resource];
-  var unit_list = ["bbl","ft3","m3","twh","mtoe","joule"]
-  for (var ui = 0; ui < unit_list.length; ui++){
-      document.getElementById(unit_list[ui] + '_span_m').style.color = 'gray';
-      document.getElementById(unit_list[ui]).disabled = true;
-    for (var gi = 0; gi < units.length; gi++) {
 
-      if (units[gi] == unit_list[ui]){
-          document.getElementById(unit_list[ui] + '_span_m').style.color = 'black';
-        document.getElementById(units[gi]).disabled = false;
+function grayOutRadio(resource){
+
+  var units = unitMap[resource];
+
+  var unit_list = ["bbl","ft3","m3","twh","mtoe"];
+  
+  for (var ui = 0; ui < unit_list.length; ui++){
+
+
+      document.getElementById(unit_list[ui] + '_span_m').style.color = 'gray';
+      document.getElementById(unit_list[ui] + '_m').disabled = true;
+
+      for (var gi = 0; gi < units.length; gi++) {
+
+          if (units[gi] == unit_list[ui]) {
+
+              document.getElementById(unit_list[ui] + '_span_m').style.color = 'black';
+              document.getElementById(units[gi] + '_m').disabled = false;
+          }
       }
-    }
   }
 }
 

@@ -113,9 +113,25 @@ function loadMap(unit, year, res) {
 function updateMap() {
 
   // Get the resource 
-  var resource;
+  var resource = getResource();
 
-  if (document.getElementById("coal").checked) {
+  // Gray out the units that aren't valid for the resource in consideration
+  grayOut(resource);
+
+  // Get units
+  var units = getUnits();
+
+  // ReloadMap based on new information
+  loadMap(units, '2016', resource);
+
+} 
+
+// Get the resource
+function getResource() {
+
+	var resource;
+
+	if (document.getElementById("coal").checked) {
 
   resource = document.getElementById("coal").value;
 
@@ -141,13 +157,13 @@ function updateMap() {
 
   }
 
-  // Gray out the units that aren't valid for the resource in consideration
-  grayOut(resource);
+  return resource;
+}
 
-  // Get units
-  var units;
-
-  if (document.getElementById("mtoe").checked) {
+//Get the units 
+function getUnits() {
+	var units;
+	if (document.getElementById("mtoe").checked) {
 
   	units = document.getElementById("mtoe").value;
 
@@ -173,11 +189,8 @@ function updateMap() {
   	units = document.getElementById("joule").value
 
   }
-
-  // ReloadMap based on new information
-  loadMap(units, '2016', resource);
-
-} 
+  return units;
+}
 
 // Removes the previous GeoJSON layer and adds the updated one 
 function refreshMapLocations() {
@@ -198,7 +211,7 @@ function grayOut(resource){
 
 	var units = unitMap[resource];
 
-	var unit_list = ["bbl","ft3","m3","twh","mtoe","joule"]
+	var unit_list = ["bbl","ft3","m3","twh","mtoe"]
 
 	for (var ui = 0; ui < unit_list.length; ui++) {
 

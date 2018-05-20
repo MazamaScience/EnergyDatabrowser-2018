@@ -93,10 +93,83 @@ function zoomToFeature(e) {
 
 	// This calls the function in the other two visualizaitons. The Mazama country code is passed 
 	// along with the name 
-	toggleAllEnergyPlots(e.target.feature.properties.mzm_id,e.target.feature.properties.name)
-	map.fitBounds(e.target.getBounds());
+	toggleAllEnergyPlots(e.target.feature.properties.mzm_id,e.target.feature.properties.name);
+	//map.fitBounds(e.target.getBounds()); # Zoom functionality 
+	var units_m = getDiffUnits();
+	var resource_m = getDiffResource();
+	toggleDiffChart(units_m	, e.target.feature.properties.mzm_id, e.target.feature.properties.name, resource_m);
+
+
 
 }
+
+// Get the resource
+function getDiffResource() {
+
+	var resource;
+
+	if (document.getElementById("coal").checked) {
+
+  resource = document.getElementById("coal").value;
+
+  }
+  else if (document.getElementById("oil").checked) {
+
+  	resource = document.getElementById("oil").value;
+
+  }
+  else if (document.getElementById("gas").checked) {
+
+  	resource = document.getElementById("gas").value;
+
+  }
+  else if (document.getElementById("nuc").checked) {
+
+  	resource = document.getElementById("nuc").value;
+
+  }
+  else {
+
+  	resource = document.getElementById("hyd").value;
+
+  }
+
+  return resource;
+}
+
+//Get the units 
+function getDiffUnits() {
+	var units;
+	if (document.getElementById("mtoe").checked) {
+
+  	units = document.getElementById("mtoe").value;
+
+  } else if (document.getElementById("bbl").checked) {
+
+  	units = document.getElementById("bbl").value;
+
+  } else if (document.getElementById("ft3").checked) {
+
+  	units = document.getElementById("ft3").value;
+
+  } else if (document.getElementById("twh").checked) {
+
+  	units = document.getElementById("twh").value;
+
+  } else if (document.getElementById("m3").checked) {
+
+  	units = document.getElementById("m3").value;
+
+  }
+  else {
+
+  	units = document.getElementById("joule").value
+
+  }
+  return units;
+}
+
+
 
 // Mapping DOM events to our functions
 function onEachFeature(feature, layer) {
