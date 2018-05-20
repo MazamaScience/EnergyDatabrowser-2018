@@ -20,7 +20,7 @@ function toggleDiffChart(unit, country_id, country_text, resource)
 function updateDiffChart()
 {   
   var resource;
-  
+
   if (document.getElementById("coal_m").checked) {
   resource = document.getElementById("coal_m").value;
   }
@@ -59,6 +59,7 @@ function updateDiffChart()
     updateStackChart(units,countryID_sp,country_sp,resource);
 }
 
+
 function grayOutRadio(resource){
 
   var units = unitMap[resource];
@@ -66,6 +67,7 @@ function grayOutRadio(resource){
   var unit_list = ["bbl","ft3","m3","twh","mtoe"];
   
   for (var ui = 0; ui < unit_list.length; ui++){
+
 
       document.getElementById(unit_list[ui] + '_span_m').style.color = 'gray';
       document.getElementById(unit_list[ui] + '_m').disabled = true;
@@ -79,7 +81,6 @@ function grayOutRadio(resource){
           }
       }
   }
-
 }
 
 
