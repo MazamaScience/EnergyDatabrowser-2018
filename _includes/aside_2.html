@@ -1,0 +1,165 @@
+<!-- Jay's UI -->
+<!-- Hide UnHide Logic -->
+
+
+<section id="aside2" class="map bg-primary text-center" style="box-shadow: 10px 10px #0066b2;">
+  <!--   <div class="container">
+            <div class="col-md-8"> -->
+
+<!-- Actual Aside HTML -->
+<!-- 
+<section class="cta">
+    <div class="cta-content">
+        <div class="container"> -->
+            <!-- <h2>Energy Production Trend:</h2> -->
+            <!-- <a href="/funds" class="btn btn-outline btn-xl page-scroll">How I can?!</a> -->
+
+<!-- End of Actual Aside HTML -->
+
+<!-- Start of Jay's UI -->
+<center>
+    <div id="databrowser2">
+    <table>
+      <tbody>
+        <tr>
+
+          <td id="controls_td">
+
+            <div id="controls_div">
+              <form id="controls_form" name="controls_form">
+
+                <input id="language" type="hidden" name="language" value="en">
+                <input id="plottype" type="hidden" name="plottype" value="Exports">
+                <input id="datasource" type="hidden" name="datasource" value="BP_2017">
+
+                <div id="radio_table_div">
+                  <table class="layout">
+                    <tbody>
+
+                      <tr id="data_row">
+                        <td class="label_td">
+                          <label>Data:</label>
+                        </td>
+                        <td>
+                          <span>BP Statistical Review 2017</span>
+                        </td>
+                      </tr>
+
+                      <tr id="resource_row">
+                        <td class="label_td">
+                          <label class="radio_label">Resource:</label>
+                        </td>
+                        <td>
+                        <span id="oil_span" class="radio_span selected" title="oil">
+                            <input type="radio" name="resource" id="oil_m" value="oil" checked="checked" onclick="updateDiffChart()">
+                            <span>Oil</span>
+                          </span>
+                          <span id="coal_span" class="radio_span selected" title="coal">
+                            <input type="radio" name="resource" id="coal_m" value="coal" 
+                            onclick="updateDiffChart()">
+                            <span>Coal</span>
+                          </span>
+                          <span id="gas_span" class="radio_span selected" title="gas">
+                            <input type="radio" name="resource" id="gas_m" value="gas" 
+                            onclick="updateDiffChart()">
+                            <span>Gas</span>
+                          </span>
+                          <span id="hydro_span" class="radio_span selected" title="hydro">
+                            <input type="radio" name="resource" id="hyd_m" value="hydro" 
+                             onclick="updateDiffChart()">
+                            <span>Hydro</span>
+                          </span>
+                          <span id="nuclear_span" class="radio_span selected" title="nuclear">
+                            <input type="radio" name="resource" id="nuc_m" value="nuclear" 
+                             onclick="updateDiffChart()">
+                            <span>Nuclear</span>
+                          </span>
+                          </td>
+                      </tr>
+
+
+                      <tr id="units_row">
+                        <td class="label_td">
+                          <label class="radio_label">Units:</label>
+                        </td>
+                        <td>
+                          <span id="bbl_span_m" class="radio_span selected" title="bbl">
+                            <input type="radio" name="units" id="bbl_m" value="bbl" checked="checked" onclick="updateDiffChart()">
+                            <span>bbl</span>
+                          </span>
+                          <span id="ft3_span_m" class="radio_span" title="ft3">
+                            <input type="radio" name="units" id="ft3_m" value="ft3" 
+                            onclick="updateDiffChart()">
+                            <span>ft3</span>
+                          </span>
+                          <span id="m3_span_m" class="radio_span" title="m3">
+                            <input type="radio" name="units" id="m3_m" value="m3"
+                            onclick="updateDiffChart()">
+                            <span>m3</span>
+                          </span>
+                          <span id="mtoe_span_m" class="radio_span" title="mtoe">
+                            <input type="radio" name="units" id="mtoe_m" value="mtoe"
+                            onclick="updateDiffChart()">
+                            <span>mtoe</span>
+                          </span>
+                          <span id="ton_span_m" class="radio_span" title="ton">
+                            <input type="radio" name="units" id="ton_m" value="ton"
+                            onclick="updateDiffChart()">
+                            <span>ton</span>
+                          </span>
+                          <span id="twh_span_m" class="radio_span" title="twh">
+                            <input type="radio" name="units" id="twh_m" value="twh"
+                            onclick="updateDiffChart()">
+                            <span>twh</span>
+                          </span>
+                        </td>
+                      </tr>
+
+                      <tr id="toggle_row">
+                        <td class="toggle_td">
+                          <label class="toggle_label">Toggle tooltip:</label>
+                        </td>
+                        <td>
+                          <span id="toggle_on_span" class="toggle_radio_span selected" title="Tooltip On">
+                            <input type="radio" name="toggle" id="on" value="on" checked="checked" onclick=toggleTooltip()>
+                            <span>On</span>
+                          </span>
+                          <span id="toggle_off_span" class="toggle_radio_span selected" title="Tooltip Off">
+                            <input type="radio" name="toggle" id="off" value="off" onclick=toggleTooltip()>
+                            <span>Off</span>
+                          </span>
+                        </td>
+                      </tr>
+
+                    </tbody>
+                  </table>
+                </div>
+                        </div>
+
+              </form>
+            </div> <!-- END of controls_div -->
+
+          </td> <!-- END of controls_td -->
+
+          </td>
+
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+</center>
+
+<script type="text/javascript" src="https://d3js.org/d3.v4.min.js"></script>
+<!-- <script type="text/javascript" src="js/stacked_area_plot.js"></script>   -->
+
+<div id="stackChart_production_consumption" style="width:900px;height:700px;"></div> 
+<script type="text/javascript" src="js/stacked_production_consumption.js"></script> 
+
+
+<!-- Jay's viz - End -->
+
+  <!--       </div>
+    </div> -->
+    <div class="overlay"></div>
+</section>

@@ -68,7 +68,7 @@
 
         <!-- Collect the nav links, forms, and other content for toggling -->
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-            <img src = "http://localhost:4000/img/MS-FullLogo-Reverse.png" class="img-responsive" alt="" style="width:150px;height:50px;margin-top:10px;">
+            <img src = "http://localhost:4000/img/MS-FullLogo-Reverse.png" class="img-responsive" alt="" style="width:150px;height:50px; display:inline-block">
             <ul class="nav navbar-nav navbar-right">
                 <li>
                     <a class="page-scroll" onclick="smoothScroll(document.getElementById('mainNav'))">Home</a>
@@ -78,6 +78,9 @@
                 </li>
                 <li>
                     <a class="page-scroll" onclick="smoothScroll(document.getElementById('download'))">Start Exploring!</a>
+                </li>
+                <li>
+                    <a class="page-scroll" onclick="smoothScroll(document.getElementById('footer'))">Contact Us</a>
                 </li>
             </ul>
         </div>
@@ -216,7 +219,7 @@
                         <h4>Mazama Science is a consulting group that brings together a wide variety of experience in support of web-based access to scientific data and information. We believe the world will be a better place when rich datasets and vetted analyses are easily available through your browser and we are working hard to make that happen.</h4>
 
                         <h4>In our experience, people enjoy looking at informative scientific graphics if the barrier to creating them is low. When this happens, our species' extraordinary capabilities as pattern recognizers enable us to convert what we see in good scientific graphics into a deeper understanding.</h4>
-                        <a href="#download" class="btn btn-outline btn-xl page-scroll">Explore the Energy Trends around the world</a>
+                        <a class="btn btn-outline btn-xl page-scroll" onclick="smoothScroll(document.getElementById('download'))">Explore the Energy Trends around the world</a>
                     </div>
                 </div>
             </div>
@@ -226,7 +229,9 @@
                         <div class="device">
                             <div class="screen">
                                 <!-- Demo image for screen mockup, you can put an image here, some HTML, an animation, video, or anything else! -->
-                                <img src="http://localhost:4000/img/mzm_img.png" class="img-responsive" alt="">
+                                <img src="http://localhost:4000/img/plot.png" class="img-responsive" alt="">
+                                <img src="http://localhost:4000/img/plot2.png" class="img-responsive" alt="" style: "margin-top:370px">
+                                <img src="http://localhost:4000/img/plot3.png" class="img-responsive" alt="" style: "margin-top:820px">
                             </div>
                             <!-- <div class="button">
                                 You can hook the "home button" to some JavaScript events or just remove it
@@ -244,7 +249,7 @@
     <div class="container">
             <div class="col-md-12">
             	<h2> Net Production Consumption of Energy Resources</h2>
-                <h4> Click on a country to get started!</h4>
+                <h4><center>Click on a country to get started!</center></h4>
                 <div class="badges">
                     <!-- <a class="badge-link" href="#"><img src="http://localhost:4000/img/Simple_world_map.png" alt=""></a> -->
                     <!-- <a class="badge-link" href="#"><img src="/img/app-store-badge.svg" alt=""></a> -->
@@ -272,6 +277,7 @@
  .leaflet-container{background:#d1d1d1;}
 
  </style>
+ <center>
 	<div id="radio_table_div">
 	                  <table class="layout">
 	                    <tbody>
@@ -348,7 +354,7 @@
 	        	</table>
 	</div>
 
-	
+	<center>
 
 	<!-- <a href="#aside"> -->
 	<div id='map'></div>
@@ -588,12 +594,14 @@
 
 <script type="text/javascript" src="https://d3js.org/d3.v4.min.js"></script>
 <script type="text/javascript" src="js/stacked_area_plot.js"></script>  
-
+<script type="text/javascript" src="js/stories.js"></script>
 
 <div id='wrapper' style="width:95%; display: table; margin:0 auto;">
         <div id="consumptionChart" style="float:left; width:50%; position:relative"></div> 
-         <div id="stackChart" style="float:right; width:50%; position:relative"</div> 
+        <div id="stackChart" style="float:right; width:50%; position:relative"></div> 
 </div>
+        </br></br>
+        <center><a class="btn btn-outline btn-xl page-scroll" onclick="smoothScroll(document.getElementById('story'))">Click to see more!</a></center>
 
 
 <!-- Jay's viz - End -->

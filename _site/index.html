@@ -68,7 +68,7 @@
 
         <!-- Collect the nav links, forms, and other content for toggling -->
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-            <img src = "http://localhost:4000/img/MS-FullLogo-Reverse.png" class="img-responsive" alt="" style="width:150px;height:50px;margin-top:10px;">
+            <img src = "http://localhost:4000/img/MS-FullLogo-Reverse.png" class="img-responsive" alt="" style="width:150px;height:50px; display:inline-block">
             <ul class="nav navbar-nav navbar-right">
                 <li>
                     <a class="page-scroll" onclick="smoothScroll(document.getElementById('mainNav'))">Home</a>
@@ -78,6 +78,9 @@
                 </li>
                 <li>
                     <a class="page-scroll" onclick="smoothScroll(document.getElementById('download'))">Start Exploring!</a>
+                </li>
+                <li>
+                    <a class="page-scroll" onclick="smoothScroll(document.getElementById('footer'))">Contact Us</a>
                 </li>
             </ul>
         </div>
@@ -95,7 +98,7 @@
                         <h4>Mazama Science is a consulting group that brings together a wide variety of experience in support of web-based access to scientific data and information. We believe the world will be a better place when rich datasets and vetted analyses are easily available through your browser and we are working hard to make that happen.</h4>
 
                         <h4>In our experience, people enjoy looking at informative scientific graphics if the barrier to creating them is low. When this happens, our species' extraordinary capabilities as pattern recognizers enable us to convert what we see in good scientific graphics into a deeper understanding.</h4>
-                        <a href="#download" class="btn btn-outline btn-xl page-scroll">Explore the Energy Trends around the world</a>
+                        <a class="btn btn-outline btn-xl page-scroll" onclick="smoothScroll(document.getElementById('download'))">Explore the Energy Trends around the world</a>
                     </div>
                 </div>
             </div>
@@ -105,7 +108,9 @@
                         <div class="device">
                             <div class="screen">
                                 <!-- Demo image for screen mockup, you can put an image here, some HTML, an animation, video, or anything else! -->
-                                <img src="http://localhost:4000/img/mzm_img.png" class="img-responsive" alt="">
+                                <img src="http://localhost:4000/img/plot.png" class="img-responsive" alt="">
+                                <img src="http://localhost:4000/img/plot2.png" class="img-responsive" alt="" style: "margin-top:370px">
+                                <img src="http://localhost:4000/img/plot3.png" class="img-responsive" alt="" style: "margin-top:820px">
                             </div>
                             <!-- <div class="button">
                                 You can hook the "home button" to some JavaScript events or just remove it
@@ -123,7 +128,7 @@
     <div class="container">
             <div class="col-md-12">
             	<h2> Net Production Consumption of Energy Resources</h2>
-                <h4> Click on a country to get started!</h4>
+                <h4><center>Click on a country to get started!</center></h4>
                 <div class="badges">
                     <!-- <a class="badge-link" href="#"><img src="http://localhost:4000/img/Simple_world_map.png" alt=""></a> -->
                     <!-- <a class="badge-link" href="#"><img src="/img/app-store-badge.svg" alt=""></a> -->
@@ -151,6 +156,7 @@
  .leaflet-container{background:#d1d1d1;}
 
  </style>
+ <center>
 	<div id="radio_table_div">
 	                  <table class="layout">
 	                    <tbody>
@@ -227,7 +233,7 @@
 	        	</table>
 	</div>
 
-	
+	<center>
 
 	<!-- <a href="#aside"> -->
 	<div id='map'></div>
@@ -264,6 +270,173 @@
 </div>
 </div>
 </div>
+</section>
+
+  <!-- Jay's UI -->
+<!-- Hide UnHide Logic -->
+
+
+<section id="aside2" class="map bg-primary text-center" style="box-shadow: 10px 10px #0066b2;">
+  <!--   <div class="container">
+            <div class="col-md-8"> -->
+
+<!-- Actual Aside HTML -->
+<!-- 
+<section class="cta">
+    <div class="cta-content">
+        <div class="container"> -->
+            <!-- <h2>Energy Production Trend:</h2> -->
+            <!-- <a href="/funds" class="btn btn-outline btn-xl page-scroll">How I can?!</a> -->
+
+<!-- End of Actual Aside HTML -->
+
+<!-- Start of Jay's UI -->
+<center>
+    <div id="databrowser2">
+    <table>
+      <tbody>
+        <tr>
+
+          <td id="controls_td">
+
+            <div id="controls_div">
+              <form id="controls_form" name="controls_form">
+
+                <input id="language" type="hidden" name="language" value="en">
+                <input id="plottype" type="hidden" name="plottype" value="Exports">
+                <input id="datasource" type="hidden" name="datasource" value="BP_2017">
+
+                <div id="radio_table_div">
+                  <table class="layout">
+                    <tbody>
+
+                      <tr id="data_row">
+                        <td class="label_td">
+                          <label>Data:</label>
+                        </td>
+                        <td>
+                          <span>BP Statistical Review 2017</span>
+                        </td>
+                      </tr>
+
+                      <tr id="resource_row">
+                        <td class="label_td">
+                          <label class="radio_label">Resource:</label>
+                        </td>
+                        <td>
+                        <span id="oil_span" class="radio_span selected" title="oil">
+                            <input type="radio" name="resource" id="oil_m" value="oil" checked="checked" onclick="updateDiffChart()">
+                            <span>Oil</span>
+                          </span>
+                          <span id="coal_span" class="radio_span selected" title="coal">
+                            <input type="radio" name="resource" id="coal_m" value="coal" 
+                            onclick="updateDiffChart()">
+                            <span>Coal</span>
+                          </span>
+                          <span id="gas_span" class="radio_span selected" title="gas">
+                            <input type="radio" name="resource" id="gas_m" value="gas" 
+                            onclick="updateDiffChart()">
+                            <span>Gas</span>
+                          </span>
+                          <span id="hydro_span" class="radio_span selected" title="hydro">
+                            <input type="radio" name="resource" id="hyd_m" value="hydro" 
+                             onclick="updateDiffChart()">
+                            <span>Hydro</span>
+                          </span>
+                          <span id="nuclear_span" class="radio_span selected" title="nuclear">
+                            <input type="radio" name="resource" id="nuc_m" value="nuclear" 
+                             onclick="updateDiffChart()">
+                            <span>Nuclear</span>
+                          </span>
+                          </td>
+                      </tr>
+
+
+                      <tr id="units_row">
+                        <td class="label_td">
+                          <label class="radio_label">Units:</label>
+                        </td>
+                        <td>
+                          <span id="bbl_span_m" class="radio_span selected" title="bbl">
+                            <input type="radio" name="units" id="bbl_m" value="bbl" checked="checked" onclick="updateDiffChart()">
+                            <span>bbl</span>
+                          </span>
+                          <span id="ft3_span_m" class="radio_span" title="ft3">
+                            <input type="radio" name="units" id="ft3_m" value="ft3" 
+                            onclick="updateDiffChart()">
+                            <span>ft3</span>
+                          </span>
+                          <span id="m3_span_m" class="radio_span" title="m3">
+                            <input type="radio" name="units" id="m3_m" value="m3"
+                            onclick="updateDiffChart()">
+                            <span>m3</span>
+                          </span>
+                          <span id="mtoe_span_m" class="radio_span" title="mtoe">
+                            <input type="radio" name="units" id="mtoe_m" value="mtoe"
+                            onclick="updateDiffChart()">
+                            <span>mtoe</span>
+                          </span>
+                          <span id="ton_span_m" class="radio_span" title="ton">
+                            <input type="radio" name="units" id="ton_m" value="ton"
+                            onclick="updateDiffChart()">
+                            <span>ton</span>
+                          </span>
+                          <span id="twh_span_m" class="radio_span" title="twh">
+                            <input type="radio" name="units" id="twh_m" value="twh"
+                            onclick="updateDiffChart()">
+                            <span>twh</span>
+                          </span>
+                        </td>
+                      </tr>
+
+                      <tr id="toggle_row">
+                        <td class="toggle_td">
+                          <label class="toggle_label">Toggle tooltip:</label>
+                        </td>
+                        <td>
+                          <span id="toggle_on_span" class="toggle_radio_span selected" title="Tooltip On">
+                            <input type="radio" name="toggle" id="on" value="on" checked="checked" onclick=toggleTooltip()>
+                            <span>On</span>
+                          </span>
+                          <span id="toggle_off_span" class="toggle_radio_span selected" title="Tooltip Off">
+                            <input type="radio" name="toggle" id="off" value="off" onclick=toggleTooltip()>
+                            <span>Off</span>
+                          </span>
+                        </td>
+                      </tr>
+
+                    </tbody>
+                  </table>
+                </div>
+                        </div>
+
+              </form>
+            </div> <!-- END of controls_div -->
+
+          </td> <!-- END of controls_td -->
+
+          </td>
+
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <div id="stackChart_production_consumption" style="width:900px;height:700px;"></div> 
+    <script type="text/javascript" src="js/stacked_production_consumption.js"></script> 
+  </br></br>
+    <a class="btn btn-outline btn-xl page-scroll" onclick="smoothScroll(document.getElementById('aside'))">Click to see more!</a>
+</center>
+
+<script type="text/javascript" src="https://d3js.org/d3.v4.min.js"></script>
+<script type="text/javascript" src="js/stacked_area_plot.js"></script> 
+
+
+
+<!-- Jay's viz - End -->
+
+  <!--       </div>
+    </div> -->
+    <div class="overlay"></div>
 </section>
 
   <!-- Jay's UI -->
@@ -396,12 +569,14 @@
 
 <script type="text/javascript" src="https://d3js.org/d3.v4.min.js"></script>
 <script type="text/javascript" src="js/stacked_area_plot.js"></script>  
-
+<script type="text/javascript" src="js/stories.js"></script>
 
 <div id='wrapper' style="width:95%; display: table; margin:0 auto;">
         <div id="consumptionChart" style="float:left; width:50%; position:relative"></div> 
-         <div id="stackChart" style="float:right; width:50%; position:relative"</div> 
+        <div id="stackChart" style="float:right; width:50%; position:relative"></div> 
 </div>
+        </br></br>
+        <center><a class="btn btn-outline btn-xl page-scroll" onclick="smoothScroll(document.getElementById('story'))">Click to see more!</a></center>
 
 
 <!-- Jay's viz - End -->
@@ -411,6 +586,17 @@
     <div class="overlay"></div>
 </section>
 
+  <section id="story" class="download bg-primary text-center">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-8 col-md-offset-2">
+				<div id='story_text'></div>
+			</div>
+		</div>
+	</div>
+</br></br>
+	<a class="btn btn-outline btn-xl page-scroll" onclick="smoothScroll(document.getElementById('download'))">Go Back to Exploring!</a>
+</section>
   <section id="data" class="download bg-primary text-center">
     <div class="container">
         <div class="row">
@@ -423,6 +609,25 @@
     </div>
 </section>
 
+   <!-- Footer -->
+	<section id ="footer" class="download bg-primary text-center">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-8 col-md-offset-2">
+                        <p>
+                            Meet Us!
+                        </p>
+                        <p>
+                            We are always eager to meet with people to discuss all things data: management, analysis, visualization, etc. We know that human interactions are at the heart of every successful project and we enjoy learning from our clients and colleagues about their problems, their strategies and their successes and failures. Whenever possible we get away from the office to find out what is going on in the interconnected worlds of science, data and software.
+
+                            We look forward to meeting you some day.
+                        </p>
+                    </br></br>
+                        <a href="mailto:info@mazamascience.com" class="btn btn-outline btn-xl page-scroll">Info@MazamaScience.com</a>
+                </div>
+            </div>
+        </div>
+	</section>
   
 </body>
 

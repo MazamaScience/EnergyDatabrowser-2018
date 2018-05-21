@@ -1,41 +1,98 @@
-d3.queue()
-    .defer(d3.json, "../Data/BPStatReview/bp_stat_review_2017_combined.json")
-    .await(ready);
-
-var merged_json;
 var years = [];
-function ready(error, loaded_json)
-{
-  merged_json = loaded_json;
-  var cid_sp = document.getElementById("countryID");
-  var countryID_sp = cid_sp.options[cid_sp.selectedIndex].value;
-  var country_sp = cid_sp.options[cid_sp.selectedIndex].text;
-  var unit = document.querySelector('input[name = "units"]:checked').value;
-  var resource = document.querySelector('input[name = "resource"]:checked').value;
-  plotStackChart(unit,countryID_sp,country_sp,resource);
+var diffPlotFlag = 0;
+var countryID_sp = null;
+var country_sp = null;
 
+function toggleDiffChart(unit, country_id, country_text, resource)
+{ countryID_sp = country_id;
+  country_sp = country_text;
+  if(diffPlotFlag == 0)
+  { 
+    plotStackChart(unit,countryID_sp,country_sp,resource);
+    diffPlotFlag++;
+  }
+  else 
+  {
+    updateDiffChart();
+  }
 }
 
 function updateDiffChart()
-{
-    var cid_sp = document.getElementById("countryID");
-    var countryID_sp = cid_sp.options[cid_sp.selectedIndex].value;
-    var country_sp = cid_sp.options[cid_sp.selectedIndex].text;
-    var unit = document.querySelector('input[name = "units"]:checked').value;
-    var resource = document.querySelector('input[name = "resource"]:checked').value;
-    updateStackChart(unit,countryID_sp,country_sp,resource);
+{   
+  var resource;
 
+  if (document.getElementById("coal_m").checked) {
+  resource = document.getElementById("coal_m").value;
+  }
+  else if (document.getElementById("oil_m").checked) {
+    resource = document.getElementById("oil_m").value;
+  }
+  else if (document.getElementById("gas_m").checked) {
+    resource = document.getElementById("gas_m").value;
+  }
+  else if (document.getElementById("nuc_m").checked) {
+    resource = document.getElementById("nuc_m").value;
+  }
+  else {
+    resource = document.getElementById("hyd_m").value;
+  }
+
+  grayOutRadio(resource);
+
+  // Get units
+  var units;
+  if (document.getElementById("mtoe_m").checked) {
+    units = document.getElementById("mtoe_m").value;
+  } else if (document.getElementById("bbl_m").checked) {
+    units = document.getElementById("bbl_m").value;
+  } else if (document.getElementById("ft3_m").checked) {
+    units = document.getElementById("ft3_m").value;
+  } else if (document.getElementById("twh_m").checked) {
+    units = document.getElementById("twh_m").value;
+  } else if (document.getElementById("m3_m").checked) {
+    units = document.getElementById("m3_m").value;
+  }
+  else {
+    units = document.getElementById("joule_m").value
+  }
+
+    updateStackChart(units,countryID_sp,country_sp,resource);
 }
+
+
+function grayOutRadio(resource){
+
+  var units = unitMap[resource];
+
+  var unit_list = ["bbl","ft3","m3","twh","mtoe"];
+  
+  for (var ui = 0; ui < unit_list.length; ui++){
+
+
+      document.getElementById(unit_list[ui] + '_span_m').style.color = 'gray';
+      document.getElementById(unit_list[ui] + '_m').disabled = true;
+
+      for (var gi = 0; gi < units.length; gi++) {
+
+          if (units[gi] == unit_list[ui]) {
+
+              document.getElementById(unit_list[ui] + '_span_m').style.color = 'black';
+              document.getElementById(units[gi] + '_m').disabled = false;
+          }
+      }
+  }
+}
+
 
 function plotStackChart(unit, country_id,country_text, resource)
 {
 var resource_data = [];
 var traceflag = "tozeroy";
 
-    for (data in merged_json[unit][resource])
+    for (data in data_json[unit][resource])
       {
         
-        country_data = merged_json[unit][resource][country_id];
+        country_data = data_json[unit][resource][country_id];
         //Parsing value from all years
         years = d3.keys(country_data);
        
@@ -136,10 +193,10 @@ function updateStackChart(unit, country_id,country_text, resource)
 var resource_data = [];
 var traceflag = "tozeroy";
 
-    for (data in merged_json[unit][resource])
+    for (data in data_json[unit][resource])
       {
         
-        country_data = merged_json[unit][resource][country_id];
+        country_data = data_json[unit][resource][country_id];
         //Parsing value from all years
         years = d3.keys(country_data);
        
