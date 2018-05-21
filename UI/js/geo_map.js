@@ -42,7 +42,8 @@ function getColor(d) {
 
 	if (d == null) return '#808080';
 	else if (d > 0) return 'green';
-	else if (d < 0) return 'red'
+	else if (d < 0) return 'red';
+	else return 'white';
 
 }
 
@@ -198,17 +199,14 @@ var legend = L.control({position: 'bottomright'});
 legend.onAdd = function (map) {
 
 	var div = L.DomUtil.create('div', 'info legend'),
-		grades = [0, 10, 20, 50, 100, 200, 500, 1000],
-		labels = [],
-		from, to;
+		grades = ['Import','Neutral','Export'],
+		labels = [];
 
 	for (var i = 0; i < grades.length; i++) {
-		from = grades[i];
-		to = grades[i + 1];
 
 		labels.push(
-			'<i style="background:' + getColor(from + 1) + '"></i> ' +
-			from + (to ? '&ndash;' + to : '+'));
+			'<i style="background:' + getColor(i-1) + '"></i> ' +
+			grades[i]);
 	}
 
 	div.innerHTML = labels.join('<br>');
