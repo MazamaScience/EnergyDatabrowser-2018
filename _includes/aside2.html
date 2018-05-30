@@ -84,7 +84,7 @@
                         </td>
                         <td>
                           <span id="bbl_span_m" class="radio_span selected" title="bbl">
-                            <input type="radio" name="units" id="bbl_m" value="bbl" checked="checked" onclick="updateDiffChart()">
+                            <input type="radio" name="units" id="bbl_m" value="bbl" onclick="updateDiffChart()">
                             <span>bbl</span>
                           </span>
                           <span id="ft3_span_m" class="radio_span" title="ft3">
@@ -98,8 +98,7 @@
                             <span>m3</span>
                           </span>
                           <span id="mtoe_span_m" class="radio_span" title="mtoe">
-                            <input type="radio" name="units" id="mtoe_m" value="mtoe"
-                            onclick="updateDiffChart()">
+                            <input type="radio" name="units" id="mtoe_m" value="mtoe" checked="checked" onclick="updateDiffChart()">
                             <span>mtoe</span>
                           </span>
                           <span id="ton_span_m" class="radio_span" title="ton">
@@ -147,10 +146,19 @@
       </tbody>
     </table>
   </div>
-  <div id="stackChart_production_consumption" style="width:900px;height:700px;"></div> 
-    <script type="text/javascript" src="js/stacked_production_consumption.js"></script> 
-  </br></br>
-    <a class="btn btn-outline btn-xl page-scroll" onclick="smoothScroll(document.getElementById('aside'))">Click to see more!</a>
+  <div id='wrapper' style="width:95%; display: table; margin:0 auto;">
+    <div id="stackChart_production_consumption" style="float:left; width:50%; position:relative"></div> 
+      <script type="text/javascript" src="js/stacked_production_consumption.js"></script> 
+    </br></br>
+    <!-- Start Story Div -->
+    <div id='story_text' style="float:right; width:45%; position:relative"></div>
+    <a class="btn btn-outline btn-xl page-scroll" onclick="smoothScroll(document.getElementById('download'))">Go Back to Exploring!</a>
+  </div>
+</br></br>
+  <!--  -->
+
+<!-- End Story Div -->
+  <a class="btn btn-outline btn-xl page-scroll" onclick="smoothScroll(document.getElementById('aside'))">Click to see more!</a>
 </center>
 
 <script type="text/javascript" src="https://d3js.org/d3.v4.min.js"></script>
