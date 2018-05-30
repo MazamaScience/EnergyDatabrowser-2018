@@ -13,7 +13,7 @@ var markers = {
     },
     'oil': {
         'symbol': 27,
-        'color': 'LightGray'
+        'color': '#9966ff'
     },
     'gas': {
         'symbol': 5,
@@ -215,12 +215,17 @@ function plotResourceCharts(unit, country, country_name, resource_pattern, perce
                 size: 15,
             }
         }],
+
+        paper_bgcolor: 'rgba(0,0,0,0)',
+        plot_bgcolor: 'rgba(0,0,0,0)'
     };
 
     Plotly.newPlot('stackChart', stacked_resource_data, layout);
     
     var layout = {
         title: country_name + ' energy resource '+ resource_pattern + ' for all years',
+        paper_bgcolor: 'rgba(0,0,0,0)',
+        plot_bgcolor: 'rgba(0,0,0,0)'
     };
     Plotly.newPlot('consumptionChart', line_resource_data, layout);
  
@@ -302,12 +307,17 @@ function updateResourceCharts(unit, country, country_name, resource_pattern, per
                 size: 15,
             }
         }],
+
+        paper_bgcolor: 'rgba(0,0,0,0)',
+        plot_bgcolor: 'rgba(0,0,0,0)'
     };
 
     Plotly.update('stackChart', stacked_trace, layout);
 
     var layout = {
         title: country_name + ' energy resource '+ resource_pattern + ' for all years',
+        paper_bgcolor: 'rgba(0,0,0,0)',
+        plot_bgcolor: 'rgba(0,0,0,0)'
     };
     Plotly.update('consumptionChart', line_trace, layout);
 }

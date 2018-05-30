@@ -167,7 +167,9 @@ var traceflag = "tozeroy";
           y: exp,
           fill: "tozeroy",
           name: "Export",
-          
+          marker: {
+            color: 'rgba(153,255,153,0.5)'
+          }
         };
 
         var trace4 = {
@@ -183,7 +185,10 @@ var traceflag = "tozeroy";
 
 
     var layout = {
-        title: country_text + " " + resource + ' trends for ' + years[0] + ' - ' + years[years.length - 1 ]
+        title: country_text + " " + resource + ' trends for ' + years[0] + ' - ' + years[years.length - 1 ],
+        paper_bgcolor: 'rgba(0,0,0,0)',
+        plot_bgcolor: 'rgba(0,0,0,0)'
+      
     };
     Plotly.newPlot('stackChart_production_consumption', resource_data, layout, {displaylogo: false});
 }
@@ -288,7 +293,9 @@ var traceflag = "tozeroy";
 
 
     var layout = {
-        title: country_text + " " + resource + ' trends for ' + years[0] + ' - ' + years[years.length - 1 ]
+        title: country_text + " " + resource + ' trends for ' + years[0] + ' - ' + years[years.length - 1 ],
+        paper_bgcolor: 'rgba(0,0,0,0)',
+        plot_bgcolor: 'rgba(0,0,0,0)'
     };
     Plotly.newPlot('stackChart_production_consumption', resource_data, layout, {displaylogo: false});
 }
